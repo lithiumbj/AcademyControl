@@ -13,11 +13,11 @@ class InvoiceFk extends Migration
     public function up()
     {
       Schema::table('invoice', function ($table) {
-        $table->integer('fk_company')->unsigned()->index()->change();
+        $table->integer('fk_company')->unsigned()->change();
         $table->foreign('fk_company')->references('id')->on('company');
-        $table->integer('fk_client')->unsigned()->index()->change();
+        $table->integer('fk_client')->unsigned()->change();
         $table->foreign('fk_client')->references('id')->on('client');
-        $table->integer('fk_user')->unsigned()->index()->change();
+        $table->integer('fk_user')->unsigned()->change();
         $table->foreign('fk_user')->references('id')->on('users');
       });
     }

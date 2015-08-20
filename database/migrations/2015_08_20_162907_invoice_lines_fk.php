@@ -13,7 +13,7 @@ class InvoiceLinesFk extends Migration
     public function up()
     {
       Schema::table('invoice_line', function ($table) {
-        $table->integer('fk_invoice')->unsigned()->index()->change();
+        $table->integer('fk_invoice')->unsigned()->change();
         $table->foreign('fk_invoice')->references('id')->on('invoice');
       });
     }

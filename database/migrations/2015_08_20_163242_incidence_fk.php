@@ -13,9 +13,9 @@ class IncidenceFk extends Migration
     public function up()
     {
       Schema::table('incidence', function ($table) {
-        $table->integer('fk_company')->unsigned()->index()->change();
+        $table->integer('fk_company')->unsigned()->change();
         $table->foreign('fk_company')->references('id')->on('company');
-        $table->integer('fk_user')->unsigned()->index()->change();
+        $table->integer('fk_user')->unsigned()->change();
         $table->foreign('fk_user')->references('id')->on('users');
       });
     }

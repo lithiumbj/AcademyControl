@@ -13,9 +13,9 @@ class UserRoleFk extends Migration
     public function up()
     {
       Schema::table('user_role', function ($table) {
-        $table->integer('fk_role')->unsigned()->index()->change();
+        $table->integer('fk_role')->unsigned()->change();
         $table->foreign('fk_role')->references('id')->on('role');
-        $table->integer('fk_user')->unsigned()->index()->change();
+        $table->integer('fk_user')->unsigned()->change();
         $table->foreign('fk_user')->references('id')->on('users');
       });
     }

@@ -13,11 +13,11 @@ class InvoiceProviderFk extends Migration
     public function up()
     {
       Schema::table('invoice_provider', function ($table) {
-        $table->integer('fk_company')->unsigned()->index()->change();
+        $table->integer('fk_company')->unsigned()->change();
         $table->foreign('fk_company')->references('id')->on('company');
-        $table->integer('fk_provider')->unsigned()->index()->change();
+        $table->integer('fk_provider')->unsigned()->change();
         $table->foreign('fk_provider')->references('id')->on('provider');
-        $table->integer('fk_user')->unsigned()->index()->change();
+        $table->integer('fk_user')->unsigned()->change();
         $table->foreign('fk_user')->references('id')->on('users');
       });
     }

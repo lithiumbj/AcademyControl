@@ -12,8 +12,8 @@ class UserRolePermissionsFk extends Migration
      */
     public function up()
     {
-      Schema::table('user_role', function ($table) {
-        $table->integer('fk_role')->unsigned()->index()->change();
+      Schema::table('user_role_permission', function ($table) {
+        $table->integer('fk_role')->unsigned()->change();
         $table->foreign('fk_role')->references('id')->on('role');
       });
     }

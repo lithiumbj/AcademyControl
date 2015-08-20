@@ -13,7 +13,7 @@ class ProviderFk extends Migration
     public function up()
     {
         Schema::table('provider', function ($table) {
-          $table->integer('fk_company')->unsigned()->index()->change();
+          $table->integer('fk_company')->unsigned()->change();
           $table->foreign('fk_company')->references('id')->on('company');
         });
     }

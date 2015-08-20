@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ContactWay extends Migration
+class UserRolePermissionsFk extends Migration
 {
     /**
      * Run the migrations.
@@ -12,12 +12,9 @@ class ContactWay extends Migration
      */
     public function up()
     {
-      Schema::create('contact_way', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('name');
-          $table->string('description');
-          $table->integer('fk_company');
-          $table->timestamps();
+      Schema::table('user_role', function ($table) {
+        $table->integer('fk_role')->unsigned()->index()->change();
+        $table->foreign('fk_role')->references('id')->on('role');
       });
     }
 

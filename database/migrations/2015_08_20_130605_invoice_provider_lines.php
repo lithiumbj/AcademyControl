@@ -14,8 +14,8 @@ class InvoiceProviderLines extends Migration
     {
           Schema::create('invoice_provider_line', function (Blueprint $table) {
               $table->increments('id');
-              $table->integer('fk_provider_invoice')->index();
-              $table->integer('fk_service')->index();
+              $table->integer('fk_provider_invoice');
+              $table->integer('fk_service');
               $table->string('prod_name');
               $table->string('prod_description');
               $table->decimal('tax_base', 5, 2);

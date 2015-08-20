@@ -14,9 +14,9 @@ class InvoiceProvider extends Migration
     {
         Schema::create('invoice_provider', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fk_provider')->index();
-            $table->integer('fk_user')->index();
-            $table->integer('fk_company')->index();
+            $table->integer('fk_provider');
+            $table->integer('fk_user');
+            $table->integer('fk_company');
             $table->integer('status');
             $table->string('facnumber',12);
             $table->longText('text_public')->nullable();

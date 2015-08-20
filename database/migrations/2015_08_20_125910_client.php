@@ -14,7 +14,7 @@ class Client extends Migration
     {
       Schema::create('client', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('fk_company')->index();
+          $table->integer('fk_company');
           $table->string('name');
           $table->string('lastname_1');
           $table->string('lastname_2')->nullable();

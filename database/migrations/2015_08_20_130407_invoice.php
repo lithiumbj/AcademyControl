@@ -14,9 +14,9 @@ class Invoice extends Migration
     {
       Schema::create('invoice', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('fk_client')->index();
-          $table->integer('fk_user')->index();
-          $table->integer('fk_company')->index();
+          $table->integer('fk_client');
+          $table->integer('fk_user');
+          $table->integer('fk_company');
           $table->string('facnumber',12);
           $table->integer('status');
           $table->longText('text_public')->nullable();

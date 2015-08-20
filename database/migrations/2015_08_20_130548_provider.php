@@ -23,7 +23,7 @@ class Provider extends Migration
           $table->string('city')->nullable();
           $table->integer('phone')->nullable();
           $table->string('email')->nullable();
-          $table->integer('fk_company')->index();
+          $table->integer('fk_company');
           $table->integer('cp')->nullable();
           $table->longText('other_address_info')->nullable();
           $table->longText('description')->nullable();

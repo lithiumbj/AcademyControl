@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ContactWay extends Migration
+class InvoiceProviderLinesFk extends Migration
 {
     /**
      * Run the migrations.
@@ -12,13 +12,10 @@ class ContactWay extends Migration
      */
     public function up()
     {
-      Schema::create('contact_way', function (Blueprint $table) {
-          $table->increments('id');
-          $table->string('name');
-          $table->string('description');
-          $table->integer('fk_company');
-          $table->timestamps();
-      });
+        Schema::table('invoice_provider_line', function ($table) {
+          $table->integer('fk_provider_invoice')->unsigned()->index()->change();
+          $table->foreign('fk_provider_invoice')->references('id')->on('invoice_provider');
+        });
     }
 
     /**

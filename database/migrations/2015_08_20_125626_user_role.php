@@ -14,8 +14,8 @@ class UserRole extends Migration
     {
       Schema::create('user_role', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('fk_role')->index();
-          $table->integer('fk_user')->index();
+          $table->integer('fk_role');
+          $table->integer('fk_user');
           $table->timestamp('created_at');
           $table->timestamp('updated_at');
       });

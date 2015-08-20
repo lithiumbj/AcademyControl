@@ -14,7 +14,7 @@ class UserRolePermission extends Migration
     {
       Schema::create('user_role_permission', function (Blueprint $table) {
           $table->increments('id');
-          $table->integer('fk_role')->index();
+          $table->integer('fk_role');
           $table->string('perm');
           $table->integer('allowed');
           $table->timestamp('created_at');

@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class InvoiceProviderFk extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+      Schema::table('invoice_provider', function ($table) {
+        $table->integer('fk_company')->unsigned()->index()->change();
+        $table->foreign('fk_company')->references('id')->on('company');
+        $table->integer('fk_provider')->unsigned()->index()->change();
+        $table->foreign('fk_provider')->references('id')->on('provider');
+        $table->integer('fk_user')->unsigned()->index()->change();
+        $table->foreign('fk_user')->references('id')->on('users');
+      });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        //
+    }
+}

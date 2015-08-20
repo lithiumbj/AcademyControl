@@ -14,10 +14,10 @@ class InvoicePayments extends Migration
     {
         Schema::create('invoice_payments', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('fk_user')->index();
-            $table->integer('fk_client')->index();
-            $table->integer('fk_company')->index();
-            $table->integer('fk_invoice')->index();
+            $table->integer('fk_user');
+            $table->integer('fk_client');
+            $table->integer('fk_company');
+            $table->integer('fk_invoice');
             $table->decimal('total', 5, 2);
             $table->timestamps();
         });

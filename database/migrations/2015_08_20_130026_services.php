@@ -18,7 +18,7 @@ class Services extends Migration
           $table->string('description');
           $table->decimal('iva', 5, 2);
           $table->decimal('price', 5, 2);
-          $table->integer('fk_company')->index();
+          $table->integer('fk_company');
           $table->integer('is_active');
           $table->timestamps();
       });

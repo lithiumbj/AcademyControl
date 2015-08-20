@@ -12,6 +12,6 @@ class HomeController extends Controller
      */
     public function home()
     {
-      echo 'yai';
+      return view('main.home');
     }
 }

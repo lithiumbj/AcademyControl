@@ -25,17 +25,18 @@
     <body class="hold-transition login-page">
       <div class="login-box">
         <div class="login-logo">
-          
+
         </div><!-- /.login-logo -->
         <div class="login-box-body">
           <p class="login-box-msg">Debe iniciar sesión para continuar</p>
-          <form action="../../index2.html" method="post">
+          <form action="{{URL::to('/auth/login')}}" method="post">
+            {!! csrf_field() !!}
             <div class="form-group has-feedback">
-              <input class="form-control" placeholder="Email" type="email">
+              <input class="form-control" name="email" placeholder="Email" type="email">
               <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
             </div>
             <div class="form-group has-feedback">
-              <input class="form-control" placeholder="Password" type="password">
+              <input class="form-control" placeholder="Password" name="password" type="password">
               <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">

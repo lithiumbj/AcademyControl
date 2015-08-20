@@ -17,7 +17,6 @@ class ContactWay extends Migration
           $table->string('name');
           $table->string('description');
           $table->integer('fk_company')->index();
-          $table->foreign('fk_company')->references('id')->on('company');
           $table->timestamps();
       });
     }

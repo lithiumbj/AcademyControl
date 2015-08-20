@@ -15,12 +15,9 @@ class InvoiceProvider extends Migration
         Schema::create('invoice_provider', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('fk_provider')->index();
-            $table->foreign('fk_provider')->references('id')->on('provider');
             $table->integer('fk_user')->index();
-            $table->foreign('fk_user')->references('id')->on('user');
-            $table->intger('fk_company')->index();
-            $table->foreign('fk_company')->references('id')->on('company');
-            $table->intger('status',1);
+            $table->integer('fk_company')->index();
+            $table->integer('status');
             $table->string('facnumber',12);
             $table->longText('text_public')->nullable();
             $table->longText('text_private')->nullable();
@@ -28,7 +25,7 @@ class InvoiceProvider extends Migration
             $table->dateTime('date_last_update');
             $table->decimal('tax_base', 5, 2);
             $table->decimal('tax', 5, 2);
-            $table->decimal('total', 5, 2)
+            $table->decimal('total', 5, 2);
             $table->timestamps();
         });
     }

@@ -15,7 +15,6 @@ class InvoiceProviderLines extends Migration
           Schema::create('invoice_provider_line', function (Blueprint $table) {
               $table->increments('id');
               $table->integer('fk_provider_invoice')->index();
-              $table->foreign('fk_provider_invoice')->references('id')->on('invoice_provider');
               $table->integer('fk_service')->index();
               $table->string('prod_name');
               $table->string('prod_description');

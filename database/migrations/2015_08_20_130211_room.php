@@ -16,10 +16,9 @@ class Room extends Migration
           $table->increments('id');
           $table->string('name');
           $table->string('description');
-          $table->integer('capacity',3);
+          $table->integer('capacity');
           $table->integer('fk_company')->index();
-          $table->foreign('fk_company')->references('id')->on('company');
-          $table->integer('is_active',1);
+          $table->integer('is_active');
           $table->timestamps();
       });
     }

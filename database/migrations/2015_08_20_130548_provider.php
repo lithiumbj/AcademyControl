@@ -21,11 +21,10 @@ class Provider extends Migration
           $table->string('address');
           $table->string('poblation')->nullable();
           $table->string('city')->nullable();
-          $table->integer('phone',9)->nullable();
+          $table->integer('phone')->nullable();
           $table->string('email')->nullable();
           $table->integer('fk_company')->index();
-          $table->foreign('fk_company')->references('id')->on('company');
-          $table->integer('cp', 5)->nullable();
+          $table->integer('cp')->nullable();
           $table->longText('other_address_info')->nullable();
           $table->longText('description')->nullable();
           $table->timestamp('created_at');

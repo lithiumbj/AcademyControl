@@ -14,8 +14,7 @@ class InvoiceLines extends Migration
     {
         Schema::create('invoice_line', function (Blueprint $table) {
             $table->increments('id');
-            $table->intger('fk_invoice')->index();
-            $table->foreign('fk_invoice')->references('id')->on('invoice');
+            $table->integer('fk_invoice')->index();
             $table->integer('fk_service')->index();
             $table->string('prod_name');
             $table->string('prod_description');

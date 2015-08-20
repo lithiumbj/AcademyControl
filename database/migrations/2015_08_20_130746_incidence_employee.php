@@ -14,15 +14,12 @@ class IncidenceEmployee extends Migration
     {
           Schema::create('incidence_employee', function (Blueprint $table) {
               $table->increments('id');
-              $table->integer('type',2);
+              $table->integer('type');
               $table->string('title');
               $table->longText('body');
               $table->integer('fk_user_reporting')->index();
-              $table->foreign('fk_user_reporting')->references('id')->on('user');
               $table->integer('fk_user_destiny')->index();
-              $table->foreign('fk_user_destiny')->references('id')->on('user');
               $table->integer('fk_company')->index();
-              $table->foreign('fk_company')->references('id')->on('company');
               $table->timestamps();
           });
     }

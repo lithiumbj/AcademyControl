@@ -14,13 +14,11 @@ class Incidence extends Migration
     {
           Schema::create('incidence', function (Blueprint $table) {
               $table->increments('id');
-              $table->integer('type',2);
+              $table->integer('type');
               $table->string('title');
               $table->longText('body');
               $table->integer('fk_user')->index();
-              $table->foreign('fk_user')->references('id')->on('user');
               $table->integer('fk_company')->index();
-              $table->foreign('fk_company')->references('id')->on('company');
               $table->timestamps();
           });
     }

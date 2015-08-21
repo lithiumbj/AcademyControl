@@ -80,4 +80,12 @@ class ClientController extends Controller
                   ->withInput();
        }
     }
+    /*
+     * Render's the view of the model
+     */
+    public function getView($id)
+    {
+      $model = Client::find($id);
+      return view('client.view',['model' => $model]);
+    }
 }

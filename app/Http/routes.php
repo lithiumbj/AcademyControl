@@ -32,4 +32,5 @@ Route::group(['middleware' => 'auth'], function () {
   //Clients
   Route::get('/client/create', 'ClientController@getCreate');
   Route::post('/client/create', 'ClientController@postCreate');
+  Route::get('/client/view/{id}', 'ClientController@getView');
 });

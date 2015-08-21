@@ -14,5 +14,74 @@
 
 <!-- Main content -->
 <section class="content">
+
+<div class="row">
+
+  <div class="col-md-4">
+    <!-- Box -->
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">Alumnos actuales</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body no-padding">
+
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+
+  <div class="col-md-4">
+    <!-- Box -->
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">Facturas vencidas (5 días)</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body no-padding">
+
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+
+  <div class="col-md-4">
+    <!-- Box -->
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">Facturas vencidas (10 días)</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body no-padding">
+
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+
+  <div class="col-md-4">
+    <!-- Box -->
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">Ingresos mensuales</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body no-padding">
+
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+
+  <div class="col-md-4">
+    <!-- Box -->
+    <div class="box box-danger">
+      <div class="box-header with-border">
+        <h3 class="box-title">Deuda actual</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body no-padding">
+
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+
+</div>
 </section>
 @stop

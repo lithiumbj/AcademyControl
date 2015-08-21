@@ -29,4 +29,6 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
  */
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/', 'HomeController@home');
+  //Clients
+  Route::get('/client/create', 'ClientController@getCreate');
 });

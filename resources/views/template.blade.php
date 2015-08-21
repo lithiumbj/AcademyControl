@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{URL::to('/')}}/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="{{URL::to('/')}}/css/custom.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
          folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{URL::to('/')}}/css/skins/_all-skins.min.css">
@@ -331,10 +332,11 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Crear cliente</a></li>
+                <li><a href="{{URL::to('/client/create')}}"><i class="fa fa-circle-o"></i> Crear cliente</a></li>
                 <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
                 <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Control de bajas</a></li>
                 <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Control de altas</a></li>
+                <li><a href="pages/charts/inline.html"><i class="fa fa-plus"></i> Generar recibos</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -349,6 +351,34 @@
               <ul class="treeview-menu">
                 <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Gestionar Proveedores</a></li>
                 <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Facturas de proveedor</a></li>
+              </ul>
+            </li>
+            <!-- //Element -->
+
+            <!-- Element -->
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-money"></i>
+                <span>Control de caja</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Cierre de caja</a></li>
+                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Ver estado de caja</a></li>
+                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Salida de caja</a></li>
+              </ul>
+            </li>
+            <!-- //Element -->
+            <!-- Element -->
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-briefcase"></i>
+                <span>Empleados</span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Dar de alta</a></li>
+                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Ver costes</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -604,6 +634,7 @@
     </script>
     <!-- Bootstrap 3.3.5 -->
     <script src="{{URL::to('/')}}/bootstrap/js/bootstrap.min.js"></script>
+    <script src="{{URL::to('/')}}/js/angular.js"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{{URL::to('/')}}/plugins/morris/morris.min.js"></script>

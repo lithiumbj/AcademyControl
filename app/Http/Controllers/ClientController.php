@@ -81,11 +81,32 @@ class ClientController extends Controller
        }
     }
     /*
+     * Render's the update of the model
+     */
+    public function getUpdate($id)
+    {
+      $model = Client::find($id);
+      //get the contat way's
+      $contactWays = ContactWay::all();
+      return view('client.update',['model' => $model, 'contactWays' => $contactWays]);
+    }
+    /*
      * Render's the view of the model
      */
     public function getView($id)
     {
       $model = Client::find($id);
-      return view('client.view',['model' => $model]);
+      //get the contat way's
+      $contactWays = ContactWay::all();
+      return view('client.view',['model' => $model, 'contactWays' => $contactWays]);
+    }
+    /*
+     * This function render's a list of clients
+     */
+    public function getList()
+    {
+      //Get all the clients for the current company
+      $clients = Client::where('fk_company', '=', Auth::user()->fk_company)->get();
+      return view('client.list', ['clients' => $clients]);
     }
 }

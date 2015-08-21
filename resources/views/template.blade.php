@@ -30,6 +30,9 @@
     <link rel="stylesheet" href="{{URL::to('/')}}/plugins/daterangepicker/daterangepicker-bs3.css">
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{URL::to('/')}}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <!-- datatables css -->
+    <link rel="stylesheet" href="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.css">
+    <link rel="stylesheet" href="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -333,7 +336,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/client/create')}}"><i class="fa fa-circle-o"></i> Crear cliente</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
+                <li><a href="{{URL::to('/client/list')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
                 <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Control de bajas</a></li>
                 <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Control de altas</a></li>
                 <li><a href="pages/charts/inline.html"><i class="fa fa-plus"></i> Generar recibos</a></li>
@@ -625,7 +628,10 @@
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="{{URL::to('/')}}/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Datatables -->
+    <script src="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->

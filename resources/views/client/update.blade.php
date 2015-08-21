@@ -18,16 +18,9 @@
   <div class="row">
 
     <div class="col-md-12">
-      <div class="box box-primary @if($model->status == 1) collapsed-box @endif">
+      <div class="box box-primary">
         <div class="box-header with-border">
           <h3 class="box-title">Vista / Edición de cliente</h3>
-
-          @if($model->status == 1)
-          <div class="box-tools pull-right">
-            <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i> Mas detalles</button>
-          </div>
-          @endif
-
         </div><!-- /.box-header -->
         <!-- form start -->
         <form role="form" method="post" action="{{URL::to('/client/update')}}">
@@ -51,55 +44,47 @@
 
             <div class="form-group col-md-4">
               <label >Nombre *</label>
-              <br/>
-              <i>{{$model->name}}</i>
+              <input class="form-control" name="name" type="text" value="{{$model->name}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Primer apellido *</label>
-              <br/>
-              <i>{{$model->lastname_1}}</i>
+              <input class="form-control"  name="lastname_1"  type="text" value="{{$model->lastname_1}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Segundo apellido</label>
-              <br/>
-              <i>{{$model->lastname_2}}</i>
+              <input class="form-control"  name="lastname_2"  type="text" value="{{$model->lastname_2}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >DNI / NIF / Pasaporte</label>
-              <br/>
-              <i>{{$model->nif}}</i>
+              <input class="form-control"  name="nif"  type="text" value="{{$model->nif}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Dirección postal *</label>
-              <br/>
-              <i>{{$model->address}}</i>
+              <input class="form-control"  name="address"  type="text" value="{{$model->address}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Población</label>
-              <br/>
-              <i>{{$model->poblation}}</i>
+              <input class="form-control"  name="poblation"  type="text" value="{{$model->poblation}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Ciudad</label>
-              <br/>
-              <i>{{$model->city}}</i>
+              <input class="form-control"  name="city" type="text" value="{{$model->city}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Código postal</label>
-              <br/>
-              <i>{{$model->cp}}</i>
+              <input class="form-control"  name="cp"  type="text" value="{{$model->cp}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >¿Que ha ocurrido con el cliente? *</label>
-              <select class="form-control" name="status" disabled="disabled">
+              <select class="form-control" name="status" >
                 <option value="0" @if($model->status == 0) selected="selected" @endif>Ha solicitado información</option>
                 <option value="1" @if($model->status == 1) selected="selected" @endif>Nueva matricula</option>
               </select>
@@ -107,7 +92,7 @@
 
             <div class="form-group col-md-4">
               <label >¿Como nos ha conocido? *</label>
-              <select class="form-control" name="fk_contact_way" disabled="disabled">
+              <select class="form-control" name="fk_contact_way" >
                 @foreach($contactWays as $contactWay)
                 <option value="{{$contactWay->id}}" @if($model->fk_contact_way == $contactWay->id) selected="selected" @endif>{{$contactWay->name}}</option>
                 @endforeach
@@ -116,41 +101,35 @@
 
             <div class="form-group col-md-4">
               <label >Teléfono (Padres / Tutores)</label>
-              <br/>
-              <i>{{$model->phone_parents}}</i>
+              <input class="form-control"  name="phone_parents"  type="phone" value="{{$model->phone_parents}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Teléfono del alumno</label>
-              <br/>
-              <i>{{$model->phone_client}}</i>
+              <input class="form-control"  name="phone_client"  type="phone" value="{{$model->phone_client}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Teléfono de contacto esencial (whatsapp / sms)</label>
-              <br/>
-              <i>{{$model->phone_whatsapp}}</i>
+              <input class="form-control"  name="phone_whatsapp"  type="phone" value="{{$model->phone_whatsapp}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Correo electrónico (Padres / Tutores)</label>
-              <br/>
-              <i>{{$model->email_parents}}</i>
+              <input class="form-control"  name="email_parents"  type="email" value="{{$model->email_parents}}">
             </div>
 
             <div class="form-group col-md-4">
               <label >Correo electrónico del alumno</label>
-              <br/>
-              <i>{{$model->email_client}}</i>
+              <input class="form-control"  name="email_client"  type="email" value="{{$model->email_client}}">
             </div>
 
             <div class="form-group col-md-12">
               <label >Más información de contacto</label>
-              <br/>
-              <i>{{$model->other_address_info}}</i>
+              <textarea class="form-control"  name="other_address_info">{{$model->other_address_info}}</textarea>
             </div>
             <div class="center">
-              <a type="submit" class="btn btn-warning btn-xs" href="{{URL::to('/client/update/'.$model->id)}}"><i class="fa fa-pencil"></i> Modificar estos datos</a>
+              <button type="submit" class="btn btn-warning btn-xs"><i class="fa fa-pencil"></i> Modificar</button>
             </div>
           </div><!-- /.box-body -->
 
@@ -159,64 +138,5 @@
     </div>
 
   </div>
-
-  @if($model->status == 1)
-
-  <!-- 2nd row -->
-  <div class="row">
-
-    <!-- Abonos box -->
-    <div class="col-md-6">
-      <div class="box box-danger">
-        <div class="box-header with-border">
-          <h3 class="box-title">Últimos 5 recibos</h3>
-        </div>
-          <div class="box-body">
-
-          </div>
-        </div>
-      </div>
-      <!-- //Abonos box -->
-
-      <!-- Faltas box -->
-      <div class="col-md-6">
-        <div class="box box-danger">
-          <div class="box-header with-border">
-            <h3 class="box-title">Faltas / incidencias</h3>
-            <small style="margin-left: 25px;"><i>(Últimas 5)</i></small>
-          </div>
-            <div class="box-body">
-
-            </div>
-          </div>
-        </div>
-        <!-- //Faltas box -->
-
-  </div>
-  <!-- //2nd row -->
-
-  <!-- 3rd row -->
-  <div class="row">
-    <!-- Horario box -->
-    <div class="col-md-12">
-      <div class="box box-success">
-        <div class="box-header with-border">
-          <h3 class="box-title">Faltas / incidencias</h3>
-        </div>
-          <div class="box-body">
-
-          </div>
-        </div>
-      </div>
-      <!-- //Horario box -->
-    </div>
-  <!-- //3rd row -->
-
-  @else
-  <div class="callout callout-warning">
-    <h4>¿Más datos?</h4>
-    <p>No se pueden asignar ni consultar horarios, incidencias o recibos pendientes para clientes que no son alumnos</p>
-  </div>
-  @endif
 </section>
 @stop

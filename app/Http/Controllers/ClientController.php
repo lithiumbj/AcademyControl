@@ -90,6 +90,59 @@ class ClientController extends Controller
       $contactWays = ContactWay::all();
       return view('client.update',['model' => $model, 'contactWays' => $contactWays]);
     }
+
+    /*
+     * This function is called to update a client model
+     */
+    public function postUpdate(Request $request)
+     {
+       //Get the data
+       $data = $request->all();
+       //Filter the data to check if any is wrong
+       $validator = Validator::make($data, [
+            'name' => 'required|max:254',
+            'lastname_1' => 'required|max:254',
+            'address' => 'required|max:254',
+        ]);
+        //Check if validator fails
+        if(!$validator->fails()){
+          //Innitial validation ok
+          $client = Client::find($data['id']);
+          //Load data
+          $client->name = $data['name'];
+          $client->lastname_1 = $data['lastname_1'];
+          $client->lastname_2 = $data['lastname_2'];
+          $client->nif = $data['nif'];
+          $client->address = $data['address'];
+          $client->poblation = $data['poblation'];
+          $client->city = $data['city'];
+          $client->status = $data['status'];
+          $client->phone_parents = $data['phone_parents'];
+          $client->phone_client = $data['phone_client'];
+          $client->phone_whatsapp = $data['phone_whatsapp'];
+          $client->fk_contact_way = $data['fk_contact_way'];
+          $client->email_parents = $data['email_parents'];
+          $client->email_client = $data['email_client'];
+          $client->cp = $data['cp'];
+          $client->other_address_info = $data['other_address_info'];
+
+          //Save the client
+          if($client->save()){
+            //Ok, go to view
+             return redirect('client/view/'.$client->id);
+          }else{
+            //ko, return to form
+            return redirect('client/update/'.$client->id)
+                     ->withErrors($validator)
+                     ->withInput();
+          }
+        }else{
+          //Innitial validation KO, redirect to form
+          return redirect('client/update/'.$client->id)
+                   ->withErrors($validator)
+                   ->withInput();
+        }
+     }
     /*
      * Render's the view of the model
      */

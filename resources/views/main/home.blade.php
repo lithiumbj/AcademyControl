@@ -17,9 +17,9 @@
 
 <div class="row">
 
-  <div class="col-md-4">
+  <div class="col-md-8">
     <!-- Box -->
-    <div class="box box-danger">
+    <div class="box box-success">
       <div class="box-header with-border">
         <h3 class="box-title">Alumnos actuales</h3>
       </div><!-- /.box-header -->
@@ -58,7 +58,7 @@
 
   <div class="col-md-4">
     <!-- Box -->
-    <div class="box box-danger">
+    <div class="box box-success">
       <div class="box-header with-border">
         <h3 class="box-title">Ingresos mensuales</h3>
       </div><!-- /.box-header -->
@@ -71,7 +71,7 @@
 
   <div class="col-md-4">
     <!-- Box -->
-    <div class="box box-danger">
+    <div class="box box-warning">
       <div class="box-header with-border">
         <h3 class="box-title">Deuda actual</h3>
       </div><!-- /.box-header -->

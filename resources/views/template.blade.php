@@ -397,7 +397,7 @@
 
             <!-- Element -->
             <li class="treeview">
-              <a href="#">
+              <a href="{{URL::to('/services/')}}">
                 <i class="fa fa-server"></i>
                 <span>Servicios</span>
               </a>

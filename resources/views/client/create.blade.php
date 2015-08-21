@@ -38,7 +38,7 @@
                 </div>
             @endif
             <!-- Error zone end -->
-            
+
             <p class="text-right"><i>Los elementos marcados con un <b>*</b> son de carácter obligatorio</i></p>
 
             <div class="form-group col-md-4">
@@ -92,8 +92,9 @@
             <div class="form-group col-md-4">
               <label >¿Como nos ha conocido? *</label>
               <select class="form-control" name="fk_contact_way" >
-                <option value="0">Ha solicitado información</option>
-                <option value="1">Nueva matricula</option>
+                @foreach($contactWays as $contactWay)
+                <option value="{{$contactWay->id}}">{{$contactWay->name}}</option>
+                @endforeach
               </select>
             </div>
 

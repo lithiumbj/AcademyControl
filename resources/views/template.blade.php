@@ -627,9 +627,9 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="{{URL::to('/')}}/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Datatables -->
+    <script></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.js"></script>
     <script src="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.js"></script>
     <!-- jQuery UI 1.11.4 -->

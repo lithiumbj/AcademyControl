@@ -166,7 +166,7 @@
   <div class="row">
 
     <!-- Abonos box -->
-    <div class="col-md-6">
+    <div class="col-md-4">
       <div class="box box-danger">
         <div class="box-header with-border">
           <h3 class="box-title">Últimos 5 recibos</h3>
@@ -179,7 +179,7 @@
       <!-- //Abonos box -->
 
       <!-- Faltas box -->
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="box box-danger">
           <div class="box-header with-border">
             <h3 class="box-title">Faltas / incidencias</h3>
@@ -192,6 +192,22 @@
         </div>
         <!-- //Faltas box -->
 
+        <!-- Servicios box -->
+        <div class="col-md-4">
+          <div class="box box-success">
+            <div class="box-header with-border">
+              <h3 class="box-title">Servicios</h3>
+              <div class="box-tools pull-right">
+                <button class="btn btn-success btn-xs" onclick="startAddServiceApp()" data-toggle="modal" data-target="#addService"><i class="fa fa-plus"></i> Agregar servicio</button>
+              </div>
+            </div>
+              <div class="box-body">
+
+              </div>
+            </div>
+          </div>
+          <!-- //Servicios box -->
+
   </div>
   <!-- //2nd row -->
 
@@ -201,7 +217,10 @@
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Faltas / incidencias</h3>
+          <h3 class="box-title">Horario</h3>
+          <div class="box-tools pull-right">
+            <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Agregar clase</button>
+          </div>
         </div>
           <div class="box-body">
 
@@ -218,5 +237,8 @@
     <p>No se pueden asignar ni consultar horarios, incidencias o recibos pendientes para clientes que no son alumnos</p>
   </div>
   @endif
+  <!--- Modals zone -->
+    @include('client.modals.addService')
+  <!--- //Modals zone -->
 </section>
 @stop

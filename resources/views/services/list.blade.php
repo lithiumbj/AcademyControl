@@ -57,7 +57,7 @@
             <td>{{($service->iva * $service->price) + $service->price}} €</td>
             <td class="center white-text">
               {{$service->is_active}}
-              @if($service->is_active == 0)
+              @if($service->is_active == 1)
                 <small class="label bg-green">A la venta</small>
               @else
                 <small class="label bg-red">Fuera de la venta</small>
@@ -65,10 +65,8 @@
             </td>
             <td class="center">
               <!-- Actions -->
-              <a class="btn btn-xs btn-success" href="{{URL::to('/client/view/'.$service->id)}}"><i class="fa fa-eye"></i></a>
-              <a class="btn btn-xs btn-success" href="{{URL::to('/client/update/'.$service->id)}}"><i class="fa fa-pencil"></i></a>
-
-                <a class="btn btn-xs btn-danger" onclick="deleteClient({{$service->id}})"><i class="fa fa-trash"></i></a>
+              <a class="btn btn-xs btn-success" onclick="alert('¡Atención!\n\nEsta operación alterará todas las futuras facturas / recibos de sus clientes que tengan contratado este servicio\n\nContacte con administración de sistemas antes de continuar')" href="{{URL::to('/client/update/'.$service->id)}}"><i class="fa fa-pencil"></i></a>
+              <a class="btn btn-xs btn-danger" onclick="deleteClient({{$service->id}})"><i class="fa fa-trash"></i></a>
               <!-- //Actions -->
             </td>
           </tr>
@@ -125,6 +123,11 @@ window.onload = function()
           <div class="form-group col-md-12">
             <label>Base imponible</label>
             <input class="form-control" name="price" type="number">
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Matricula (Base imponible)</label>
+            <input class="form-control" name="matricula" type="number">
           </div>
 
           <div class="form-group col-md-12">

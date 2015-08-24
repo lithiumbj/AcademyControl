@@ -38,4 +38,5 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/client/list/', 'ClientController@getList');
   //Services
   Route::get('/services', 'ServicesController@getList');
+  Route::post('/services/create', 'ServicesController@postCreate');
 });

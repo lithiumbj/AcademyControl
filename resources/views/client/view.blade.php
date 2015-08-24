@@ -230,7 +230,9 @@
       <!-- //Horario box -->
     </div>
   <!-- //3rd row -->
-
+  <script>
+    var _client = {{$model->id}};
+  </script>
   @else
   <div class="callout callout-warning">
     <h4>¿Más datos?</h4>

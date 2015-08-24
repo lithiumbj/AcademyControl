@@ -56,7 +56,17 @@ function startAddServiceApp()
        */
       this.addService = function(payMatricula)
       {
-        
+        //Show spinner
+        this.workingOn = true;
+        //Do the quest
+        $http.post(_addServiceUrl, {fk_client : _client, fk_service : this.fk, matricula : payMatricula}).
+          then(angular.bind(this, function(response) {
+            //Ok
+            this.workingOn = false;
+          })), angular.bind(this, function(response) {
+            //Error
+            this.workingOn = false;
+          });
       }
   });
   //Bootstrap the controller

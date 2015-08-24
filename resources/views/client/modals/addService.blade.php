@@ -61,6 +61,13 @@
       <!-- //Step 2 -->
 
       <div class="modal-footer">
+        <!-- Progress -->
+        <div class="progress progress-sm active" ng-show="service.workingOn">
+          <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            <span class="sr-only">wait</span>
+          </div>
+        </div>
+        <!-- //Progress -->
         <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left;">Cerrar</button>
         <button type="button" class="btn btn-default" ng-click="service.goToStep2()" ng-show="service.step == 1" ng-hide="!service.selected">Siguiente</button>
       </div>
@@ -70,6 +77,7 @@
 <!-- Scripts zone -->
 <script>
   var _csrf = "{{csrf_token()}}";
+  var _addServiceUrl = "{{URL::to('/client/addService')}}";
 </script>
 <script src="{{URL::to('/angular/addService.js')}}"></script>
 

@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\Client;
 use App\Models\ContactWay;
+use App\Models\ServiceClient;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
+use App\Helpers\AngularHelper;
 
 use Validator;
 
@@ -161,5 +164,35 @@ class ClientController extends Controller
       //Get all the clients for the current company
       $clients = Client::where('fk_company', '=', Auth::user()->fk_company)->get();
       return view('client.list', ['clients' => $clients]);
+    }
+    /*
+     * This fucntion catches the angular request and links a service to a client
+     * Also if the request indicates, creates a due invoice
+     */
+    public function ajaxSetService()
+    {
+      $request = AngularHelper::parseClientSideData();
+      if($request){
+        //Create the service
+        $serviceClient = new ServiceClient;
+        $serviceClient->fk_user = Auth::user()->id;
+        $serviceClient->fk_service = $request->fk_service;
+        $serviceClient->fk_client = $request->fk_client;
+        //Save the serviceClient
+        if($serviceClient->save()){
+          //Check if the system need's to make a invoice
+          if($request->matricula)
+            if(InvoiceController::createMatriculaInvoice($request->fk_client, $request->fk_service))
+              print_r(json_encode(['result' => 'ok']));
+            else
+              print_r(json_encode(['result' => 'invoiceError']));
+          else
+            print_r(json_encode(['result' => 'ok']));
+        }else{
+          print_r(json_encode(['result' => 'error']));
+        }
+      }else{
+        print_r(json_encode(['result' => 'badData']));
+      }
     }
 }

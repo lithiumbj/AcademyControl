@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\AngularHelper;
 
 use Validator;
+use DB;
 
 class ClientController extends Controller
 {
@@ -154,7 +155,14 @@ class ClientController extends Controller
       $model = Client::find($id);
       //get the contat way's
       $contactWays = ContactWay::all();
-      return view('client.view',['model' => $model, 'contactWays' => $contactWays]);
+      //Get the client services
+      $services = DB::table('service_client')
+        ->join('service', 'service.id', '=', 'service_client.fk_service')
+        ->where('service_client.fk_client','=',$model->id)
+        ->select('service_client.id', 'service.name', 'service_client.created_at')->get();
+
+      //Render the view
+      return view('client.view',['model' => $model, 'contactWays' => $contactWays, 'services' => $services]);
     }
     /*
      * This function render's a list of clients

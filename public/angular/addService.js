@@ -63,9 +63,16 @@ function startAddServiceApp()
           then(angular.bind(this, function(response) {
             //Ok
             this.workingOn = false;
+            if(response.data.result == 'ok'){
+              //Reload the page to load the new data
+              location.reload();
+            }else{
+              alert("Error al registrar el servicio al cliente, se ha guardado inormación sobre el fallo en el log, póngase en contacto con atención técnica");
+            }
           })), angular.bind(this, function(response) {
             //Error
-            this.workingOn = false;
+              alert("Error al registrar el servicio al cliente, se ha guardado inormación sobre el fallo en el log, póngase en contacto con atención técnica");
+              this.workingOn = false;
           });
       }
   });

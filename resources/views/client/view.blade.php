@@ -1,6 +1,9 @@
 @extends('template')
 <!-- Content Header (Page header) -->
 @section('content')
+<?php
+use App\Helpers\DateHelper;
+?>
 <section class="content-header">
   <h1>
     Cliente
@@ -202,7 +205,22 @@
               </div>
             </div>
               <div class="box-body">
-
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th>Servicio</th>
+                      <th>Contratado desde</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach($services as $service)
+                    <tr>
+                      <td>{{$service->name}}</td>
+                      <td>{{DateHelper::getDate($service->created_at)}}</td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

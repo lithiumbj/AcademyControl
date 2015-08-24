@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\Client;
+use App\Models\Invoice;
 use App\Models\ContactWay;
 use App\Models\ServiceClient;
 use App\Http\Controllers\Controller;
@@ -160,9 +161,11 @@ class ClientController extends Controller
         ->join('service', 'service.id', '=', 'service_client.fk_service')
         ->where('service_client.fk_client','=',$model->id)
         ->select('service_client.id', 'service.name', 'service_client.created_at')->get();
+      //Get the client last invoices
+      $invoices = Invoice::where('fk_client', '=', $model->id)->orderBy('date_creation', 'asc')->get();
 
       //Render the view
-      return view('client.view',['model' => $model, 'contactWays' => $contactWays, 'services' => $services]);
+      return view('client.view',['model' => $model, 'contactWays' => $contactWays, 'services' => $services, 'invoices' => $invoices]);
     }
     /*
      * This function render's a list of clients

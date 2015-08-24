@@ -7,3 +7,7 @@
 .white-text{
   color: white;
 }
+.scrollable-box{
+  max-height: 300px !important;
+  overflow-x: scroll !important;
+}

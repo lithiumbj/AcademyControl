@@ -174,8 +174,44 @@ use App\Helpers\DateHelper;
         <div class="box-header with-border">
           <h3 class="box-title">Últimos 5 recibos</h3>
         </div>
-          <div class="box-body">
-
+          <div class="box-body scrollable-box">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Ref</th>
+                  <th>Fecha</th>
+                  <th>Total</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($invoices as $invoice)
+                <tr>
+                  <td>{{$invoice->facnumber}}</td>
+                  <td>{{DateHelper::getDate($invoice->date_creation)}}</td>
+                  <td>{{$invoice->total}}</td>
+                  <td class="center">
+                    <!-- Not validated yet -->
+                    @if($invoice->status == 0)
+                    <small class="label bg-gray">Borrador</small>
+                    @endif
+                    <!-- Unpaid -->
+                    @if($invoice->status == 1)
+                    <small class="label bg-yellow">Impagada</small>
+                    @endif
+                    <!-- payed -->
+                    @if($invoice->status == 2)
+                    <small class="label bg-green">Pagada</small>
+                    @endif
+                    <!-- Abandoned -->
+                    @if($invoice->status == 3)
+                    <small class="label bg-red">Adeudada / Abandonada</small>
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -204,7 +240,7 @@ use App\Helpers\DateHelper;
                 <button class="btn btn-success btn-xs" onclick="startAddServiceApp()" data-toggle="modal" data-target="#addService"><i class="fa fa-plus"></i> Agregar servicio</button>
               </div>
             </div>
-              <div class="box-body">
+              <div class="box-body scrollable-box">
                 <table class="table table-bordered">
                   <thead>
                     <tr>

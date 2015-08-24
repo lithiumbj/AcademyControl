@@ -68,6 +68,8 @@ class InvoiceController extends Controller
     $invoice->text_public = $text_public;
     $invoice->text_private = $text_private;
     $invoice->date_creation = $date_creation;
+    $tax = 0;
+    $total = 0;
     //Save / Create the invoice
     if($invoice->save()){
       //Ok, so continue
@@ -80,11 +82,17 @@ class InvoiceController extends Controller
         $newLine->prod_description = $line->prod_description;
         $newLine->tax_base = $line->tax_base;
         $newLine->tax = $line->tax;
+        $total += $newLine->tax_base;
+        $tax += ($newLine->tax_base * $newLine->tax);
         //Save it
         if(!$newLine->save()){
           return false;
         }
       }
+      //Update the invoice
+      $invoice->tax = $tax;
+      $invoice->total = $total;
+      $invoice->save();
     }else{
       //Revert the facnumber increment
       $currFacnumber = SettingsHelper::fetchSetting('facnumber');

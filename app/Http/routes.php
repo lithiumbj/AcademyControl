@@ -40,4 +40,7 @@ Route::group(['middleware' => 'auth'], function () {
   //Services
   Route::get('/services', 'ServicesController@getList');
   Route::post('/services/create', 'ServicesController@postCreate');
+  //Rooms / Horarios
+  Route::get('/rooms', 'RoomController@getPreview');
+  Route::post('/rooms/create', 'RoomController@postCreate');
 });

@@ -406,7 +406,7 @@
 
             <!-- Element -->
             <li class="treeview">
-              <a href="#">
+              <a href="{{URL::to('/rooms')}}">
                 <i class="fa fa-calendar"></i>
                 <span>Ver horarios</span>
               </a>

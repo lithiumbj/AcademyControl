@@ -3,6 +3,7 @@
 @section('content')
 <?php
 use App\Helpers\DateHelper;
+use App\Http\Controllers\RoomController;
 ?>
 <section class="content-header">
   <h1>
@@ -24,7 +25,7 @@ use App\Helpers\DateHelper;
         @if(count($rooms)>0)
           @foreach($rooms as $room)
             <!-- AulaTag -->
-            <li class="">
+            <li class="@if($fk_room == $room->id) active @endif">
               <a href="#tab_{{$room->id}}" data-toggle="tab">{{$room->name}} <span class="label label-success label-room pull-right">{{$room->capacity}}</span></a>
             </li>
             <!-- //AulaTag -->
@@ -41,17 +42,17 @@ use App\Helpers\DateHelper;
       <div class="tab-content">
         @if(count($rooms)>0)
           @foreach($rooms as $room)
-          <div class="tab-pane" id="tab_{{$room->id}}">
+          <div class="tab-pane @if($fk_room == $room->id) active @endif" id="tab_{{$room->id}}">
             <table class="table table-bordered">
               <thead>
                 <tr>
                   <td style="width:54px;"></td>
-                  <td>Lunes</td>
-                  <td>Martes</td>
-                  <td>Miércoles</td>
-                  <td>Jueves</td>
-                  <td>Viernes</td>
-                  <td>Sábado</td>
+                  <td style="width: 16%;">Lunes</td>
+                  <td style="width: 16%;">Martes</td>
+                  <td style="width: 16%;">Miércoles</td>
+                  <td style="width: 16%;">Jueves</td>
+                  <td style="width: 16%;">Viernes</td>
+                  <td style="width: 16%;">Sábado</td>
                 </tr>
               </thead>
               <tbody>
@@ -62,9 +63,20 @@ use App\Helpers\DateHelper;
                     </td>
                   @for($a = 1; $a < 7; $a++)
                     <td>
+                      <!-- services -->
+                      @foreach(RoomController::getServicesForRoom($room->id, $a, $i) as $service)
+                      <button class="btn bg-yellow" style="margin-bottom: 10px;">{{$service->name}}
+                        <a href="{{URL::to('/room/delink/'.$service->id)}}">
+                          <i class="fa fa-trash" style="color:red;"></i>
+                        </a>
+                      </button><br/>
+                      @endforeach
+                      <!-- //services -->
 
                       <!-- Add btn -->
-                      <button style="float:right;" class="btn btn-xs btn-success" data-target="#linkServiceModal" data-toggle="modal"><i class="fa fa-plus"></i></button>
+                      <button style="float:right;" class="btn btn-xs btn-success" data-target="#linkServiceModal" data-toggle="modal" onclick="openAssignModal({{$room->id}},{{$a}},{{$i}})">
+                        <i class="fa fa-plus"></i>
+                      </button>
                       <!-- //Add btn -->
                     </td>
                   @endfor

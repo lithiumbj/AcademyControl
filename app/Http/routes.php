@@ -42,5 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/services/create', 'ServicesController@postCreate');
   //Rooms / Horarios
   Route::get('/rooms', 'RoomController@getPreview');
+  Route::get('/rooms/{id}', 'RoomController@getPreview');
   Route::post('/rooms/create', 'RoomController@postCreate');
+  Route::post('/rooms/assign', 'RoomController@postAssignToService');
 });

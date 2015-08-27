@@ -167,4 +167,48 @@ class InvoiceController extends Controller
     //return to the invoice list
     return redirect('/invoice/');
   }
+
+  /*
+   * This function set's the invoice to unpay
+   */
+  public function setUnpayedInvoice($invoiceId)
+  {
+      //Get the invoice
+      $invoice = Invoice::find($invoiceId);
+      //Update the status
+      $invoice->status = 1;
+      $invoice->save();
+      //Delete the payments
+      $payment = InvoicePayment::where('fk_invoice','=',$invoice->id);
+      //Create the payment
+      $payment->delete();
+      //return to the invoice list
+      return redirect('/invoice/');
+  }
+
+  /*
+   * Returns the view of the invoice
+   */
+  public function getView($invoiceId)
+  {
+    $invoice = Invoice::find($invoiceId);
+    $client = Client::find($invoice->fk_client);
+    $payments = InvoicePayment::where('fk_invoice','=', $invoiceId)->get();
+    $lines = InvoiceLine::where('fk_invoice', '=', $invoiceId)->get();
+    //generate the view
+    return view('invoice.view',['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines]);
+  }
+
+  /*
+   * This function print's the invoice
+   */
+  public function printInvoice($invoiceId)
+  {
+    $invoice = Invoice::find($invoiceId);
+    $client = Client::find($invoice->fk_client);
+    $payments = InvoicePayment::where('fk_invoice','=', $invoiceId)->get();
+    $lines = InvoiceLine::where('fk_invoice', '=', $invoiceId)->get();
+    //generate the view
+    return view('invoice.print',['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines]);
+  }
 }

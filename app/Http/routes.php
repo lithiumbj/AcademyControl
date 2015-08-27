@@ -49,4 +49,5 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/room/delink_client', 'RoomController@postDelinkClient');
   //invoices
   Route::get('/invoice', 'InvoiceController@getList');
+  Route::get('/invoice/pay/{id}', 'InvoiceController@setPayedInvoice');
 });

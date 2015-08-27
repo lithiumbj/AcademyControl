@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\Invoice;
+use App\Models\InvoicePayment;
 use App\Models\InvoiceLine;
 use App\Models\Client;
 use App\Models\ServiceClient;
@@ -142,5 +143,28 @@ class InvoiceController extends Controller
     $invoices = Invoice::where('fk_company', '=', Auth::user()->fk_company)->get();
     //Return the data
     return view('invoice.list',['invoices' => $invoices]);
+  }
+
+  /*
+   * Set's the invoice as payed
+   */
+  public function setPayedInvoice($invoiceId)
+  {
+    //Get the invoice
+    $invoice = Invoice::find($invoiceId);
+    //Update the status
+    $invoice->status = 2;
+    $invoice->save();
+    //create the payment
+    $payment = new InvoicePayment;
+    $payment->fk_user = Auth::user()->id;
+    $payment->fk_company = Auth::user()->fk_company;
+    $payment->fk_client = $invoice->fk_client;
+    $payment->fk_invoice = $invoice->id;
+    $payment->total = $invoice->total;
+    //Create the payment
+    $payment->save();
+    //return to the invoice list
+    return redirect('/invoice/');
   }
 }

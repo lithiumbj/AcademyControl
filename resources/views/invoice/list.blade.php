@@ -25,7 +25,7 @@ use App\Models\Client;
         </div><!-- /.box-header -->
         <!-- form start -->
           <div class="box-body">
-      <table class="table table-bordered">
+      <table class="table table-bordered" id="invoiceList">
         <thead>
           <tr>
             <td>Referencia</td>
@@ -57,9 +57,10 @@ use App\Models\Client;
                 <small class="label bg-red">Abandonada / Adeudada</small>
               @endif
             </td>
-            <td class="center">
-              <button class="btn btn-xs btn-success">Pagar</button><br/>
-              <button class="btn btn-xs btn-danger">Abandonar</button><br/>
+            <td class="center" style="width: 220px;">
+              <a href="{{URL::to('/invoice/pay/'.$invoice->id)}}" class="btn btn-xs btn-success">Pagar</a>
+              <button class="btn btn-xs btn-primary">Imprimir</button>
+              <button class="btn btn-xs btn-danger">Abandonar</button>
             </td>
           </tr>
           @endforeach
@@ -70,4 +71,14 @@ use App\Models\Client;
   </div>
 
 </section>
+<script>
+
+/*
+ * At load, set the datatable
+ */
+window.onload = function()
+{
+  jQuery("#invoiceList").dataTable();
+}
+</script>
 @stop

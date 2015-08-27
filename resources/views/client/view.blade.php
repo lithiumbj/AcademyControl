@@ -78,6 +78,30 @@ use App\Http\Controllers\RoomController;
             </div>
 
             <div class="form-group col-md-4">
+              <label >Nombre del padre / madre</label>
+              <br/>
+              <i>{{$model->parent_name}}</i>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label >1º Apellido de padre / madre</label>
+              <br/>
+              <i>{{$model->parent_lastname_1}}</i>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label >1º Apellido de padre / madre</label>
+              <br/>
+              <i>{{$model->parent_lastname_2}}</i>
+            </div>
+
+            <div class="form-group col-md-4">
+              <label >DNI / NIF / Pasaporte del padre / madre</label>
+              <br/>
+              <i>{{$model->parent_nif}}</i>
+            </div>
+
+            <div class="form-group col-md-4">
               <label >Dirección postal *</label>
               <br/>
               <i>{{$model->address}}</i>
@@ -188,7 +212,7 @@ use App\Http\Controllers\RoomController;
               <tbody>
                 @foreach($invoices as $invoice)
                 <tr>
-                  <td>{{$invoice->facnumber}}</td>
+                  <td><a href="{{URL::to('/invoice/'.$invoice->id)}}">{{$invoice->facnumber}}</a></td>
                   <td>{{DateHelper::getDate($invoice->date_creation)}}</td>
                   <td>{{$invoice->total}}</td>
                   <td class="center">

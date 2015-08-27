@@ -35,49 +35,69 @@ use App\Http\Controllers\RoomController;
           </div>
         </div><!-- /.box-header -->
         <div class="box-body">
-          <table class="table table-bordered">
-            <tr>
-              <td style="width:300px;">Referencia</td>
-              <td>{{$invoice->facnumber}}</td>
-            </tr>
-            <tr>
-              <td>Estado</td>
-              <td>
-                @if($invoice->status == 0)
-                  <small class="label bg-default">Borrador</small>
-                @endif
-                @if($invoice->status == 1)
-                  <small class="label bg-yellow">Impagada</small>
-                @endif
-                @if($invoice->status == 2)
-                  <small class="label bg-green">Pagada</small>
-                @endif
-                @if($invoice->status == 3)
-                  <small class="label bg-red">Abandonada / Adeudada</small>
-                @endif
-              </td>
-            </tr>
-            <tr>
-              <td>Nota publica</td>
-              <td>{{$invoice->text_public}}</td>
-            </tr>
-            <tr>
-              <td>Fecha de creación</td>
-              <td>{{date('d/m/Y',strtotime($invoice->date_creation))}}</td>
-            </tr>
-            <tr>
-              <td>Fecha de pago</td>
-              @if(count($payments)>0)
-                <td>{{date('d/m/Y H:i:s',strtotime($payments[count($payments)-1]->created_at))}}</td>
-              @else
-                <td>Sin pagos registrados</td>
-              @endif
-            </tr>
-            <tr>
-              <td>Importe total</td>
-              <td>{{$invoice->total}}€</td>
-            </tr>
-          </table>
+
+            <div class="col-md-6">
+              <table class="table table-bordered">
+                <tr>
+                  <td style="width:300px;">Referencia</td>
+                  <td>{{$invoice->facnumber}}</td>
+                </tr>
+                <tr>
+                  <td>Estado</td>
+                  <td>
+                    @if($invoice->status == 0)
+                      <small class="label bg-default">Borrador</small>
+                    @endif
+                    @if($invoice->status == 1)
+                      <small class="label bg-yellow">Impagada</small>
+                    @endif
+                    @if($invoice->status == 2)
+                      <small class="label bg-green">Pagada</small>
+                    @endif
+                    @if($invoice->status == 3)
+                      <small class="label bg-red">Abandonada / Adeudada</small>
+                    @endif
+                  </td>
+                </tr>
+                <tr>
+                  <td>Nota interna</td>
+                  <td>{{$invoice->text_private}}</td>
+                </tr>
+                <tr>
+                  <td>Fecha de creación</td>
+                  <td>{{date('d/m/Y',strtotime($invoice->date_creation))}}</td>
+                </tr>
+                <tr>
+                  <td>Fecha de pago</td>
+                  @if(count($payments)>0)
+                    <td>{{date('d/m/Y H:i:s',strtotime($payments[count($payments)-1]->created_at))}}</td>
+                  @else
+                    <td>Sin pagos registrados</td>
+                  @endif
+                </tr>
+                <tr>
+                  <td>Importe total</td>
+                  <td>{{$invoice->total}}€</td>
+                </tr>
+              </table>
+            </div>
+            <!-- Client details -->
+            <div class="col-md-6">
+              <table class="table table-bordered">
+                <tr>
+                  <td style="width:300px;">Nombre de padre / madre</td>
+                  <td>{{$client->parent_name}}</td>
+                </tr>
+                <tr>
+                  <td>Apellidos de padre / madre</td>
+                  <td>{{$client->parent_lastname_1}} {{$client->parent_lastname_2}}</td>
+                </tr>
+                <tr>
+                  <td>DNI de padre / madre</td>
+                  <td>{{$client->parent_nif}}</td>
+                </tr>
+              </table>
+            </div>
         </div>
       </div>
     </div>

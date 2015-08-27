@@ -58,6 +58,10 @@ class ClientController extends Controller
          $client->address = $data['address'];
          $client->poblation = $data['poblation'];
          $client->city = $data['city'];
+         $client->parent_name = $data['parent_name'];
+         $client->parent_lastname_1 = $data['parent_lastname_1'];
+         $client->parent_lastname_2 = $data['parent_lastname_2'];
+         $client->parent_nif = $data['parent_nif'];
          $client->status = $data['status'];
          $client->phone_parents = $data['phone_parents'];
          $client->phone_client = $data['phone_client'];
@@ -118,6 +122,10 @@ class ClientController extends Controller
           $client->lastname_1 = $data['lastname_1'];
           $client->lastname_2 = $data['lastname_2'];
           $client->nif = $data['nif'];
+          $client->parent_name = $data['parent_name'];
+          $client->parent_lastname_1 = $data['parent_lastname_1'];
+          $client->parent_lastname_2 = $data['parent_lastname_2'];
+          $client->parent_nif = $data['parent_nif'];
           $client->address = $data['address'];
           $client->poblation = $data['poblation'];
           $client->city = $data['city'];

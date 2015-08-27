@@ -63,7 +63,7 @@ use App\Models\Client;
               @else
                 <a href="{{URL::to('/invoice/unpay/'.$invoice->id)}}" class="btn btn-xs btn-warning">Eliminar pago</a>
               @endif
-              <button class="btn btn-xs btn-primary">Imprimir</button>
+              <a href="{{URL::to('/invoice/print/'.$invoice->id)}}" class="btn btn-xs btn-primary">Imprimir</a>
               <button class="btn btn-xs btn-danger">Abandonar</button>
               <a href="{{URL::to('/invoice/'.$invoice->id)}}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>
             </td>

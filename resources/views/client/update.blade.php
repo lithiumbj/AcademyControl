@@ -63,6 +63,26 @@
             </div>
 
             <div class="form-group col-md-4">
+              <label >Nombre de padre / madre</label>
+              <input class="form-control"  name="parent_name"  type="text">
+            </div>
+
+            <div class="form-group col-md-4">
+              <label >1º Apellido de padre / madre</label>
+              <input class="form-control"  name="parent_lastname_1"  type="text">
+            </div>
+
+            <div class="form-group col-md-4">
+              <label >2º Apellido de padre / madre</label>
+              <input class="form-control"  name="parent_lastname_2"  type="text">
+            </div>
+
+            <div class="form-group col-md-4">
+              <label >DNI de padre / madre</label>
+              <input class="form-control"  name="parent_nif"  type="text">
+            </div>
+
+            <div class="form-group col-md-4">
               <label >Dirección postal *</label>
               <input class="form-control"  name="address"  type="text" value="{{$model->address}}">
             </div>

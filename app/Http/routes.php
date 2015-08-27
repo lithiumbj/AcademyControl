@@ -47,4 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/rooms/assign', 'RoomController@postAssignToService');
   Route::post('/room/assign_client', 'RoomController@postAssignClientToGroup');
   Route::post('/room/delink_client', 'RoomController@postDelinkClient');
+  //invoices
+  Route::get('/invoice', 'InvoiceController@getList');
 });

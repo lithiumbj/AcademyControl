@@ -8,4 +8,17 @@ class Client extends Model
 {
     //Table definition
     protected $table = 'client';
+
+    /*
+     * Returns the name of the Client
+     *
+     * @param {Integer} $id - The client id
+     *
+     * @return {String} The client name
+     */
+    public static function getClientName($id)
+    {
+      $client = Client::find($id);
+      return $client->name.' '.$client->lastname_1.' '.$client->lastname_2;
+    }
 }

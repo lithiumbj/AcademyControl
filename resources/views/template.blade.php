@@ -372,6 +372,12 @@
               </ul>
             </li>
             <!-- //Element -->
+            <li class="treeview">
+              <a href="{{URL::to('/invoice/')}}">
+                <i class="fa fa-money"></i>
+                <span>Recibos</span>
+              </a>
+            </li>
             <!-- Element -->
             <li class="treeview">
               <a href="#">

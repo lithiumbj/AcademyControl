@@ -290,7 +290,7 @@ use App\Http\Controllers\RoomController;
                 </ul>
                 <div class="tab-content">
                   @foreach($services as $service)
-                  <div class="tab-pane active" id="tab_{{$service->id}}">
+                  <div class="tab-pane" id="tab_{{$service->id}}">
                     <!-- Horario -->
                     <table class="table table-bordered">
                       <thead>

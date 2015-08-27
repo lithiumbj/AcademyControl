@@ -133,4 +133,14 @@ class InvoiceController extends Controller
     //return the data
     return $newFacnumber;
   }
+
+  /*
+   * This function renders the invoice / "recibos" list
+   */
+  public function getList()
+  {
+    $invoices = Invoice::where('fk_company', '=', Auth::user()->fk_company)->get();
+    //Return the data
+    return view('invoice.list',['invoices' => $invoices]);
+  }
 }

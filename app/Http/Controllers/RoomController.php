@@ -6,7 +6,7 @@ use App\User;
 use App\Models\Service;
 use App\Models\Room;
 use App\Models\RoomService;
-use App\Models\RoomReseve;
+use App\Models\RoomReserve;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -93,5 +93,75 @@ class RoomController extends Controller
       return $services;
     else
       return [];
+  }
+
+  /*
+   * This function return the avalable and the availability of the rooms
+   * for a specific service
+   *
+   * @param {Integer} $fk_service - The service id
+   * @param {Integer} $hour - The hour
+   * @param {Integer} $day - The day
+   *
+   * @return {Mixed[]} The array with the data
+   */
+  public static function getRoomsForService($fk_service, $hour, $day)
+  {
+    $rooms = DB::table('room_service')
+      ->join('room', 'room.id', '=', 'room_service.fk_room')
+      ->whereRaw('room_service.fk_service = '.$fk_service.' AND room_service.hour = '.$hour.' AND room_service.day = '.$day)
+      ->select('room_service.id', 'room.name', 'room.capacity')
+      ->get();
+      //return the data
+      return $rooms;
+  }
+  /*
+   * Return's the ocupance number for a specific group
+   */
+  public static function getRoomOcupance($fk_room_service)
+  {
+    $ocupance = RoomReserve::where('fk_room_service','=', $fk_room_service)->count();
+    return $ocupance;
+  }
+
+  /*
+   * This static funtion check's if the user is enroled into a specific service
+   *
+   * @param {Integer} $fk_room_service - The room service assignment id
+   * @param {Integer} $fk_client - The client's id
+   */
+  public static function isClientEnroled($fk_room_service, $fk_client)
+  {
+    return RoomReserve::whereRaw('fk_room_service = '.$fk_room_service. ' AND fk_client = '.$fk_client)->get();
+  }
+  /*
+   * This function enroles a client into a group (rooms)
+   */
+  public function postAssignClientToGroup(Request $request)
+  {
+    $roomReserve = new RoomReserve;
+    $data = $request->all();
+    //Set parametters
+    $roomReserve->fk_company = Auth::user()->fk_company;
+    $roomReserve->fk_user = Auth::user()->id;
+    $roomReserve->fk_client = $data['fk_client'];
+    $roomReserve->fk_room_service = $data['fk_room_service'];
+    //Save it
+    $roomReserve->save();
+    return redirect('/client/view/'.$data['fk_client']);
+  }
+
+  /*
+   * This function unlinks the client in the group
+   */
+  public function postDelinkClient(Request $request)
+  {
+      $data = $request->all();
+      $roomReserve = RoomReserve::whereRaw('fk_client = '.$data['fk_client'].' AND fk_room_service = '.$data['fk_room_service']);
+      //Delete it if exists
+      if($roomReserve)
+        $roomReserve->delete();
+      //Return to the client's view
+      return redirect('/client/view/'.$data['fk_client']);
   }
 }

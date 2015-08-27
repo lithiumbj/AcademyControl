@@ -3,6 +3,7 @@
 @section('content')
 <?php
 use App\Helpers\DateHelper;
+use App\Http\Controllers\RoomController;
 ?>
 <section class="content-header">
   <h1>
@@ -273,11 +274,79 @@ use App\Helpers\DateHelper;
         <div class="box-header with-border">
           <h3 class="box-title">Horario</h3>
           <div class="box-tools pull-right">
-            <button class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Agregar clase</button>
+            <i>Leyenda:</i> &nbsp;
+            <small class="label pull-right bg-red" style="margin-right: 5px;">Grupo lleno</small>&nbsp;
+            <small class="label pull-right bg-yellow" style="margin-right: 5px;">Grupo casi lleno</small>&nbsp;
+            <small class="label pull-right bg-green" style="margin-right: 5px;">Grupo libre</small>&nbsp;
+            <small class="label pull-right bg-blue" style="margin-right: 5px;">Alumno en este grupo</small>
           </div>
         </div>
           <div class="box-body">
-
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                @foreach($services as $service)
+                  <li><a href="#tab_{{$service->id}}" data-toggle="tab">{{$service->name}}</a></li>
+                @endforeach
+                </ul>
+                <div class="tab-content">
+                  @foreach($services as $service)
+                  <div class="tab-pane active" id="tab_{{$service->id}}">
+                    <!-- Horario -->
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <td style="width:54px;"></td>
+                          <td style="width: 16%;">Lunes</td>
+                          <td style="width: 16%;">Martes</td>
+                          <td style="width: 16%;">Miércoles</td>
+                          <td style="width: 16%;">Jueves</td>
+                          <td style="width: 16%;">Viernes</td>
+                          <td style="width: 16%;">Sábado</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @for($i=10;$i < 22; $i++)
+                          <tr>
+                            <td>
+                              <b>{{$i}}:00</b>
+                            </td>
+                          @for($a = 1; $a < 7; $a++)
+                            <td class="center">
+                              @if(count(RoomController::getRoomsForService($service->serviceId, $i, $a))>0)
+                                @foreach(RoomController::getRoomsForService($service->serviceId, $i, $a) as $roomService)
+                                  @if(count(RoomController::isClientEnroled($roomService->id, $model->id))>0)
+                                      <button class="btn btn btn-primary" data-toggle="modal" data-target="#delinkRoom" onclick="delinkModal({{$model->id}}, {{$roomService->id}})">Alumno en este grupo</button>
+                                  @else
+                                    <!-- Free occupance -->
+                                    @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id)) > 6)
+                                    <button class="btn btn btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}})">Grupo Libre</button>
+                                    @else
+                                    <!-- Mid occupance -->
+                                      @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id)) > 2)
+                                        <button class="btn btn btn-warning"data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}})">Grupo casi lleno</button>
+                                      @else
+                                        <!-- Full! -->
+                                        @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id)) == 0)
+                                          <button class="btn btn btn-danger" onclick="alert('Este grupo está leno, tendrá que escoger otro')">Grupo lleno</button>
+                                        @endif
+                                        <!-- //Full! -->
+                                      @endif
+                                    <!-- //Mid occupance -->
+                                    @endif
+                                  @endif
+                                @endforeach
+                              @endif
+                            </td>
+                          @endfor
+                        </tr>
+                        @endfor
+                      </tbody>
+                    </table>
+                    <!-- //Horario -->
+                  </div><!-- /.tab-pane -->
+                  @endforeach
+                </div><!-- /.tab-content -->
+              </div>
           </div>
         </div>
       </div>
@@ -295,6 +364,7 @@ use App\Helpers\DateHelper;
   @endif
   <!--- Modals zone -->
     @include('client.modals.addService')
+    @include('client.modals.enrolRoom')
   <!--- //Modals zone -->
 </section>
 @stop

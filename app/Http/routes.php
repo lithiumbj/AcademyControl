@@ -45,4 +45,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/rooms/{id}', 'RoomController@getPreview');
   Route::post('/rooms/create', 'RoomController@postCreate');
   Route::post('/rooms/assign', 'RoomController@postAssignToService');
+  Route::post('/room/assign_client', 'RoomController@postAssignClientToGroup');
+  Route::post('/room/delink_client', 'RoomController@postDelinkClient');
 });

@@ -72,12 +72,13 @@ use App\Http\Controllers\RoomController;
                       </button><br/>
                       @endforeach
                       <!-- //services -->
-
+                      @if(count(RoomController::getServicesForRoom($room->id, $a, $i))==0)
                       <!-- Add btn -->
                       <button style="float:right;" class="btn btn-xs btn-success" data-target="#linkServiceModal" data-toggle="modal" onclick="openAssignModal({{$room->id}},{{$a}},{{$i}})">
                         <i class="fa fa-plus"></i>
                       </button>
                       <!-- //Add btn -->
+                      @endif
                     </td>
                   @endfor
                 </tr>

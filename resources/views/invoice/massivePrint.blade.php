@@ -7,7 +7,7 @@ use App\Http\Controllers\RoomController;
 ?>
 
 @foreach($rawData as $data)
-<section class="content-header">
+<section class="content-header invoice-unit">
   <h1>
     Factura
     <small>{{$data['invoice']->facnumber}}</small>
@@ -134,6 +134,7 @@ use App\Http\Controllers\RoomController;
     </div>
   </div>
 </section>
+<hr class="hr-break"/>
 @endforeach
 <style>
 .main-header, .main-sidebar, .breadcrumb, .btn, .main-footer{
@@ -141,6 +142,10 @@ use App\Http\Controllers\RoomController;
 }
 .content-wrapper{
   margin-left: 0px !important;
+}
+.hr-break{
+  page-break-before: always !important;
+  clear :both !important
 }
 </style>
 @stop

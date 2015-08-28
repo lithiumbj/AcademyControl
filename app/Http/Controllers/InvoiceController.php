@@ -19,8 +19,6 @@ use App\Helpers\SettingsHelper;
 
 use DB;
 use View;
-use PDF;
-
 use Validator;
 
 class InvoiceController extends Controller
@@ -291,8 +289,6 @@ class InvoiceController extends Controller
        //generate the data to the view
        $rawData[] = ['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines];
       }
-      $view = View::make('invoice.massivePrint',['rawData' => $rawData]);
-      PDF::saveFromView($view, 'path/filename.pdf');
-
+      return view('invoice.massivePrint', ['rawData' => $rawData]);
    }
 }

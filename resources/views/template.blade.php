@@ -109,9 +109,9 @@
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/client/create')}}"><i class="fa fa-circle-o"></i> Crear cliente</a></li>
                 <li><a href="{{URL::to('/client/list')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
-                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Control de bajas</a></li>
-                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Control de altas</a></li>
-                <li><a href="pages/charts/inline.html"><i class="fa fa-plus"></i> Generar recibos</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Control de bajas</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Control de altas</a></li>
+                <li><a href=""><i class="fa fa-plus"></i> Generar recibos</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -124,8 +124,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Gestionar Proveedores</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Facturas de proveedor</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Gestionar Proveedores</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Facturas de proveedor</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -138,9 +138,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Cierre de caja</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Ver estado de caja</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Salida de caja</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Cierre de caja</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Ver estado de caja</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Salida de caja</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -158,8 +158,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Dar de alta</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Ver costes</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Dar de alta</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Ver costes</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -199,10 +199,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Nuevos clientes</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Porcentaje de conversión</a></li>
-                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Ventas perdidas</a></li>
-                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Informaciones</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Nuevos clientes</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Porcentaje de conversión</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Ventas perdidas</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Informaciones</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -215,9 +215,9 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> Incidencias</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Incidencias (Personal)</a></li>
-                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Informar de incidencia</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Incidencias</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Incidencias (Personal)</a></li>
+                <li><a href=""><i class="fa fa-circle-o"></i> Informar de incidencia</a></li>
               </ul>
             </li>
             <!-- //Element -->
@@ -422,6 +422,10 @@
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{{URL::to('/')}}/plugins/morris/morris.min.js"></script>
+    <!-- Chart js -->
+    <script src="{{URL::to('/')}}/js/chartjs/Chart.Core.js"></script>
+    <script src="{{URL::to('/')}}/js/chartjs/Chart.Bar.js"></script>
+    <script src="{{URL::to('/')}}/js/chartjs/Chart.Line.js"></script>
     <!-- Sparkline -->
     <script src="{{URL::to('/')}}/plugins/sparkline/jquery.sparkline.min.js"></script>
     <!-- jvectormap -->

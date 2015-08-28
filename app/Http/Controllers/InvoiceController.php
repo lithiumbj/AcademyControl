@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Helpers\AngularHelper;
 use App\Helpers\SettingsHelper;
 
+use DB;
+
 use Validator;
 
 class InvoiceController extends Controller
@@ -217,6 +219,57 @@ class InvoiceController extends Controller
    */
    public function getGenerateAutoInvoices()
    {
-     
+     //Current month client invoices
+     $currentMonthClientInvoices = DB::table('invoice')
+        ->join('client', 'client.id', '=', 'invoice.fk_client')
+        ->whereRaw("YEAR(invoice.date_creation) = ".date('Y')." AND MONTH(invoice.date_creation) = ".date('m'))
+        ->select(DB::raw('client.*'))->get();
+     return view('invoice.generate', ['clientsWithInvoices' => $currentMonthClientInvoices]);
+   }
+
+   /*
+    * This function get's the post request and generates the invoices automatically
+    */
+   public function postGenerateAutoInvoices(Request $request)
+   {
+     $data = $request->all();
+     //Check if the client exception array exists
+     //Get the clients
+     $clients;
+     if(isset($data['client'])){
+       //Generate query without these clients
+       $extraWhere = ' ';
+       foreach($data['client'] as $client){
+         $extraWhere .= ' AND id != '.$client.' ';
+       }
+       $clients = Client::whereRaw('fk_company = '.Auth::user()->fk_company.$extraWhere)->get();
+     }else{
+       //Normal function
+       $clients = Client::where('fk_company', '=', Auth::user()->fk_company)->get();
+     }
+     //After get the clients, get the services foreac
+     foreach($clients as $client){
+       //Get associated services
+       $services = ServiceClient::where('fk_client', '=', $client->id)->get();
+       //For-each service generate the monthly due
+       $lines = [];
+       foreach($services as $serviceClient){
+         //Get service details
+         $service = Service::where('id', '=', $serviceClient->fk_service)->first();
+         //Second create the line
+         $newLine = new InvoiceLine;
+         $newLine->fk_service = $service->id;
+         $newLine->prod_name = $service->name;
+         $newLine->prod_description = $service->description;
+         $newLine->tax_base = $service->matricula;
+         $newLine->tax = $service->iva;
+         //Set into an array
+         $lines[] = $newLine;
+       }
+       //Create the invoice
+       InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, '', '', date('Y-m-d'), $lines);
+     }
+     //Return to the invoice list
+     return redirect('/invoice');
    }
 }

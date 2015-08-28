@@ -211,4 +211,12 @@ class InvoiceController extends Controller
     //generate the view
     return view('invoice.print',['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines]);
   }
+
+  /*
+   * This function render's the view of the auto-generated invoices
+   */
+   public function getGenerateAutoInvoices()
+   {
+     
+   }
 }

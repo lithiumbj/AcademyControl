@@ -111,7 +111,7 @@
                 <li><a href="{{URL::to('/client/list')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
                 <li><a href=""><i class="fa fa-circle-o"></i> Control de bajas</a></li>
                 <li><a href=""><i class="fa fa-circle-o"></i> Control de altas</a></li>
-                <li><a href=""><i class="fa fa-plus"></i> Generar recibos</a></li>
+                <li><a href="{{URL::to('/invoice/generate')}}"><i class="fa fa-plus"></i> Generar recibos</a></li>
               </ul>
             </li>
             <!-- //Element -->

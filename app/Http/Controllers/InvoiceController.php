@@ -165,7 +165,7 @@ class InvoiceController extends Controller
     //Create the payment
     $payment->save();
     //return to the invoice list
-    return redirect('/invoice/');
+    return redirect('/invoice/'.$invoice->id);
   }
 
   /*

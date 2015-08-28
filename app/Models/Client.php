@@ -21,4 +21,12 @@ class Client extends Model
       $client = Client::find($id);
       return $client->name.' '.$client->lastname_1.' '.$client->lastname_2;
     }
+    /*
+     * Returns the client list for the company
+     */
+    public static function getClients()
+    {
+      $clients = Client::where('fk_company', '=', \Auth::user()->fk_company)->get();
+      return $clients;
+    }
 }

@@ -58,14 +58,8 @@ use App\Models\Client;
               @endif
             </td>
             <td class="center" style="width: 250px;">
-              @if($invoice->status != 2)
-                <a href="{{URL::to('/invoice/pay/'.$invoice->id)}}" class="btn btn-xs btn-success">Pagar</a>
-              @else
-                <a href="{{URL::to('/invoice/unpay/'.$invoice->id)}}" class="btn btn-xs btn-warning">Eliminar pago</a>
-              @endif
-              <a href="{{URL::to('/invoice/print/'.$invoice->id)}}" class="btn btn-xs btn-primary">Imprimir</a>
-              <button class="btn btn-xs btn-danger">Abandonar</button>
               <a href="{{URL::to('/invoice/'.$invoice->id)}}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>
+              <a href="{{URL::to('/invoice/print/'.$invoice->id)}}" class="btn btn-xs btn-primary">Imprimir</a>
             </td>
           </tr>
           @endforeach

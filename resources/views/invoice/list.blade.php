@@ -21,7 +21,10 @@ use App\Models\Client;
     <div class="col-md-12">
       <div class="box box-primary">
         <div class="box-header with-border">
-          <h3>Listado de facturas / recibos</h3>
+          Listado de facturas / recibos
+          <div class="box-tools pull-right">
+            <button href="{{URL::to('/invoice/massiveprint')}}" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#massivePrintModal"><i class="fa fa-print"></i> Impresión masiva</button>
+          </div>
         </div><!-- /.box-header -->
         <!-- form start -->
           <div class="box-body">
@@ -78,6 +81,8 @@ use App\Models\Client;
 window.onload = function()
 {
   jQuery("#invoiceList").dataTable();
+  startDatePickerListeners();
 }
 </script>
+@include('invoice.modals.massiveprint')
 @stop

@@ -18,6 +18,8 @@ use App\Helpers\AngularHelper;
 use App\Helpers\SettingsHelper;
 
 use DB;
+use View;
+use PDF;
 
 use Validator;
 
@@ -271,5 +273,26 @@ class InvoiceController extends Controller
      }
      //Return to the invoice list
      return redirect('/invoice');
+   }
+
+   /*
+    * This function generates a massive print for a time interval
+    */
+   public function postMassivePrint(Request $request)
+   {
+     $data = $request->all();
+     //Get the invoices
+     $invoices = Invoice::whereRaw('fk_company = '.Auth::user()->fk_company.' AND date_creation BETWEEN "'.date('Y-m-d', strtotime($data['date_start'])).'" AND "'.date('Y-m-d', strtotime($data['date_end'])).'"')->get();
+     $rawData = [];
+     foreach($invoices as $invoice){
+       $client = Client::find($invoice->fk_client);
+       $payments = InvoicePayment::where('fk_invoice','=', $invoice->id)->get();
+       $lines = InvoiceLine::where('fk_invoice', '=', $invoice->id)->get();
+       //generate the data to the view
+       $rawData[] = ['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines];
+      }
+      $view = View::make('invoice.massivePrint',['rawData' => $rawData]);
+      PDF::saveFromView($view, 'path/filename.pdf');
+
    }
 }

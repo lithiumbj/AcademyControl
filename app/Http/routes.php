@@ -52,6 +52,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/invoice', 'InvoiceController@getList');
   Route::get('/invoice/generate', 'InvoiceController@getGenerateAutoInvoices');
   Route::post('/invoice/generate', 'InvoiceController@postGenerateAutoInvoices');
+  Route::post('/invoice/massiveprint', 'InvoiceController@postMassivePrint');
   Route::get('/invoice/{id}', 'InvoiceController@getView');
   Route::get('/invoice/pay/{id}', 'InvoiceController@setPayedInvoice');
   Route::get('/invoice/print/{id}', 'InvoiceController@printInvoice');

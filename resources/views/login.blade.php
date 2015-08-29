@@ -25,7 +25,7 @@
     <body class="hold-transition login-page">
       <div class="login-box">
         <div class="login-logo">
-
+          <img style="width: 220px;" src="{{URL::to('/img/logo.png')}}"/>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
           <p class="login-box-msg">Debe iniciar sesión para continuar</p>

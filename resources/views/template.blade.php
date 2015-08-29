@@ -57,10 +57,38 @@
           <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
           </a>
+          <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <img src="{{URL::to('/img/'.Auth::user()->id.'.png')}}" class="user-image" alt="User Image">
+                  <span class="hidden-xs">{{Auth::user()->name}}</span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src="{{URL::to('/img/'.Auth::user()->id.'.png')}}" class="img-circle" alt="User Image">
+                    <p>
+                      {{Auth::user()->name}}
+                      <small>{{Auth::user()->created_at}}</small>
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <div class="pull-left">
+                      <a href="{{URL::to('/settings')}}" class="btn btn-default btn-flat">Ajustes</a>
+                    </div>
+                    <div class="pull-right">
+                      <a href="{{URL::to('/auth/logout')}}" class="btn btn-default btn-flat">Cerrar sesión</a>
+                    </div>
+                  </li>
+                </ul>
+              </li>
             </ul>
           </div>
+
         </nav>
       </header>
       <!-- Left side column. contains the logo and sidebar -->
@@ -174,7 +202,7 @@
 
             <!-- Element -->
             <li class="treeview">
-              <a href="#">
+              <a href="{{URL::to('/rooms')}}">
                 <i class="fa fa-object-group"></i>
                 <span>Aulas</span>
               </a>

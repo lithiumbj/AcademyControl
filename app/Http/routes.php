@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function () {
   //Clients
   Route::get('/client/create', 'ClientController@getCreate');
   Route::post('/client/create', 'ClientController@postCreate');
+  Route::post('/client/search', 'ClientController@postSearch');
   Route::get('/client/view/{id}', 'ClientController@getView');
   Route::get('/client/update/{id}', 'ClientController@getUpdate');
   Route::post('/client/update', 'ClientController@postUpdate');

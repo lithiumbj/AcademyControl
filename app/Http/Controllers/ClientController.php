@@ -214,4 +214,16 @@ class ClientController extends Controller
         print_r(json_encode(['result' => 'badData']));
       }
     }
+
+    /*
+     * This function searches client
+     */
+    public function postSearch(Request $request)
+    {
+      //Get the data
+      $data = $request->all();
+      //Get all the clients for the current company
+      $clients = Client::whereRaw('fk_company = '.Auth::user()->fk_company." AND (name LIKE '%".$data['q']."%' OR lastname_1 = '%".$data['q']."%' OR lastname_2 = '%".$data['q']."%')")->get();
+      return view('client.list', ['clients' => $clients]);
+    }
 }

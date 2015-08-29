@@ -78,9 +78,10 @@
             </div>
           </div>
           <!-- search form -->
-          <form action="#" method="get" class="sidebar-form">
+          <form action="{{URL::to('/client/search')}}" method="post" class="sidebar-form">
+            {!! csrf_field() !!}
             <div class="input-group">
-              <input type="text" name="q" class="form-control" placeholder="Search...">
+              <input type="text" name="q" class="form-control" placeholder="Buscar alumnos">
               <span class="input-group-btn">
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
               </span>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
+use App\Helpers\AngularHelper;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -66,5 +67,17 @@ class ServicesController extends Controller
                   ->withErrors($validator)
                   ->withInput();
        }
+    }
+    /*
+     * Return's as json the service extra info
+     */
+    public function ajaxGetProductInfo()
+    {
+      $request = AngularHelper::parseClientSideData();
+      if($request){
+        return Service::find($request->id);
+      }else{
+        return '[]';
+      }
     }
 }

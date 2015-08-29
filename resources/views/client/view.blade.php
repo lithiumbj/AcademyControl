@@ -28,6 +28,7 @@ use App\Http\Controllers\RoomController;
 
           @if($model->status == 1)
           <div class="box-tools pull-right">
+            <a class="btn btn-box-tool" href="{{URL::to('/invoice/create/'.$model->id)}}"><i class="fa fa-money"></i> Crear recibo</a>
             <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i> Mas detalles</button>
           </div>
           @endif

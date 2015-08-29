@@ -33,6 +33,7 @@
     <!-- datatables css -->
     <link rel="stylesheet" href="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.css">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -144,11 +145,17 @@
               </ul>
             </li>
             <!-- //Element -->
+
             <li class="treeview">
-              <a href="{{URL::to('/invoice/')}}">
+              <a href="#">
                 <i class="fa fa-money"></i>
                 <span>Recibos</span>
+                <i class="fa fa-angle-left pull-right"></i>
               </a>
+              <ul class="treeview-menu">
+                <li><a href="{{URL::to('/invoice')}}"><i class="fa fa-circle-o"></i> Listado</a></li>
+                <li><a href="{{URL::to('/invoice/generate')}}"><i class="fa fa-plus"></i> Generar recibos</a></li>
+              </ul>
             </li>
             <!-- Element -->
             <li class="treeview">
@@ -450,5 +457,7 @@
     <script src="{{URL::to('/')}}/js/pages/dashboard.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{URL::to('/')}}/js/demo.js"></script>
+    <!-- Extra libs -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
   </body>
 </html>

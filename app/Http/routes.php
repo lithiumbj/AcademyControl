@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
   //Services
   Route::get('/services', 'ServicesController@getList');
   Route::post('/services/create', 'ServicesController@postCreate');
+  Route::post('/services/ajaxGetProductInfo', 'ServicesController@ajaxGetProductInfo');
   //Rooms / Horarios
   Route::get('/rooms', 'RoomController@getPreview');
   Route::get('/rooms/{id}', 'RoomController@getPreview');
@@ -52,9 +53,12 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/invoice', 'InvoiceController@getList');
   Route::get('/invoice/generate', 'InvoiceController@getGenerateAutoInvoices');
   Route::post('/invoice/generate', 'InvoiceController@postGenerateAutoInvoices');
+  Route::post('/invoice/ajaxCreate', 'InvoiceController@ajaxCreateInvoice');
   Route::post('/invoice/massiveprint', 'InvoiceController@postMassivePrint');
   Route::get('/invoice/{id}', 'InvoiceController@getView');
+  Route::get('/invoice/delete/{id}', 'InvoiceController@getDelete');
   Route::get('/invoice/pay/{id}', 'InvoiceController@setPayedInvoice');
   Route::get('/invoice/print/{id}', 'InvoiceController@printInvoice');
   Route::get('/invoice/unpay/{id}', 'InvoiceController@setUnpayedInvoice');
+  Route::get('/invoice/create/{id}', 'InvoiceController@getCreateInvoice');
 });

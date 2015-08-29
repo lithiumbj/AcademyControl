@@ -45,6 +45,23 @@ class InvoiceController extends Controller
   }
 
   /*
+   * Get's the ajax request to create a new invoice
+   */
+  public function ajaxCreateInvoice()
+  {
+    $request = AngularHelper::parseClientSideData();
+    if($request){
+      $finalId = InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $request->fk_client, Auth::user()->fk_company, 1, '', '', date('Y-m-d'), $request->lines);
+      if($finalId)
+        print_r(json_encode(['status' => 'ok', 'id' => $finalId]));
+      else
+        print_r(json_encode(['status' => 'ko']));
+    }else{
+      print_r(json_encode(['status' => 'ko']));
+    }
+  }
+
+  /*
    * Creates a due invoice, following the parametters
    *
    * @param {String} $facnumber - The invoice number
@@ -102,7 +119,7 @@ class InvoiceController extends Controller
       SettingsHelper::setSetting('facnumber', $currFacnumber-1);
       return false;
     }
-    return true;
+    return $invoice->id;
   }
   /*
    * Generates the next invoice number
@@ -290,5 +307,39 @@ class InvoiceController extends Controller
        $rawData[] = ['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines];
       }
       return view('invoice.massivePrint', ['rawData' => $rawData]);
+   }
+
+   /*
+    * This function show's the create invoice form
+    */
+   public function getCreateInvoice($fk_client)
+   {
+     $client = Client::find($fk_client);
+     $services = Service::where('fk_company', '=', Auth::user()->fk_company)->get();
+     //Render view
+     return view('invoice.new', ['client' => $client, 'services' => $services]);
+   }
+
+   /*
+    * This function deletes an invoice
+    */
+   public function getDelete($facid)
+   {
+     //Delete the payments
+     $payments = InvoicePayment::where('fk_invoice','=',$facid)->get();
+     foreach($payments as $payment){
+       $payment->delete();
+     }
+     //Delete the lines
+     $lines = InvoiceLine::where('fk_invoice','=',$facid)->get();
+     foreach($lines as $line){
+       $line->delete();
+     }
+     //Delete the invoice
+     $invoice = Invoice::find($facid);
+     $invoice->delete();
+     
+     //return to the list
+     return redirect('/invoice');
    }
 }

@@ -106,6 +106,7 @@
               <select class="form-control" name="status" >
                 <option value="0">Ha solicitado información</option>
                 <option value="1">Nueva matricula</option>
+                <option value="1">Ex-alumno / abandono</option>
               </select>
             </div>
 
@@ -147,7 +148,10 @@
               <label >Más información de contacto</label>
               <textarea class="form-control"  name="other_address_info"></textarea>
             </div>
+          </div>
+          <div class="row">
             <div class="center"><button type="submit" class="btn btn-success btn-xs"><i class="fa fa-plus"></i> Crear</button></div>
+          </div>
           </div><!-- /.box-body -->
 
         </form>

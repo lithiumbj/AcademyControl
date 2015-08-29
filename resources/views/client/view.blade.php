@@ -131,6 +131,7 @@ use App\Http\Controllers\RoomController;
               <select class="form-control" name="status" disabled="disabled">
                 <option value="0" @if($model->status == 0) selected="selected" @endif>Ha solicitado información</option>
                 <option value="1" @if($model->status == 1) selected="selected" @endif>Nueva matricula</option>
+                <option value="2" @if($model->status == 2) selected="selected" @endif>Ex-alumno / Abandonado</option>
               </select>
             </div>
 
@@ -272,6 +273,7 @@ use App\Http\Controllers\RoomController;
                     <tr>
                       <th>Servicio</th>
                       <th>Contratado desde</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -279,6 +281,9 @@ use App\Http\Controllers\RoomController;
                     <tr>
                       <td>{{$service->name}}</td>
                       <td>{{DateHelper::getDate($service->created_at)}}</td>
+                      <td>
+                        <a href="{{URL::to('/service/unlink/'.$service->id)}}" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                      </td>
                     </tr>
                     @endforeach
                   </tbody>

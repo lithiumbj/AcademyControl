@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/services', 'ServicesController@getList');
   Route::post('/services/create', 'ServicesController@postCreate');
   Route::post('/services/ajaxGetProductInfo', 'ServicesController@ajaxGetProductInfo');
+  Route::get('/service/unlink/{id}', 'ServicesController@getUnlink');
   //Rooms / Horarios
   Route::get('/rooms', 'RoomController@getPreview');
   Route::get('/rooms/{id}', 'RoomController@getPreview');

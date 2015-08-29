@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\Service;
+use App\Models\ServiceClient;
+use App\Models\RoomService;
+use App\Models\RoomReserve;
 use App\Http\Controllers\Controller;
 use App\Helpers\AngularHelper;
 
@@ -79,5 +82,30 @@ class ServicesController extends Controller
       }else{
         return '[]';
       }
+    }
+
+    /*
+     * Erases the link between a service and the client, also erases the room reserve
+     * asgination
+     */
+    public function getUnlink($id)
+    {
+      //Get the ServiceUser object
+      $serviceClient = ServiceClient::find($id);
+      //First of all unlink the room reserves (horario)
+      $roomServices = RoomService::whereRaw('fk_service = '.$serviceClient->fk_service)->get();
+      //for every roomservice look for a coincidence in the roomReserve and delete
+      foreach($roomServices as $roomService){
+        $roomReserves = RoomReserve::whereRaw('fk_room_service = '.$roomService->id.' AND fk_client = '.$serviceClient->fk_client)->get();
+        //Delete them
+        foreach($roomReserves as $roomReserve){
+          //!!Delete!
+          $roomReserve->delete();
+        }
+      }
+      //After all, delete the relation between user and service
+      $serviceClient->delete();
+      //return a redirect
+      return redirect('/client/view/'.$serviceClient->fk_client);
     }
 }

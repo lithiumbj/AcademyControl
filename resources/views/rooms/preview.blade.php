@@ -65,11 +65,10 @@ use App\Http\Controllers\RoomController;
                     <td>
                       <!-- services -->
                       @foreach(RoomController::getServicesForRoom($room->id, $a, $i) as $service)
-                      <button class="btn bg-yellow" style="margin-bottom: 10px;">{{$service->name}}
-                        <a href="{{URL::to('/room/delink/'.$service->id)}}">
-                          <i class="fa fa-trash" style="color:red;"></i>
-                        </a>
-                      </button><br/>
+                      <button class="btn bg-yellow" style="margin-bottom: 10px;" onclick="getClientsForRoom({{$service->id}})" data-toggle="modal" data-target="#showPeopleInRoom">{{$service->name}}</button>
+                      <a href="{{URL::to('/room/delink/'.$service->id)}}">
+                        <i class="fa fa-trash" style="color:red;"></i>
+                      </a><br/>
                       @endforeach
                       <!-- //services -->
                       @if(count(RoomController::getServicesForRoom($room->id, $a, $i))==0)
@@ -96,6 +95,7 @@ use App\Http\Controllers\RoomController;
 <!-- Modals zone -->
 @include('rooms.modals.newRoom')
 @include('rooms.modals.linkService')
+@include('rooms.modals.peopleInRoom')
 <!-- //Modals zone -->
 
 </section>

@@ -62,7 +62,7 @@ use App\Http\Controllers\RoomController;
                 <tr>
                   <td>Fecha de pago</td>
                   @if(count($data['payments'])>0)
-                    <td>{{date('d/m/Y H:i:s',strtotime($data->$payments[count($payments)-1]->created_at))}}</td>
+                    <td>{{date('d/m/Y H:i:s',strtotime($data['payments'][count($data['payments'])-1]->created_at))}}</td>
                   @else
                     <td>Sin pagos registrados</td>
                   @endif

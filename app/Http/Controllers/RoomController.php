@@ -94,6 +94,18 @@ class RoomController extends Controller
     else
       return [];
   }
+  /*
+   * Return's the room reserve clients for a specific room
+   */
+  public function getRoomReserveClients($roomId)
+  {
+    $reserves = DB::table('room_reserve')
+      ->join('client', 'client.id', '=', 'room_reserve.fk_client')
+      ->where('fk_room_service','=',$roomId)
+      ->select('client.name', 'room_reserve.id')
+      ->get();
+    print_r(json_encode($reserves));
+  }
 
   /*
    * This function return the avalable and the availability of the rooms

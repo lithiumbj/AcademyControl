@@ -136,22 +136,19 @@ class InvoiceController extends Controller
     //Get the current facnumber
     $currFacnumber = SettingsHelper::fetchSetting('facnumber');
     //Build the new facnumber
-    $newFacnumber = $constant;
     //We get the limit (The maximun length of the mask)
     $limit = strlen($constant) + $digits;
-    //We will walk for every character from the first # up to the first digit to set
-    for($i = $limit - $digits; $i < $limit; $i++){
-      //IF true concatenate a 0, if not, concatenate the digit
-      if(($limit-$i) - strlen($currFacnumber)>0){
-        $newFacnumber = $newFacnumber.'0';
-      }else{
-        $newFacnumber = $newFacnumber.$currFacnumber;
-      }
+    //How many # are?
+    $zeros = $digits - strlen($currFacnumber);
+    $newMask = '';
+    for($i = 0; $i < $zeros; $i++){
+      $newMask.='0';
     }
+    $newMask = $constant.$newMask.$currFacnumber;
     //Set the new facnumber
     SettingsHelper::setSetting('facnumber', $currFacnumber+1);
     //return the data
-    return $newFacnumber;
+    return $newMask;
   }
 
   /*
@@ -338,7 +335,7 @@ class InvoiceController extends Controller
      //Delete the invoice
      $invoice = Invoice::find($facid);
      $invoice->delete();
-     
+
      //return to the list
      return redirect('/invoice');
    }

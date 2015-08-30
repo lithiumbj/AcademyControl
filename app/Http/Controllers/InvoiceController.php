@@ -275,7 +275,7 @@ class InvoiceController extends Controller
          $newLine->fk_service = $service->id;
          $newLine->prod_name = $service->name;
          $newLine->prod_description = $service->description;
-         $newLine->tax_base = $service->matricula;
+         $newLine->tax_base = $service->price;
          $newLine->tax = $service->iva;
          //Set into an array
          $lines[] = $newLine;

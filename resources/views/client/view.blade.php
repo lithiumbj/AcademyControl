@@ -24,7 +24,7 @@ use App\Http\Controllers\RoomController;
     <div class="col-md-12">
       <div class="box box-primary @if($model->status == 1) collapsed-box @endif">
         <div class="box-header with-border">
-          <h3 class="box-title">Vista / Edición de cliente</h3>
+          <h3 class="box-title">{{$model->name .' '.$model->lastname_1.' '.$model->lastname_2}}</h3>
 
           @if($model->status == 1)
           <div class="box-tools pull-right">

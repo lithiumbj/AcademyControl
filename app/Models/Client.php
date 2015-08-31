@@ -19,7 +19,10 @@ class Client extends Model
     public static function getClientName($id)
     {
       $client = Client::find($id);
-      return $client->name.' '.$client->lastname_1.' '.$client->lastname_2;
+      if($client)
+        return $client->name.' '.$client->lastname_1.' '.$client->lastname_2;
+      else
+        return '';
     }
     /*
      * Returns the client list for the company

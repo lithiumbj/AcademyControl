@@ -43,8 +43,10 @@ Route::group(['middleware' => 'auth'], function () {
   //Services
   Route::get('/services', 'ServicesController@getList');
   Route::post('/services/create', 'ServicesController@postCreate');
+  Route::post('/services/update', 'ServicesController@postUpdate');
   Route::post('/services/ajaxGetProductInfo', 'ServicesController@ajaxGetProductInfo');
   Route::get('/service/unlink/{id}', 'ServicesController@getUnlink');
+  Route::get('/services/delete/{id}', 'ServicesController@getDelete');
   //Rooms / Horarios
   Route::get('/rooms', 'RoomController@getPreview');
   Route::get('/rooms/getReserveClients/{id}', 'RoomController@getRoomReserveClients');

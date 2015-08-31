@@ -41,7 +41,7 @@
             <th>Referencia</th>
             <th>Descripción larga</th>
             <th>Base Imponible</th>
-            <th>IVA</th>
+            <th>Matricula</th>
             <th>Precio</th>
             <th>Estado</th>
             <th>Acciones</th>
@@ -53,8 +53,8 @@
             <td>{{$service->name}}</td>
             <td>{{$service->description}}</td>
             <td>{{$service->price}} €</td>
-            <td>{{$service->iva}} €</td>
-            <td>{{($service->iva * $service->price) + $service->price}} €</td>
+            <td>{{$service->matricula}} €</td>
+            <td>{{$service->price}} €</td>
             <td class="center white-text">
               {{$service->is_active}}
               @if($service->is_active == 1)
@@ -65,8 +65,8 @@
             </td>
             <td class="center">
               <!-- Actions -->
-              <a class="btn btn-xs btn-success" onclick="alert('¡Atención!\n\nEsta operación alterará todas las futuras facturas / recibos de sus clientes que tengan contratado este servicio\n\nContacte con administración de sistemas antes de continuar')" href="{{URL::to('/client/update/'.$service->id)}}"><i class="fa fa-pencil"></i></a>
-              <a class="btn btn-xs btn-danger" onclick="deleteClient({{$service->id}})"><i class="fa fa-trash"></i></a>
+              <a class="btn btn-xs btn-success" onclick='updateService({{$service->id}}, "{{$service->name}}", "{{$service->description}}", {{$service->price}}, {{$service->matricula}}, {{$service->iva}}, {{$service->is_active}})' data-toggle="modal" data-target="#updateServiceModal"><i class="fa fa-pencil"></i></a>
+              <a class="btn btn-xs btn-danger" href="{{URL::to('/services/delete/'.$service->id)}}"><i class="fa fa-trash"></i></a>
               <!-- //Actions -->
             </td>
           </tr>
@@ -82,12 +82,20 @@
 
 <script>
 /*
- * This function sends the delete ajax request to the client controller
- */
-function deleteClient(client_id)
+ * This function loads the service data into the form
+*/
+function updateService(id, name, description, price, matricula, iva, is_active)
 {
-
+  alert('¡Atención!\n\nEsta operación alterará todas las futuras facturas / recibos de sus clientes que tengan contratado este servicio\n\nContacte con administración de sistemas antes de continuar');
+  jQuery("#service_id").val(id);
+  jQuery("#service_name").val(name);
+  jQuery("#service_description").val(description);
+  jQuery("#service_price").val(price);
+  jQuery("#service_matricula").val(matricula);
+  jQuery("#service_iva").val(iva);
+  jQuery("#service_is_active").val(is_active);
 }
+
 /*
  * At load, set the datatable
  */
@@ -155,5 +163,65 @@ window.onload = function()
 </div>
 
 <!-- //Create modal zone -->
+
+<!-- update modal zone -->
+
+<div class="modal fade" id="updateServiceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="{{URL::to('/services/update')}}" method="post">
+        {!! csrf_field() !!}
+        <input type="hidden" name="id" id="service_id"/>
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Modificar service</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="form-group col-md-12">
+            <label>Referencia</label>
+            <input class="form-control" name="name" type="text" id="service_name"/>
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Descripción</label>
+            <input class="form-control" name="description" type="text" id="service_description">
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Base imponible</label>
+            <input class="form-control" name="price" type="number" id="service_price">
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Matricula (Base imponible)</label>
+            <input class="form-control" name="matricula" type="number" id="service_matricula">
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>% de IVA</label>
+            <input class="form-control" name="iva" type="number" id="service_iva">
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>¿A la venta?</label>
+            <select class="form-control" name="is_active" id="service_is_active">
+              <option value="1">Sí</option>
+              <option value="0">No</option>
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <hr/>
+          <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left;">Cancelar</button>
+          <button type="submit" class="btn btn-success">Modificar</button>
+        </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<!-- //update modal zone -->
 
 @stop

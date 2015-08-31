@@ -25,7 +25,7 @@ class CashflowController extends Controller
    */
   public function showCash()
   {
-    $cashflows = Cashflow::where('fk_company', '=', Auth::user()->fk_company)->get();
+    $cashflows = Cashflow::whereRaw('fk_company = '. Auth::user()->fk_company.' AND created_at BETWEEN "'.date('Y-m-d').' 00:00:00" AND "'.date('Y-m-d').' 23:59:59"')->get();
     return view('cashflow.view',['cashflows' => $cashflows]);
   }
 
@@ -50,7 +50,7 @@ class CashflowController extends Controller
    */
   public function getClose()
   {
-    $cashflows = Cashflow::where('fk_company', '=', Auth::user()->fk_company)->get();
+    $cashflows = Cashflow::whereRaw('fk_company = '. Auth::user()->fk_company.' AND created_at BETWEEN "'.date('Y-m-d').' 00:00:00" AND "'.date('Y-m-d').' 23:59:59"')->get();
     return view('cashflow.close',['cashflows' => $cashflows]);
   }
 

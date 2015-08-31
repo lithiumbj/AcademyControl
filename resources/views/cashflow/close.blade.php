@@ -2,6 +2,7 @@
 <!-- Content Header (Page header) -->
 <?php
 use App\Models\Client;
+use App\User;
 $total = 0;
 ?>
 @section('content')
@@ -48,7 +49,7 @@ $total = 0;
                       <tr>
                         <td>{{$cashflow->id}}</td>
                         <td>{{$cashflow->concept}}</td>
-                        <td>{{Client::getClientName($cashflow->fk_user)}}</td>
+                        <td>{{User::getUserName($cashflow->fk_user)}}</td>
                         <td>{{$cashflow->value}} €</td>
                         <?php $total+=$cashflow->value;?>
                         <td class="center">

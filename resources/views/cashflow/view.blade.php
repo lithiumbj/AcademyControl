@@ -2,6 +2,7 @@
 <!-- Content Header (Page header) -->
 <?php
 use App\Models\Client;
+use App\User;
 ?>
 @section('content')
 <section class="content-header">
@@ -44,7 +45,7 @@ use App\Models\Client;
                     <tr>
                       <td>{{$cashflow->id}}</td>
                       <td>{{$cashflow->concept}}</td>
-                      <td>{{Client::getClientName($cashflow->fk_user)}}</td>
+                      <td>{{User::getUserName($cashflow->fk_user)}}</td>
                       <td>{{$cashflow->value}} €</td>
                       <td class="center">
                         @if($cashflow->is_open == 1)

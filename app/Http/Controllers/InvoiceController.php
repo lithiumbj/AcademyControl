@@ -10,6 +10,7 @@ use App\Models\Client;
 use App\Models\ServiceClient;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\CashflowController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -178,6 +179,7 @@ class InvoiceController extends Controller
     $payment->fk_client = $invoice->fk_client;
     $payment->fk_invoice = $invoice->id;
     $payment->total = $invoice->total;
+    $payment->fk_cashflow = CashflowController::createInMovement('Pago de recibo de '.Client::getClientName($payment->fk_client), $payment->total);
     //Create the payment
     $payment->save();
     //return to the invoice list
@@ -198,6 +200,8 @@ class InvoiceController extends Controller
       $payment = InvoicePayment::where('fk_invoice','=',$invoice->id);
       //Create the payment
       $payment->delete();
+      //Generate a exit money cashflow
+      $payment->fk_cashflow = CashflowController::createInMovement('Devolución de recibo de '.Client::getClientName($invoice->fk_client), ($invoice->total * -1));
       //return to the invoice list
       return redirect('/invoice/');
   }

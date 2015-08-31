@@ -57,7 +57,7 @@ use App\Models\Client;
                           <small class="label bg-yellow">Movimiento</small>
                         @endif
                       </td>
-                      <td>{{date('Y/m/d',strtotime($cashflow->created_at))}}</td>
+                      <td>{{date('d/m/Y h:i:s',strtotime($cashflow->created_at))}}</td>
                     </tr>
                   @endforeach
                 </tbody>

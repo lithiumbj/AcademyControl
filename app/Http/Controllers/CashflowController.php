@@ -110,4 +110,25 @@ class CashflowController extends Controller
     //Save and return
     return redirect('/cashflow');
   }
+
+  /*
+   * This function creates a positive movement in the cashflow diary
+   *
+   * @param {String} $concept
+   * @param {Double} $value
+   */
+  public static function createInMovement($concept, $value)
+  {
+    $cashflow = new Cashflow;
+    //Set the values
+    $cashflow->fk_company = Auth::user()->fk_company;
+    $cashflow->fk_user = Auth::user()->id;
+    $cashflow->concept = $concept;
+    $cashflow->value = $value;
+    $cashflow->is_open = 0;
+    $cashflow->is_closed = 0;
+    $cashflow->save();
+    //Return the id
+    return $cashflow->id;
+  }
 }

@@ -41,6 +41,16 @@ use App\Models\Client;
             <p><i>¡ATENCIÓN! estos clientes tienen recibos emitidos este mes, verifique que no se van a duplicar sus recibos</i></p>
             <hr/>
             <div class="row">
+      
+              <div class="col-md-12" style="margin-top: 20px;">
+                <div class="form-group">
+                  <label for="inputEmail3" class="col-sm-4 control-label">Nota pública</label>
+                  <div class="col-sm-8">
+                    <input class="form-control" id="note_public" name="note_public" placeholder="Nota..." type="text">
+                  </div>
+                </div>
+              </div>
+
               <div class="col-md-8 col-md-offset-2">
                 <table class="table table-bordered">
                   <thead>

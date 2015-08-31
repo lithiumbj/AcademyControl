@@ -281,7 +281,7 @@ class InvoiceController extends Controller
          $lines[] = $newLine;
        }
        //Create the invoice
-       InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, '', '', date('Y-m-d'), $lines);
+       InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, $data['note_public'], '', date('Y-m-d'), $lines);
      }
      //Return to the invoice list
      return redirect('/invoice');
@@ -300,6 +300,9 @@ class InvoiceController extends Controller
        $client = Client::find($invoice->fk_client);
        $payments = InvoicePayment::where('fk_invoice','=', $invoice->id)->get();
        $lines = InvoiceLine::where('fk_invoice', '=', $invoice->id)->get();
+       //Update invoice with the new note public
+       $invoice->text_public = $data['note_public'];
+       $invoice->save();
        //generate the data to the view
        $rawData[] = ['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines];
       }

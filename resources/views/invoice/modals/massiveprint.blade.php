@@ -27,6 +27,16 @@
             </div>
           </div>
         </div>
+<!--
+        <div class="col-md-12" style="margin-top: 20px;">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-4 control-label">Nota pública</label>
+            <div class="col-sm-8">
+              <input class="form-control" id="note_public" name="note_public" placeholder="Nota..." type="text">
+            </div>
+          </div>
+        </div>
+-->
       </div>
 
       </div>

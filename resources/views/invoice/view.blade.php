@@ -63,6 +63,10 @@ use App\Http\Controllers\RoomController;
                 <td>{{$invoice->text_private}}</td>
               </tr>
               <tr>
+                <td>Nota publica</td>
+                <td>{{$invoice->text_public}}</td>
+              </tr>
+              <tr>
                 <td>Fecha de creación</td>
                 <td>{{date('d/m/Y',strtotime($invoice->date_creation))}}</td>
               </tr>

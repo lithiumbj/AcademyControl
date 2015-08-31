@@ -6,10 +6,6 @@ use App\Helpers\DateHelper;
 use App\Http\Controllers\RoomController;
 ?>
 <section class="content-header">
-  <h1>
-    Factura
-    <small>{{$invoice->facnumber}}</small>
-  </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Factura</a></li>
     <li class="active">{{$invoice->facnumber}}</li>
@@ -23,7 +19,7 @@ use App\Http\Controllers\RoomController;
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Factura -- {{$invoice->facnumber}}</h3>
+          <h3 class="box-title">Recibo</h3>
           <div class="box-tools pull-right">
             <a href="{{URL::to('/invoice/print/'.$invoice->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-print"></i> Imprimir</a>
             @if($invoice->status != 2)
@@ -38,10 +34,6 @@ use App\Http\Controllers\RoomController;
 
             <div class="col-md-6">
               <table class="table table-bordered">
-                <tr>
-                  <td style="width:300px;">Referencia</td>
-                  <td>{{$invoice->facnumber}}</td>
-                </tr>
                 <tr>
                   <td>Estado</td>
                   <td>
@@ -60,8 +52,8 @@ use App\Http\Controllers\RoomController;
                   </td>
                 </tr>
                 <tr>
-                  <td>Nota interna</td>
-                  <td>{{$invoice->text_private}}</td>
+                  <td>Nota</td>
+                  <td>{{$invoice->text_public}}</td>
                 </tr>
                 <tr>
                   <td>Fecha de creación</td>
@@ -77,7 +69,7 @@ use App\Http\Controllers\RoomController;
                 </tr>
                 <tr>
                   <td>Importe total</td>
-                  <td>{{$invoice->total}}€</td>
+                  <td><b>{{$invoice->total}}€</b></td>
                 </tr>
               </table>
             </div>
@@ -85,16 +77,12 @@ use App\Http\Controllers\RoomController;
             <div class="col-md-6">
               <table class="table table-bordered">
                 <tr>
-                  <td style="width:300px;">Nombre de padre / madre</td>
-                  <td>{{$client->parent_name}}</td>
+                  <td style="width:300px;">Nombre</td>
+                  <td>{{$client->name}}</td>
                 </tr>
                 <tr>
-                  <td>Apellidos de padre / madre</td>
-                  <td>{{$client->parent_lastname_1}} {{$client->parent_lastname_2}}</td>
-                </tr>
-                <tr>
-                  <td>DNI de padre / madre</td>
-                  <td>{{$client->parent_nif}}</td>
+                  <td>Apellidos</td>
+                  <td>{{$client->lastname_1}} {{$client->lastname_2}}</td>
                 </tr>
               </table>
             </div>
@@ -108,7 +96,7 @@ use App\Http\Controllers\RoomController;
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Conceptos -- {{$invoice->facnumber}}</h3>
+          <h3 class="box-title">Conceptos del recibo</h3>
           <div class="box-tools pull-right">
           </div>
         </div><!-- /.box-header -->

@@ -8,10 +8,6 @@ use App\Http\Controllers\RoomController;
 
 @foreach($rawData as $data)
 <section class="content-header invoice-unit">
-  <h1>
-    Factura
-    <small>{{$data['invoice']->facnumber}}</small>
-  </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Factura</a></li>
     <li class="active">{{$data['invoice']->facnumber}}</li>
@@ -24,16 +20,12 @@ use App\Http\Controllers\RoomController;
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Factura -- {{$data['invoice']->facnumber}}</h3>
+          <h3 class="box-title">Recibo</h3>
         </div><!-- /.box-header -->
         <div class="box-body">
 
             <div class="col-md-6">
               <table class="table table-bordered">
-                <tr>
-                  <td style="width:300px;">Referencia</td>
-                  <td>{{$data['invoice']->facnumber}}</td>
-                </tr>
                 <tr>
                   <td>Estado</td>
                   <td>
@@ -52,12 +44,8 @@ use App\Http\Controllers\RoomController;
                   </td>
                 </tr>
                 <tr>
-                  <td>Nota interna</td>
-                  <td>{{$data['invoice']->text_private}}</td>
-                </tr>
-                <tr>
-                  <td>Fecha de creación</td>
-                  <td>{{date('d/m/Y',strtotime($data['invoice']->date_creation))}}</td>
+                  <td>Nota</td>
+                  <td>{{$data['invoice']->text_public}}</td>
                 </tr>
                 <tr>
                   <td>Fecha de pago</td>
@@ -69,7 +57,7 @@ use App\Http\Controllers\RoomController;
                 </tr>
                 <tr>
                   <td>Importe total</td>
-                  <td>{{$data['invoice']->total}}€</td>
+                  <td><b>{{$data['invoice']->total}}€</b></td>
                 </tr>
               </table>
             </div>
@@ -77,16 +65,12 @@ use App\Http\Controllers\RoomController;
             <div class="col-md-6">
               <table class="table table-bordered">
                 <tr>
-                  <td style="width:300px;">Nombre de padre / madre</td>
-                  <td>{{$data['client']->parent_name}}</td>
+                  <td style="width:300px;">Nombre</td>
+                  <td>{{$data['client']->name}}</td>
                 </tr>
                 <tr>
-                  <td>Apellidos de padre / madre</td>
-                  <td>{{$data['client']->parent_lastname_1}} {{$data['client']->parent_lastname_2}}</td>
-                </tr>
-                <tr>
-                  <td>DNI de padre / madre</td>
-                  <td>{{$data['client']->parent_nif}}</td>
+                  <td>Apellidos</td>
+                  <td>{{$data['client']->lastname_1}} {{$data['client']->lastname_2}}</td>
                 </tr>
               </table>
             </div>
@@ -100,7 +84,7 @@ use App\Http\Controllers\RoomController;
     <div class="col-md-12">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Conceptos -- {{$data['invoice']->facnumber}}</h3>
+          <h3 class="box-title">Conceptos del recibo</h3>
           <div class="box-tools pull-right">
           </div>
         </div><!-- /.box-header -->

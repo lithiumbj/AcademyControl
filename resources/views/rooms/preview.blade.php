@@ -65,19 +65,17 @@ use App\Http\Controllers\RoomController;
                     <td>
                       <!-- services -->
                       @foreach(RoomController::getServicesForRoom($room->id, $a, $i) as $service)
-                      <button class="btn bg-yellow" style="margin-bottom: 10px;" onclick="getClientsForRoom({{$service->id}})" data-toggle="modal" data-target="#showPeopleInRoom">{{$service->name}}</button>
+                      <button class="btn bg-yellow btn-xs" style="margin-bottom: 10px;" onclick="getClientsForRoom({{$service->id}})" data-toggle="modal" data-target="#showPeopleInRoom">{{$service->name}}</button>
                       <a href="{{URL::to('/room/delink/'.$service->id)}}">
                         <i class="fa fa-trash" style="color:red;"></i>
                       </a><br/>
                       @endforeach
                       <!-- //services -->
-                      @if(count(RoomController::getServicesForRoom($room->id, $a, $i))==0)
                       <!-- Add btn -->
                       <button style="float:right;" class="btn btn-xs btn-success" data-target="#linkServiceModal" data-toggle="modal" onclick="openAssignModal({{$room->id}},{{$a}},{{$i}})">
                         <i class="fa fa-plus"></i>
                       </button>
                       <!-- //Add btn -->
-                      @endif
                     </td>
                   @endfor
                 </tr>

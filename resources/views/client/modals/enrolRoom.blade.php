@@ -4,6 +4,8 @@
       {!! csrf_field() !!}
       <input type="hidden" name="fk_client" id="fk_client_2"/>
       <input type="hidden" name="fk_room_service" id="fk_room_service_2"/>
+      <input type="hidden" name="day" id="day_2"/>
+      <input type="hidden" name="hour" id="hour_2"/>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -45,10 +47,12 @@
 </div>
 
 <script>
-function enrolModal(fk_client, fk_room_service)
+function enrolModal(fk_client, fk_room_service, day, hour)
 {
   jQuery("#fk_client_2").val(fk_client);
   jQuery("#fk_room_service_2").val(fk_room_service);
+  jQuery("#day_2").val(day);
+  jQuery("#hour_2").val(hour);
 }
 function delinkModal(fk_client, fk_room_service)
 {

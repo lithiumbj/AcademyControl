@@ -345,18 +345,18 @@ use App\Http\Controllers\RoomController;
                               @if(count(RoomController::getRoomsForService($service->serviceId, $i, $a))>0)
                                 @foreach(RoomController::getRoomsForService($service->serviceId, $i, $a) as $roomService)
                                   @if(count(RoomController::isClientEnroled($roomService->id, $model->id))>0)
-                                      <button class="btn btn btn-primary" data-toggle="modal" data-target="#delinkRoom" onclick="delinkModal({{$model->id}}, {{$roomService->id}})">Alumno en este grupo</button>
+                                      <button class="btn btn btn-primary" data-toggle="modal" data-target="#delinkRoom" onclick="delinkModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Alumno en este grupo ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                   @else
                                     <!-- Free occupance -->
-                                    @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id)) > 6)
-                                    <button class="btn btn btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}})">Grupo Libre</button>
+                                    @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 6)
+                                    <button class="btn btn btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo Libre ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                     @else
                                     <!-- Mid occupance -->
-                                      @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id)) > 2)
-                                        <button class="btn btn btn-warning"data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}})">Grupo casi lleno</button>
+                                      @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 2)
+                                        <button class="btn btn btn-warning"data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo casi lleno ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                       @else
                                         <!-- Full! -->
-                                        @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id)) == 0)
+                                        @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) == 0)
                                           <button class="btn btn btn-danger" onclick="alert('Este grupo está leno, tendrá que escoger otro')">Grupo lleno</button>
                                         @endif
                                         <!-- //Full! -->

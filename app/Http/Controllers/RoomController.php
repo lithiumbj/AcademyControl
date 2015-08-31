@@ -130,10 +130,21 @@ class RoomController extends Controller
   /*
    * Return's the ocupance number for a specific group
    */
-  public static function getRoomOcupance($fk_room_service)
+  public static function getRoomOcupance($fk_room_service, $day, $hour)
   {
-    $ocupance = RoomReserve::where('fk_room_service','=', $fk_room_service)->count();
+    $roomService = roomService::find($fk_room_service);
+    $ocupance = RoomReserve::whereRaw('fk_room = '.$roomService->fk_room.' AND day = '.$day.' AND hour = '.$hour)->count();
     return $ocupance;
+  }
+
+  /*
+   * Return's the room capacity based on the room service id
+   */
+  public static function getCapacity($fk_room_service)
+  {
+      $roomService = roomService::find($fk_room_service);
+      $room = Room::find($roomService->fk_room);
+      return $room->capacity;
   }
 
   /*
@@ -158,6 +169,11 @@ class RoomController extends Controller
     $roomReserve->fk_user = Auth::user()->id;
     $roomReserve->fk_client = $data['fk_client'];
     $roomReserve->fk_room_service = $data['fk_room_service'];
+    //Get the room service info
+    $roomService = roomService::find($roomReserve->fk_room_service);
+    $roomReserve->fk_room = $roomService->fk_room;
+    $roomReserve->hour = $data['hour'];
+    $roomReserve->day = $data['day'];
     //Save it
     $roomReserve->save();
     return redirect('/client/view/'.$data['fk_client']);

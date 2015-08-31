@@ -67,4 +67,12 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/invoice/print/{id}', 'InvoiceController@printInvoice');
   Route::get('/invoice/unpay/{id}', 'InvoiceController@setUnpayedInvoice');
   Route::get('/invoice/create/{id}', 'InvoiceController@getCreateInvoice');
+  //Caja
+  Route::get('/cashflow/', 'CashflowController@showCash');
+  Route::get('/cashflow/open', 'CashflowController@getOpen');
+  Route::post('/cashflow/open', 'CashflowController@postOpen');
+  Route::get('/cashflow/exit', 'CashflowController@getExit');
+  Route::post('/cashflow/exit', 'CashflowController@postExit');
+  Route::get('/cashflow/close', 'CashflowController@getClose');
+  Route::post('/cashflow/close', 'CashflowController@postClose');
 });

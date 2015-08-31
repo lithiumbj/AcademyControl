@@ -168,9 +168,10 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href=""><i class="fa fa-circle-o"></i> Cierre de caja</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Ver estado de caja</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Salida de caja</a></li>
+                <li><a href="{{URL::to('/cashflow/open')}}"><i class="fa fa-circle-o"></i> Apertura de caja</a></li>
+                <li><a href="{{URL::to('/cashflow/close')}}"><i class="fa fa-circle-o"></i> Cierre de caja</a></li>
+                <li><a href="{{URL::to('/cashflow')}}"><i class="fa fa-circle-o"></i> Ver estado de caja</a></li>
+                <li><a href="{{URL::to('/cashflow/exit')}}"><i class="fa fa-circle-o"></i> Salida de caja</a></li>
               </ul>
             </li>
             <!-- //Element -->

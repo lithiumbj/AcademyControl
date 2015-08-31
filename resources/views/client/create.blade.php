@@ -83,22 +83,22 @@
 
             <div class="form-group col-md-4">
               <label >Dirección postal *</label>
-              <input class="form-control"  name="address"  type="text">
+              <input class="form-control" value="C/"  name="address"  type="text">
             </div>
 
             <div class="form-group col-md-4">
               <label >Población</label>
-              <input class="form-control"  name="poblation"  type="text">
+              <input class="form-control" value="Benetússer"  name="poblation"  type="text">
             </div>
 
             <div class="form-group col-md-4">
               <label >Ciudad</label>
-              <input class="form-control"  name="city" type="text">
+              <input class="form-control" value="Valencia"  name="city" type="text">
             </div>
 
             <div class="form-group col-md-4">
               <label >Código postal</label>
-              <input class="form-control"  name="cp"  type="text">
+              <input class="form-control" value="46910"  name="cp"  type="text">
             </div>
 
             <div class="form-group col-md-4">

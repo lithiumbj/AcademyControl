@@ -179,7 +179,7 @@ use App\Http\Controllers\RoomController;
               <br/>
               <i>{{$model->other_address_info}}</i>
             </div>
-            <div class="center">
+            <div class="center form-group col-md-12" >
               <a type="submit" class="btn btn-warning btn-xs" href="{{URL::to('/client/update/'.$model->id)}}"><i class="fa fa-pencil"></i> Modificar estos datos</a>
             </div>
           </div><!-- /.box-body -->
@@ -338,7 +338,15 @@ use App\Http\Controllers\RoomController;
                         @for($i=10;$i < 22; $i++)
                           <tr>
                             <td>
-                              <b>{{$i}}:00</b>
+                              @if($i<17)
+                                <b>{{$i}}:00</b>
+                              @endif
+                              @if($i >= 17 && $i < 18)
+                                <b>{{$i}}:15</b>
+                              @endif
+                              @if($i > 17)
+                                <b>{{$i}}:30</b>
+                              @endif
                             </td>
                           @for($a = 1; $a < 7; $a++)
                             <td class="center">

@@ -59,7 +59,15 @@ use App\Http\Controllers\RoomController;
                 @for($i=10;$i < 22; $i++)
                   <tr>
                     <td>
-                      <b>{{$i}}:00</b>
+                      @if($i<17)
+                        <b>{{$i}}:00</b>
+                      @endif
+                      @if($i >= 17 && $i < 18)
+                        <b>{{$i}}:15</b>
+                      @endif
+                      @if($i > 17)
+                        <b>{{$i}}:30</b>
+                      @endif
                     </td>
                   @for($a = 1; $a < 7; $a++)
                     <td>

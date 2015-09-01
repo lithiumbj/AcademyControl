@@ -185,6 +185,15 @@ class ClientController extends Controller
       return view('client.list', ['clients' => $clients]);
     }
     /*
+     * This function get's the typed list of clients
+     */
+    public function getTypedList($type)
+    {
+      //Get all the clients for the current company
+      $clients = Client::whereRaw('fk_company = '.Auth::user()->fk_company.' AND status = '.$type)->get();
+      return view('client.list', ['clients' => $clients]);
+    }
+    /*
      * This fucntion catches the angular request and links a service to a client
      * Also if the request indicates, creates a due invoice
      */

@@ -147,7 +147,9 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/client/create')}}"><i class="fa fa-circle-o"></i> Crear cliente</a></li>
-                <li><a href="{{URL::to('/client/list')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
+                <li><a href="{{URL::to('/client/list/1')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
+                <li><a href="{{URL::to('/client/list/0')}}"><i class="fa fa-circle-o"></i> Listar informaciones</a></li>
+                <li><a href="{{URL::to('/client/list/2')}}"><i class="fa fa-circle-o"></i> Listar ex-clientes</a></li>
                 <!-- Role checking -->
                 @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
                 <li><a href=""><i class="fa fa-circle-o"></i> Control de bajas</a></li>
@@ -293,7 +295,7 @@
             </li>
             <!-- //Element -->
             @endif
-            
+
           </ul>
         </section>
         <!-- /.sidebar -->

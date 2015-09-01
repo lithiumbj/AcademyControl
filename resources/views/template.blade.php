@@ -105,6 +105,9 @@
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>
+
+          <!-- Role checking -->
+          @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
           <!-- search form -->
           <form action="{{URL::to('/client/search')}}" method="post" class="sidebar-form">
             {!! csrf_field() !!}
@@ -115,11 +118,16 @@
               </span>
             </div>
           </form>
+          @endif
+          <!-- //Role checking -->
+
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
             <!-- Element -->
             <li class="treeview">
               <a href="{{URL::to('/')}}">
@@ -128,6 +136,7 @@
               </a>
             </li>
             <!-- //Element -->
+            @endif
 
             <!-- Element -->
             <li class="treeview">
@@ -139,13 +148,18 @@
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/client/create')}}"><i class="fa fa-circle-o"></i> Crear cliente</a></li>
                 <li><a href="{{URL::to('/client/list')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
+                <!-- Role checking -->
+                @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
                 <li><a href=""><i class="fa fa-circle-o"></i> Control de bajas</a></li>
                 <li><a href=""><i class="fa fa-circle-o"></i> Control de altas</a></li>
                 <li><a href="{{URL::to('/invoice/generate')}}"><i class="fa fa-plus"></i> Generar recibos</a></li>
+                @endif
               </ul>
             </li>
             <!-- //Element -->
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
             <!-- Element -->
             <li class="treeview">
               <a href="#">
@@ -159,6 +173,7 @@
               </ul>
             </li>
             <!-- //Element -->
+            @endif
 
             <!-- Element -->
             <li class="treeview">
@@ -168,9 +183,12 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
+              <!-- Role checking -->
+              @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
                 <li><a href="{{URL::to('/cashflow/open')}}"><i class="fa fa-circle-o"></i> Apertura de caja</a></li>
                 <li><a href="{{URL::to('/cashflow/close')}}"><i class="fa fa-circle-o"></i> Cierre de caja</a></li>
                 <li><a href="{{URL::to('/cashflow')}}"><i class="fa fa-circle-o"></i> Ver estado de caja</a></li>
+              @endif
                 <li><a href="{{URL::to('/cashflow/exit')}}"><i class="fa fa-circle-o"></i> Salida de caja</a></li>
               </ul>
             </li>
@@ -184,9 +202,15 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/invoice')}}"><i class="fa fa-circle-o"></i> Listado</a></li>
+                <!-- Role checking -->
+                @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
                 <li><a href="{{URL::to('/invoice/generate')}}"><i class="fa fa-plus"></i> Generar recibos</a></li>
+                @endif
               </ul>
             </li>
+
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
             <!-- Element -->
             <li class="treeview">
               <a href="#">
@@ -200,6 +224,7 @@
               </ul>
             </li>
             <!-- //Element -->
+            @endif
 
             <!-- Element -->
             <li class="treeview">
@@ -210,6 +235,8 @@
             </li>
             <!-- //Element -->
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
             <!-- Element -->
             <li class="treeview">
               <a href="{{URL::to('/services/')}}">
@@ -218,6 +245,7 @@
               </a>
             </li>
             <!-- //Element -->
+            @endif
 
             <!-- Element -->
             <li class="treeview">
@@ -228,6 +256,8 @@
             </li>
             <!-- //Element -->
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
             <!-- Element -->
             <li class="treeview">
               <a href="#">
@@ -243,7 +273,11 @@
               </ul>
             </li>
             <!-- //Element -->
+            @endif
 
+
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
             <!-- Element -->
             <li class="treeview">
               <a href="#">
@@ -258,7 +292,8 @@
               </ul>
             </li>
             <!-- //Element -->
-
+            @endif
+            
           </ul>
         </section>
         <!-- /.sidebar -->

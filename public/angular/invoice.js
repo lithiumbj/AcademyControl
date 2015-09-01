@@ -16,6 +16,7 @@ window.onload = function()
       this.tmpPrice = 0;
       this.tmpDescription = '';
       this.tmpIVA = 0.0;
+      this.note_public = '';
       //total Variables
       this.iva = 0.0;
       this.bi = 0.0;
@@ -78,7 +79,7 @@ window.onload = function()
        */
        this.createInvoice = function()
        {
-         $http.post(_createInvoice, {fk_client : _fk_client, lines : this.lines}).
+         $http.post(_createInvoice, {fk_client : _fk_client, lines : this.lines, note: this.note_public}).
          then(angular.bind(this, function(response) {
            //Ok
            if(response.data.status != 'ko'){

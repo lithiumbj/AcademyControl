@@ -42,6 +42,10 @@ use App\Models\Client;
               <td>Total</td>
               <td><% invoice.total %> <b>€</b></td>
             </tr>
+            <tr>
+              <td>Nota pública</td>
+              <td><input type="text" class="form-control" ng-model="invoice.note_public"/></td>
+            </tr>
           </table>
         </div>
 

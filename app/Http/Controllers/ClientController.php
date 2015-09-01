@@ -6,8 +6,10 @@ use App\User;
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\ContactWay;
+use App\Models\RoomReserve;
 use App\Models\ServiceClient;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\InvoiceController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -234,5 +236,32 @@ class ClientController extends Controller
       //Get all the clients for the current company
       $clients = Client::whereRaw('fk_company = '.Auth::user()->fk_company." AND (name LIKE '%".$data['q']."%' OR lastname_1 = '%".$data['q']."%' OR lastname_2 = '%".$data['q']."%')")->get();
       return view('client.list', ['clients' => $clients]);
+    }
+
+    /*
+     * Deletes the client with all they info
+     */
+    public function deleteClient($id)
+    {
+      //First of all delete the room reserves
+      $roomReserves = RoomReserve::where('fk_client', '=', $id)->get();
+      foreach($roomReserves as $roomReserve){
+        $roomReserve->delete();
+      }
+      //Delete the service assigned to the client
+      $serviceClient = ServiceClient::where('fk_client', '=', $id)->get();
+      foreach($serviceClient as $service){
+        $service->delete();
+      }
+      //Delete invoices
+      $invoices = Invoice::where('fk_client', '=', $id)->get();
+      foreach($invoices as $invoice){
+        InvoiceController::deleteInvoice($invoice->id);
+      }
+      //Delete the client
+      $client = Client::find($id);
+      $client->delete();
+      //Return to the view
+      return redirect('/client/list/1');
     }
 }

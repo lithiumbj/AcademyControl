@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/client/list/', 'ClientController@getList');
   Route::get('/client/list/{type}', 'ClientController@getTypedList');
   Route::post('/client/addService', 'ClientController@ajaxSetService');
+  Route::get('/client/delete/{id}', 'ClientController@deleteClient');
   //Services
   Route::get('/services', 'ServicesController@getList');
   Route::post('/services/create', 'ServicesController@postCreate');

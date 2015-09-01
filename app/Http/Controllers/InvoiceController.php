@@ -346,4 +346,23 @@ class InvoiceController extends Controller
      //return to the list
      return redirect('/invoice');
    }
+   /*
+    * Deletes the invoice
+    */
+   public static function deleteInvoice($facid)
+   {
+     //Delete the payments
+     $payments = InvoicePayment::where('fk_invoice','=',$facid)->get();
+     foreach($payments as $payment){
+       $payment->delete();
+     }
+     //Delete the lines
+     $lines = InvoiceLine::where('fk_invoice','=',$facid)->get();
+     foreach($lines as $line){
+       $line->delete();
+     }
+     //Delete the invoice
+     $invoice = Invoice::find($facid);
+     $invoice->delete();
+   }
 }

@@ -60,8 +60,7 @@
               <!-- Actions -->
               <a class="btn btn-xs btn-success" href="{{URL::to('/client/view/'.$client->id)}}"><i class="fa fa-eye"></i></a>
               <a class="btn btn-xs btn-success" href="{{URL::to('/client/update/'.$client->id)}}"><i class="fa fa-pencil"></i></a>
-
-                <a class="btn btn-xs btn-danger" onclick="deleteClient({{$client->id}})"><i class="fa fa-trash"></i></a>
+              <a class="btn btn-xs btn-danger" href="{{URL::to('/client/delete/'.$client->id)}}"><i class="fa fa-trash"></i></a>
               <!-- //Actions -->
             </td>
           </tr>

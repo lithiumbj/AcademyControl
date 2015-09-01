@@ -5,6 +5,7 @@
 use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\InvoicePayment;
+use App\Http\Controllers\ServicesController;
 ?>
 <section class="content-header">
   <h1>
@@ -161,6 +162,26 @@ use App\Models\InvoicePayment;
     <!-- //Box -->
   </div>
 
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <!-- Box -->
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title">Matriculas activas</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><i class="fa fa-certificate"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Servicios contratados en este momento</span>
+            <span class="info-box-number">{{ServicesController::getTotalLinkedServices()}} Servicios</span>
+          </div><!-- /.info-box-content -->
+        </div>
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
 </div>
 </section>
 

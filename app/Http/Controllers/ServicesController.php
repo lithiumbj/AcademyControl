@@ -180,4 +180,13 @@ class ServicesController extends Controller
 
       return redirect('/services');
     }
+
+    /*
+     * This function return's the active and linked services number
+     */
+    public static function getTotalLinkedServices()
+    {
+      $services = ServiceClient::all();
+      return count($services);
+    }
 }

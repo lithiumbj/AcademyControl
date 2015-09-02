@@ -23,8 +23,8 @@ Route::get('/login',function(){
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 //ONLY ON DEV
-//Route::get('auth/register', 'Auth\AuthController@getRegister');
-//Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');
 /*
  * //zone END//
  */
@@ -77,4 +77,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/cashflow/exit', 'CashflowController@postExit');
   Route::get('/cashflow/close', 'CashflowController@getClose');
   Route::post('/cashflow/close', 'CashflowController@postClose');
+  //Teacher routes
+  Route::get('/teacher/teach', 'TeacherController@getTeacherView');
 });

@@ -138,6 +138,8 @@
             <!-- //Element -->
             @endif
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
             <!-- Element -->
             <li class="treeview">
               <a href="#">
@@ -159,6 +161,7 @@
               </ul>
             </li>
             <!-- //Element -->
+            @endif
 
             <!-- Role checking -->
             @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
@@ -177,6 +180,8 @@
             <!-- //Element -->
             @endif
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
             <!-- Element -->
             <li class="treeview">
               <a href="#">
@@ -195,7 +200,10 @@
               </ul>
             </li>
             <!-- //Element -->
+            @endif
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-money"></i>
@@ -210,6 +218,7 @@
                 @endif
               </ul>
             </li>
+            @endif
 
             <!-- Role checking -->
             @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
@@ -228,14 +237,17 @@
             <!-- //Element -->
             @endif
 
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
             <!-- Element -->
             <li class="treeview">
               <a href="{{URL::to('/rooms')}}">
                 <i class="fa fa-object-group"></i>
-                <span>Aulas</span>
+                <span>Aulas / Horarios</span>
               </a>
             </li>
             <!-- //Element -->
+            @endif
 
             <!-- Role checking -->
             @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
@@ -249,12 +261,6 @@
             <!-- //Element -->
             @endif
 
-            <!-- Element -->
-            <li class="treeview">
-              <a href="{{URL::to('/rooms')}}">
-                <i class="fa fa-calendar"></i>
-                <span>Ver horarios</span>
-              </a>
             </li>
             <!-- //Element -->
 

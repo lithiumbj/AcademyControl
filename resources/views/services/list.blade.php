@@ -11,7 +11,9 @@
     <li class="active">Listado</li>
   </ol>
 </section>
-
+<?php
+  use App\User;
+?>
 <!-- Main content -->
 <section class="content">
   <div class="row">
@@ -151,6 +153,15 @@ window.onload = function()
             </select>
           </div>
 
+          <div class="form-group col-md-12">
+            <label>Profesor que imparte la asignatura</label>
+            <select class="form-control" name="fk_teacher">
+              @foreach(User::getUsers() as $user)
+                <option value="{{$user->id}}">{{$user->name}}</option>
+              @endforeach
+            </select>
+          </div>
+
         </div>
         <div class="modal-footer">
           <hr/>
@@ -208,6 +219,15 @@ window.onload = function()
             <select class="form-control" name="is_active" id="service_is_active">
               <option value="1">Sí</option>
               <option value="0">No</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-12">
+            <label>Profesor que imparte la asignatura</label>
+            <select class="form-control" name="fk_teacher">
+              @foreach(User::getUsers() as $user)
+                <option value="{{$user->id}}">{{$user->name}}</option>
+              @endforeach
             </select>
           </div>
 

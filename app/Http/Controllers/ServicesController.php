@@ -51,6 +51,7 @@ class ServicesController extends Controller
          $service->price = $data['price'];
          $service->matricula = $data['matricula'];
          $service->fk_company = $data['is_active'];
+         $service->fk_teacher = $data['fk_teacher'];
          //Set fixed fk's
          $service->is_active = 1;
 
@@ -135,6 +136,7 @@ class ServicesController extends Controller
          $service->price = $data['price'];
          $service->matricula = $data['matricula'];
          $service->fk_company = $data['is_active'];
+         $service->fk_teacher = $data['fk_teacher'];
          //Set fixed fk's
          $service->is_active = 1;
 

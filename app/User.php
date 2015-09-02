@@ -38,4 +38,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
       $user = User::find($id);
       return $user->name;
     }
+
+    public static function getUsers()
+    {
+        return User::where('fk_company','=',\Auth::user()->fk_company)->get();
+    }
 }

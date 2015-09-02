@@ -48,7 +48,10 @@ class TeacherController extends Controller
     $roomReserves = RoomReserve::where('fk_room_service','=', $data['service'])->get();
     $clients = [];
     foreach($roomReserves as $RoomReserve){
-      $clients[] = Client::find($RoomReserve->fk_client);
+      $tmpArray = [];
+      $tmpArray[] = Client::find($RoomReserve->fk_client);
+      $tmpArray[] = $RoomReserve->id;
+      $clients[] = $tmpArray;
     }
     //Render the view
     return view('teacher.teach',['clients' => $clients]);

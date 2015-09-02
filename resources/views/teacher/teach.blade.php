@@ -2,6 +2,7 @@
 <!-- Content Header (Page header) -->
 <?php
 use App\Models\Client;
+use App\Http\Controllers\IncidenceController;
 ?>
 @section('content')
 <section class="content-header">
@@ -32,8 +33,8 @@ use App\Models\Client;
             <tbody>
               @foreach($clients as $client)
               <tr>
-                <td>{{$client->name}}</td>
-                <td>{{$client->lastname_1}} {{$client->lastname_2}}</td>
+                <td>{{$client[0]->name}}</td>
+                <td>{{$client[0]->lastname_1}} {{$client[0]->lastname_2}}</td>
                 <td class="center">
                   <button class="btn btn-xs btn-success"><i class="fa fa-briefcase"></i> Abrir informe</button>
                   <button class="btn btn-xs btn-warning"><i class="fa fa-bullseye"></i> Emitir incidencia</button>
@@ -64,11 +65,19 @@ use App\Models\Client;
             <tbody>
               @foreach($clients as $client)
                 <tr>
-                  <td>{{$client->name}}</td>
-                  <td>{{$client->lastname_1}} {{$client->lastname_2}}</td>
-                  <td>
-                    <a href="" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i></a>
-                    <a href="" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></a>
+                  <td>{{$client[0]->name}}</td>
+                  <td>{{$client[0]->lastname_1}} {{$client[0]->lastname_2}}</td>
+                  <td class="center">
+                    @if(!is_null(IncidenceController::isChekedIn($client[0]->id, $client[1])))
+                      @if(IncidenceController::isChekedIn($client[0]->id, $client[1]) == 1)
+                        <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 0)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i> Si, cambiar</button>
+                      @else
+                        <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 1)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> No, cambiar</button>
+                      @endif
+                    @else
+                    <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 1)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i></button>
+                    <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 0)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
+                    @endif
                   </td>
                 </tr>
               @endforeach
@@ -79,4 +88,25 @@ use App\Models\Client;
     </div>
   </div>
 </section>
+
+<script>
+/*
+ * This function sets the assitance to true or false
+ */
+function clientIsIn(fk_client, fk_room_reserve, assist)
+{
+  jQuery.ajax({
+    url: "{{URL::to('/assistance/checkin')}}",
+    method : "POST",
+    data : {fk_client: fk_client, fk_room_reserve: fk_room_reserve, assist: assist, _token : "{{csrf_token()}}"}
+  }).done(function(data) {
+    if(data == 'ok')
+      location.reload();
+    else
+      alert("Error al establecer el estado de la falta del alumno");
+  }).fail(function(){
+
+  });
+}
+</script>
 @stop

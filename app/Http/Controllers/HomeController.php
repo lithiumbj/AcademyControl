@@ -21,4 +21,8 @@ class HomeController extends Controller
         //Is a normal user
         return view('main.home');
     }
+    public function teacher()
+    {
+      return view('main.professor');
+    }
 }

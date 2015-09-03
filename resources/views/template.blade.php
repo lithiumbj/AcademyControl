@@ -142,6 +142,17 @@
             @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
             <!-- Element -->
             <li class="treeview">
+              <a href="{{URL::to('/teacher/view')}}">
+                <i class="fa fa-tachometer"></i>
+                <span>Vista profesor</span>
+              </a>
+            </li>
+            <!-- //Element -->
+            @endif
+            <!-- Role checking -->
+            @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
+            <!-- Element -->
+            <li class="treeview">
               <a href="#">
                 <i class="fa fa-users"></i>
                 <span>Clientes</span>

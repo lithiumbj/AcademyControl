@@ -78,6 +78,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/cashflow/close', 'CashflowController@getClose');
   Route::post('/cashflow/close', 'CashflowController@postClose');
   //Teacher routes
+  Route::get('/teacher/view', 'HomeController@teacher');
   Route::get('/teacher/teach', 'TeacherController@getTeacherView');
   //Asistance / incidences / reports routes
   Route::post('/assistance/checkin','IncidenceController@checkIn');

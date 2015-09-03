@@ -81,4 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/teacher/teach', 'TeacherController@getTeacherView');
   //Asistance / incidences / reports routes
   Route::post('/assistance/checkin','IncidenceController@checkIn');
+  Route::post('/incidence/client/create', 'IncidenceController@createClientIncidence');
+  Route::post('/report/client/get','IncidenceController@getClientReport');
+  Route::post('/report/client/create','IncidenceController@crateClientReport');
 });

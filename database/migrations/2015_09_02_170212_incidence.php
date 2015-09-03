@@ -19,6 +19,12 @@ class Incidence extends Migration
         $table->integer('fk_client')->unsigned();
         $table->string('concept');
         $table->longText('observations');
+        //Foreign key
+        $table->foreign('fk_company')->references('id')->on('company');
+        $table->foreign('fk_client')->references('id')->on('client');
+        $table->foreign('fk_user')->references('id')->on('users');
+        //Default timestamps
+        $table->timestamps();
       });
     }
 

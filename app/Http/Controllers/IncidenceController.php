@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\Client;
 use App\Models\Assistance;
+use App\Models\ClientReport;
+use App\Models\RoomReserve;
+use App\Models\RoomService;
+use App\Models\ClientIncidence;
 use App\Models\ServiceClient;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\InvoiceController;
@@ -69,5 +73,65 @@ class IncidenceController extends Controller
       else
         echo 'ko';
     }
+  }
+
+  /*
+   * This function creates a incidence for the client
+   */
+  public function createClientIncidence(Request $request)
+  {
+    $data = $request->all();
+    $incidence = new ClientIncidence;
+    //Set basic fk's
+    $incidence->fk_client = $data['fk_client'];
+    $incidence->fk_user = Auth::user()->id;
+    $incidence->fk_company = Auth::user()->fk_company;
+    //Other data
+    $incidence->concept = $data['concept'];
+    $incidence->observations = $data['description'];
+    //Save
+    if($incidence->save())
+      echo 'ok';
+    else
+      echo 'ko';
+  }
+
+  /*
+   * This function returns the client report
+   */
+  public function getClientReport(Request $request)
+  {
+    $data = $request->all();
+    //Get the service
+    $roomReserve = RoomReserve::find($data['fk_service']);
+    $roomService = RoomService::find($roomReserve->fk_room_service);
+    //Execute final query
+    $reports = ClientReport::whereRaw('fk_client = '.$data['fk_client'].' AND fk_service = '.$roomService->fk_service)->get();
+    //Print return
+    print_r(json_encode($reports));
+  }
+
+  /*
+   * This function creates a client report
+   */
+  public function crateClientReport(Request $request)
+  {
+      $data = $request->all();
+      //Create model and fill it
+      $report = new ClientReport;
+      $report->fk_user = Auth::user()->id;
+      $report->fk_company = Auth::user()->fk_company;
+      $report->fk_client = $data['fk_client'];
+      //Get the service
+        $roomReserve = RoomReserve::find($data['fk_service']);
+        $roomService = RoomService::find($roomReserve->fk_room_service);
+      //
+      $report->fk_service = $roomService->fk_service;
+      $report->concept = $data['concept'];
+      $report->observations = $data['observations'];
+      if($report->save())
+        return 'ok';
+      else
+        return 'ko';
   }
 }

@@ -356,7 +356,7 @@ use App\Http\Controllers\RoomController;
                                       <button class="btn btn btn-primary" data-toggle="modal" data-target="#delinkRoom" onclick="delinkModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Alumno en este grupo ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                   @else
                                     <!-- Free occupance -->
-                                    @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 6)
+                                    @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 2)
                                     <button class="btn btn btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo Libre ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                     @else
                                     <!-- Mid occupance -->

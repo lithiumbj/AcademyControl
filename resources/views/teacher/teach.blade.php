@@ -17,7 +17,7 @@ use App\Http\Controllers\IncidenceController;
     <div class="col-md-7">
       <div class="box box-success">
         <div class="box-header with-border">
-          <h3 class="box-title">Usuarios </h3>
+          <h3 class="box-title">Alumnos </h3>
           <div class="box-tools pull-right">
           </div>
         </div><!-- /.box-header -->

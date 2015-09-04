@@ -134,4 +134,13 @@ class IncidenceController extends Controller
       else
         return 'ko';
   }
+
+  /*
+   * This function get's all the client incidencies
+   */
+  public function getClientIncidences()
+  {
+    $incidences = ClientIncidence::whereRaw('fk_company = '.Auth::user()->fk_company)->get();
+    return view('client.incidences',['incidences' => $incidences]);
+  }
 }

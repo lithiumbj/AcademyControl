@@ -192,4 +192,20 @@ class RoomController extends Controller
       //Return to the client's view
       return redirect('/client/view/'.$data['fk_client']);
   }
+
+  /*
+   * This function delink's the room
+   */
+  public function getDelinkRoom($id)
+  {
+    $roomService = RoomService::find($id);
+    //Delete the room reserves
+    $roomReserves = RoomReserve::where('fk_room_service', '=', $roomService->id)->get();
+    foreach($roomReserves as $r){
+      $r->delete();
+    }
+    $roomService->delete();
+    //Return
+    return redirect('/rooms');
+  }
 }

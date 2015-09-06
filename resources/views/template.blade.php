@@ -286,8 +286,6 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href=""><i class="fa fa-circle-o"></i> Nuevos clientes</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Porcentaje de conversión</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Ventas perdidas</a></li>
                 <li><a href=""><i class="fa fa-circle-o"></i> Informaciones</a></li>
               </ul>
             </li>
@@ -306,9 +304,7 @@
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/incidence/client')}}"><i class="fa fa-circle-o"></i> Incidencias (Alumnos)</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Incidencias (Personal)</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Faltas de asistencia</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Informar de incidencia</a></li>
+                <li><a href="{{URL::to('/assistance/list')}}"><i class="fa fa-circle-o"></i> Faltas de asistencia</a></li>
               </ul>
             </li>
             <!-- //Element -->

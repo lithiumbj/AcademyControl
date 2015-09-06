@@ -140,7 +140,50 @@ class IncidenceController extends Controller
    */
   public function getClientIncidences()
   {
-    $incidences = ClientIncidence::whereRaw('fk_company = '.Auth::user()->fk_company)->get();
+    $incidences = ClientIncidence::whereRaw('fk_company = '.Auth::user()->fk_company.' AND seen IS NULL')->get();
     return view('client.incidences',['incidences' => $incidences]);
+  }
+
+  /*
+   * This function completes the incidence
+   */
+  public function completeIncidence($id)
+  {
+    //Load the incidence
+    $incidence = ClientIncidence::find($id);
+    //Update the user and seen values
+    $incidence->seen = 1;
+    $incidence->fk_user = Auth::user()->id;
+    //Save
+    $incidence->save();
+    //Redirect to the list
+    return redirect('/incidence/client');
+  }
+
+  /*
+   * This function returns an array with the client incidences
+   */
+  public static function fetchClientIncidences($fk_client)
+  {
+    $incidences = ClientIncidence::where('fk_client', '=', $fk_client)->get();
+    return $incidences;
+  }
+
+  /*
+   * This function renders the client assistance list view
+   */
+  public function getAssitanceList()
+  {
+      $assistance = Assistance::whereRaw('fk_company = '. Auth::user()->fk_company.' AND assist = 0')->get();
+      return view('client.assistance',['incidences' => $assistance]);
+  }
+
+  /*
+   * This function fetchs the list of assistances
+   */
+  public static function fetchAssitanceList($fk_client)
+  {
+      $assistance = Assistance::whereRaw('fk_client = '. $fk_client.' AND assist = 0')->get();
+      return $assistance;
   }
 }

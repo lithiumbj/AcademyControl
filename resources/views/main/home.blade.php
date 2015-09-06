@@ -188,7 +188,9 @@ use App\Http\Controllers\ServicesController;
 <script>
 window.onload = function()
 {
-  jQuery("#clientsTable").dataTable();
+  jQuery("#clientsTable").dataTable({
+    "iDisplayLength": 100
+  });
 
   /*
    * Chartjs

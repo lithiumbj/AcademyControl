@@ -4,6 +4,9 @@
 <?php
 use App\Helpers\DateHelper;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\IncidenceController;
+use App\Http\Controllers\ServicesController;
+use App\Models\Client;
 ?>
 <section class="content-header">
   <h1>
@@ -249,10 +252,89 @@ use App\Http\Controllers\RoomController;
         <div class="box box-danger">
           <div class="box-header with-border">
             <h3 class="box-title">Faltas / incidencias</h3>
-            <small style="margin-left: 25px;"><i>(Últimas 5)</i></small>
           </div>
             <div class="box-body">
-
+              <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab_1" data-toggle="tab">Faltas</a></li>
+                  <li><a href="#tab_2" data-toggle="tab">Incidencias</a></li>
+                </ul>
+                <div class="tab-content">
+                  <div class="tab-pane active" id="tab_1">
+                    @if(count(IncidenceController::fetchAssitanceList($model->id))>0)
+                    <table class="table table-bordered" id="assistanceTable">
+                      <thead>
+                        <tr>
+                          <td>Fecha</td>
+                          <td>Clase</td>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        @foreach(IncidenceController::fetchAssitanceList($model->id) as $assistence)
+                        <tr>
+                          <td>{{date('d/m/Y', strtotime($assistence->created_at))}}</td>
+                          <td><i class="fa fa-circle-o text-red"></i> {{ServicesController::fetchServiceFromFkRoomReserve($assistence->fk_room_reserve)->name}}</td>
+                        </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                    @else
+                    <div class="info-box bg-green">
+                      <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">¡Sin ninguna falta de asistencia!</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                      </div><!-- /.info-box-content -->
+                    </div>
+                    @endif
+                  </div><!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2">
+                    @if(count(IncidenceController::fetchClientIncidences($model->id))>0)
+                    <table class="table table-bordered">
+                      <thead>
+                        <tr>
+                          <th>Resumen</th>
+                          <th>Fecha</th>
+                          <th>Estado</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      @foreach(IncidenceController::fetchClientIncidences($model->id) as $incidence)
+                        <tr>
+                          <td>{{$incidence->concept}}</td>
+                          <td>{{date('d/m/Y', strtotime($incidence->created_at))}}</td>
+                          <td class="center">
+                            @if($incidence->seen == 1)
+                              <small class="label bg-green">Resuelto</small>
+                            @else
+                              <small class="label bg-red">Pendiente</small>
+                            @endif
+                          </td>
+                          <td style="width:70px;">
+                            <button class="btn btn-success btn-xs" onclick="alert('Incidencia completa: \n\n{{$incidence->observations}}')"><i class="fa fa-eye"></i></button>
+                            <a class="btn btn-warning btn-xs" href="{{URL::to('/incidence/client/complete/'.$incidence->id)}}"><i class="fa fa-mail-reply-all"></i></a>
+                          </td>
+                        </tr>
+                      @endforeach
+                    </tbody>
+                    </table>
+                    @else
+                    <div class="info-box bg-green">
+                      <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">¡Sin ninguna incidencia!</span>
+                        <div class="progress">
+                          <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                      </div><!-- /.info-box-content -->
+                    </div>
+                    @endif
+                  </div><!-- /.tab-pane -->
+                </div><!-- /.tab-content -->
+              </div>
             </div>
           </div>
         </div>

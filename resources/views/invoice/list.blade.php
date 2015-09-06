@@ -80,7 +80,9 @@ use App\Models\Client;
  */
 window.onload = function()
 {
-  jQuery("#invoiceList").dataTable();
+  jQuery("#invoiceList").dataTable({
+    "iDisplayLength": 100
+  });
   startDatePickerListeners();
 }
 </script>

@@ -2,16 +2,17 @@
 <!-- Content Header (Page header) -->
 <?php
 use App\Models\Client;
+use App\Http\Controllers\ServicesController;
 ?>
 @section('content')
 <section class="content-header">
   <h1>
     Incidencias
-    <small>Incidencias de alumno</small>
+    <small>Faltas de alumnos</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Incidencias</a></li>
-    <li class="active">Incidencias de alumno</li>
+    <li class="active">Faltas de alumnos</li>
   </ol>
 </section>
 
@@ -24,14 +25,13 @@ use App\Models\Client;
       </div>
     </div><!-- /.box-header -->
     <div class="box-body">
-      <table class="table table-bordered">
+      <table class="table table-bordered" id="assistanceTable">
         <thead>
           <tr>
             <td style="width: 100px;">Nº incidencia</td>
             <td>Alumno</td>
-            <td>Resumen</td>
             <td>Fecha</td>
-            <td style="width: 125px;"></td>
+            <td>Clase</td>
           </tr>
         </thead>
         <tbody>
@@ -39,12 +39,8 @@ use App\Models\Client;
           <tr>
             <td>{{$incidence->id}}</td>
             <td><a href="{{URL::to('/client/view/'.$incidence->fk_client)}}">{{Client::getClientName($incidence->fk_client)}}</a></td>
-            <td>{{$incidence->concept}}</td>
             <td>{{date('d/m/Y', strtotime($incidence->created_at))}}</td>
-            <td>
-              <button class="btn btn-success btn-xs" onclick="alert('Incidencia completa: \n\n{{$incidence->observations}}')"><i class="fa fa-eye"></i></button>
-              <a class="btn btn-warning btn-xs" href="{{URL::to('/incidence/client/complete/'.$incidence->id)}}"><i class="fa fa-mail-reply-all"></i> Completar</a>
-            </td>
+            <td><i class="fa fa-circle-o text-red"></i> {{ServicesController::fetchServiceFromFkRoomReserve($incidence->fk_room_reserve)->name}}</td>
           </tr>
           @endforeach
         </tbody>
@@ -52,5 +48,16 @@ use App\Models\Client;
     </div>
   </div>
 </section>
+<script>
 
+/*
+ * At load, set the datatable
+ */
+window.onload = function()
+{
+  jQuery("#assistanceTable").dataTable({
+    "iDisplayLength": 100
+  });
+}
+</script>
 @stop

@@ -103,7 +103,9 @@ function updateService(id, name, description, price, matricula, iva, is_active)
  */
 window.onload = function()
 {
-  jQuery("#clientsTable").dataTable();
+  jQuery("#clientsTable").dataTable({
+    "iDisplayLength": 100
+  });
 }
 </script>
 

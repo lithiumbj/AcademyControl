@@ -191,4 +191,16 @@ class ServicesController extends Controller
       $services = ServiceClient::all();
       return count($services);
     }
+
+    /*
+     * This static function returns the service object from a reserve
+     */
+     public static function fetchServiceFromFkRoomReserve($fk_room_reserve)
+     {
+       $roomReserve = RoomReserve::find($fk_room_reserve);
+       $roomService = RoomService::find($roomReserve->fk_room_service)->first();
+       $service = Service::find($roomService->fk_service)->first();
+       //Return the service
+       return $service;
+     }
 }

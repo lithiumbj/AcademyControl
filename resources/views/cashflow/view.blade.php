@@ -77,7 +77,9 @@ use App\User;
 <script>
   window.onload = function()
   {
-    jQuery("#cashflowTable").dataTable();
+    jQuery("#cashflowTable").dataTable({
+      "iDisplayLength": 100
+    });
   }
 </script>
 @stop

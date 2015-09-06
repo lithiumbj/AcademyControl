@@ -41,7 +41,7 @@ use App\Models\Client;
             <p><i>¡ATENCIÓN! estos clientes tienen recibos emitidos este mes, verifique que no se van a duplicar sus recibos</i></p>
             <hr/>
             <div class="row">
-      
+
               <div class="col-md-12" style="margin-top: 20px;">
                 <div class="form-group">
                   <label for="inputEmail3" class="col-sm-4 control-label">Nota pública</label>
@@ -89,7 +89,9 @@ use App\Models\Client;
  */
 window.onload = function()
 {
-  jQuery("#invoiceList").dataTable();
+  jQuery("#invoiceList").dataTable({
+    "iDisplayLength": 100
+  });
 }
 </script>
 @stop

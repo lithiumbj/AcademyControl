@@ -87,7 +87,9 @@ function deleteClient(client_id)
  */
 window.onload = function()
 {
-  jQuery("#clientsTable").dataTable();
+  jQuery("#clientsTable").dataTable({
+    "iDisplayLength": 100
+  });
 }
 </script>
 @stop

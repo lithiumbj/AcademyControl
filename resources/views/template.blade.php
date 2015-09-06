@@ -285,8 +285,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href=""><i class="fa fa-circle-o"></i> Nuevos clientes</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Informaciones</a></li>
+                <li><a href="{{URL::to('/stats/new_clients')}}"><i class="fa fa-circle-o"></i> Nuevos clientes</a></li>
+                <li><a href="{{URL::to('/stats/new_infos')}}"><i class="fa fa-circle-o"></i> Informaciones</a></li>
               </ul>
             </li>
             <!-- //Element -->

@@ -97,4 +97,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/provider/create', 'ProviderController@getCreate');
   Route::post('/provider/create', 'ProviderController@postCreate');
   Route::get('/provider/view/{id}', 'ProviderController@getProvider');
+  Route::get('/provider/update/{id}', 'ProviderController@getUpdate');
+  Route::get('/provider/delete/{id}', 'ProviderController@getDelete');
+  Route::post('/provider/update', 'ProviderController@postUpdate');
+  //Provider invoices
+  Route::get('/provider_invoice/create/{id}', 'ProviderInvoiceController@getCreateInvoice');
 });

@@ -87,6 +87,81 @@ class ProviderController extends Controller
      */
     public function getProvider($id)
     {
-        
+      $model = Provider::find($id);
+      //get the contat way's
+      //$invoices = Invoice::where('fk_client', '=', $model->id)->orderBy('date_creation', 'asc')->get();
+      $invoices = [];
+      //Render the view
+      return view('provider.view',['model' => $model, 'invoices' => $invoices]);
     }
+    
+    /*
+     * Render's the update of the model
+     */
+    public function getUpdate($id)
+    {
+      $model = Provider::find($id);
+      return view('provider.update',['model' => $model]);
+    }
+
+    /*
+     * This function is called to update a provider model
+     */
+    public function postUpdate(Request $request)
+     {
+       //Get the data
+       $data = $request->all();
+       //Filter the data to check if any is wrong
+       $validator = Validator::make($data, [
+            'name' => 'required|max:254',
+            'lastname_1' => 'required|max:254',
+            'address' => 'required|max:254',
+        ]);
+        //Check if validator fails
+        if(!$validator->fails()){
+          //Innitial validation ok
+          $provider = Provider::find($data['id']);
+          //Load data
+          $provider->name = $data['name'];
+          $provider->lastname_1 = $data['lastname_1'];
+          $provider->lastname_2 = $data['lastname_2'];
+          $provider->nif = $data['nif'];
+          $provider->address = $data['address'];
+          $provider->poblation = $data['poblation'];
+          $provider->city = $data['city'];
+          $provider->phone = $data['phone'];
+          $provider->email = $data['email'];
+          $provider->cp = $data['cp'];
+          $provider->other_address_info = $data['other_address_info'];
+
+          //Save the client
+          if($provider->save()){
+            //Ok, go to view
+             return redirect('provider/view/'.$provider->id);
+          }else{
+            //ko, return to form
+            return redirect('provider/update/'.$provider->id)
+                     ->withErrors($validator)
+                     ->withInput();
+          }
+        }else{
+          //Innitial validation KO, redirect to form
+          return redirect('provider/update/'.$provider->id)
+                   ->withErrors($validator)
+                   ->withInput();
+        }
+     }
+     
+     /*
+      * @TO-DO
+      * this function deletes the provider
+      */
+     public function getDelete($id)
+     {
+         //Get the invoices
+         
+         //Get the invoice lines
+         
+         //Delete the provider
+     }
 }

@@ -92,4 +92,9 @@ Route::group(['middleware' => 'auth'], function () {
   //Stats routes
   Route::get('/stats/new_clients', 'StatsController@getNewClients');
   Route::get('/stats/new_infos', 'StatsController@getNewInfos');
+  //Provider Routes
+  Route::get('/provider/', 'ProviderController@getList');
+  Route::get('/provider/create', 'ProviderController@getCreate');
+  Route::post('/provider/create', 'ProviderController@postCreate');
+  Route::get('/provider/view/{id}', 'ProviderController@getProvider');
 });

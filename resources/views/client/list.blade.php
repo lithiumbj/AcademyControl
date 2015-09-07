@@ -1,6 +1,9 @@
 @extends('template')
 <!-- Content Header (Page header) -->
 @section('content')
+<?php
+use App\User;
+?>
 <section class="content-header">
   <h1>
     Clientes
@@ -29,7 +32,7 @@
             <th>Teléfono</th>
             <th>Dirección</th>
             <th>Tipo</th>
-            <th>Corriente de pago</th>
+            <th>Empleado</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -54,7 +57,7 @@
               @endif
             </td>
             <td class="center">
-              <small class="label bg-green">NOT YET</small>
+              {{User::getUserName($client->fk_user)}}
             </td>
             <td class="center">
               <!-- Actions -->

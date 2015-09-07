@@ -2,6 +2,7 @@
 <!-- Content Header (Page header) -->
 <?php
 use App\Models\Client;
+use App\Http\Controllers\CashflowController;
 ?>
 @section('content')
 <section class="content-header">
@@ -35,7 +36,8 @@ use App\Models\Client;
                 <div class="form-group" style="height: 55px;">
                   <label class="col-sm-4 control-label">Importe (+/-)</label>
                   <div class="col-sm-8">
-                    <input class="form-control" placeholder="Cantidad" name="value" type="text">
+                    <input class="form-control" placeholder="Cantidad" name="value" value="{{CashflowController::getArrastre()}}" type="text">
+                    <p>Se calcula automáticamente el arrastre con respecto a los días anteriores</p>
                   </div>
                 </div>
 

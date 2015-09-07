@@ -131,4 +131,13 @@ class CashflowController extends Controller
     //Return the id
     return $cashflow->id;
   }
+
+  /*
+   * Fetch's the arrastre for the cashflow
+   */
+  public static function getArrastre()
+  {
+    $amount = Cashflow::where('fk_company', '=', Auth::user()->fk_company)->sum('value');
+    return $amount;
+  }
 }

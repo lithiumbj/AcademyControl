@@ -13,8 +13,7 @@ class InvoiceProviderLinesFix extends Migration {
     public function up() {
         Schema::table('invoice_provider_line', function ($table) {
             //Drop columns
-            $table->dropColumn('tax_base');
-            $table->dropColumn('total');
+            $table->dropColumn('tax');
         });
     }
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\Provider;
+use App\Models\InvoiceProvider;
+use App\Models\InvoiceProviderLine;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
@@ -159,9 +161,18 @@ class ProviderController extends Controller
      public function getDelete($id)
      {
          //Get the invoices
-         
-         //Get the invoice lines
-         
+         $invoices = InvoiceProvider::where('fk_provider','=',$id)->get();
+         foreach($invoices as $invoice){
+            //Get the invoice lines
+            $lines = InvoiceProviderLine::where('fk_provider_invoice', '=', $invoice->id)->get();
+            foreach($lines as $line){
+                $line->delete();
+            }
+            $invoice->delete();
+         }
          //Delete the provider
+         $provider = Provider::find($id);
+         $provider->delete();
+         return redirect('/provider');
      }
 }

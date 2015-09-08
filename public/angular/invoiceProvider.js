@@ -16,28 +16,11 @@ window.onload = function()
       this.tmpDescription = '';
       this.tmpIVA = 0.0;
       this.note_public = '';
+      this.currDate;
       //total Variables
       this.iva = 0.0;
       this.bi = 0.0;
       this.total = 0.0;
-
-      /*
-       * This function is called when the user select's an product / service in the
-       * combobox, it get the details of the product using a webservice
-       */
-      this.getProductDetails = function()
-      {
-        $http.post(_getProductDetails, {id: this.tmpProduct}).
-        then(angular.bind(this, function(response) {
-          //Ok
-          this.tmpPrice = response.data.price;
-          this.tmpDescription = response.data.description;
-          this.tmpName = response.data.name;
-          this.tmpIVA = response.data.iva;
-        }), function(response) {
-          // Ko.
-        });
-      };
 
       /*
        * This function recalculate the invoice totals
@@ -61,16 +44,27 @@ window.onload = function()
       this.addLine = function()
       {
         var line = {
-          "fk_service" : this.tmpProduct,
           "tax_base" : parseInt(this.tmpPrice),
-          "prod_name" : this.tmpName,
+          "prod_name" : this.concept,
           "prod_description" : this.tmpDescription,
-          "name" : this.tmpName,
           "tax" : parseInt(this.tmpIVA)
         };
         this.lines.push(line);
         //recalculate the totals
         this.recalculateTotals();
+      };
+      
+      /*
+       * Deletes the line
+       */
+      this.deleteLine = function(fk_line)
+      {
+          var backup = this.lines;
+          this.lines = [];
+          for(var i=0; i < backup.length; i++){
+              if(i != fk_line)
+                  this.lines.push(backup[i]);
+          }
       };
 
       /*
@@ -78,7 +72,7 @@ window.onload = function()
        */
        this.createInvoice = function()
        {
-         $http.post(_createInvoice, {fk_client : _fk_client, lines : this.lines, note: this.note_public}).
+         $http.post(_createInvoice, {fk_provider : _fk_client, lines : this.lines, note: this.note_public, date : this.currDate}).
          then(angular.bind(this, function(response) {
            //Ok
            if(response.data.status != 'ko'){
@@ -97,4 +91,7 @@ window.onload = function()
   angular.bootstrap(angular.element("#invoice-container")[0], ['invoice']);
   //Other jQuery stuff
   jQuery("#serviceSelector").select2();
+  jQuery("#facDate").datepicker({
+      format : 'yyyy-mm-dd'
+  });
 }

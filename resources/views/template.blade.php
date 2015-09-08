@@ -186,7 +186,7 @@
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/provider/create')}}"><i class="fa fa-circle-o"></i> Crear proveedor</a></li>
                 <li><a href="{{URL::to('/provider/')}}"><i class="fa fa-circle-o"></i> Listado de proveedores</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Facturas de proveedor</a></li>
+                <li><a href="{{URL::to('/provider_invoice')}}"><i class="fa fa-circle-o"></i> Facturas de proveedor</a></li>
               </ul>
             </li>
             <!-- //Element -->

@@ -6,12 +6,12 @@ use App\Models\Client;
 @section('content')
 <section class="content-header">
   <h1>
-    Recibos
-    <small>Crear nuevo</small>
+    Factura de proveedor
+    <small>Registrar</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Recibos</a></li>
-    <li class="active">Crear nuevo</li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> Factura de proveedor</a></li>
+    <li class="active">Registrar</li>
   </ol>
 </section>
 
@@ -21,8 +21,8 @@ use App\Models\Client;
     <div class="box-header with-border">
       <h3 class="box-title">Crear nuevo </h3>
       <div class="box-tools pull-right">
-        <button class="btn btn-success btn-xs" ng-click="invoice.createInvoice()"><i class="fa fa-floppy-o"></i> Crear recibo</button>
-        <button class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Descartar</button>
+        <button class="btn btn-success btn-xs" ng-click="invoice.createInvoice()"><i class="fa fa-floppy-o"></i> Guardar</button>
+        <a class="btn btn-danger btn-xs" href="{{URL::to('/provider_invoice')}}"><i class="fa fa-minus"></i> Descartar</a>
       </div>
     </div><!-- /.box-header -->
     <div class="box-body">
@@ -45,6 +45,10 @@ use App\Models\Client;
             <tr>
               <td>Nota pública</td>
               <td><input type="text" class="form-control" ng-model="invoice.note_public"/></td>
+            </tr>
+            <tr>
+              <td>Fecha de la factura</td>
+              <td><input type="text" id="facDate" value="{{date('Y-m-d')}}" class="form-control" ng-model="invoice.currDate"/></td>
             </tr>
           </table>
         </div>
@@ -97,11 +101,11 @@ use App\Models\Client;
               <td><% line.name %></td>
               <td><% line.description %></td>
               <td><% line.tax_base %> <b>€</b></td>
-              <td><% line.taxt %> <b>€</b></td>
-              <td><% line.tax_base + line.tax %> <b>€</b></td>
+              <td><% line.tax %> <b>€</b></td>
+              <td><% line.tax_base + (line.tax_base * (line.tax/100)) %> <b>€</b></td>
               <!-- actions -->
               <td>
-
+                  <button class="btn btn-danger btn-xs" ng-click="invoice.deleteLine(keyLine)"><i class="fa fa-trash"></i></button>
               </td>
               <!-- //actions -->
             </tr>
@@ -137,7 +141,7 @@ use App\Models\Client;
           <!-- Product price changer -->
           <div class="col-md-1">
             IVA (%) <br/>
-            <input class="form-control" ng-model="invoice.tmpIva" type="text"/>
+            <input class="form-control" ng-model="invoice.tmpIVA" type="text"/>
           </div>
           <!-- //Product price changer -->
 
@@ -168,9 +172,9 @@ use App\Models\Client;
 <script>
   var _csrf = "{{csrf_token()}}";
   var _getProductDetails = "{{URL::to('/services/ajaxGetProductInfo')}}";
-  var _createInvoice = "{{URL::to('/invoice/ajaxCreate')}}";
+  var _createInvoice = "{{URL::to('/provider_invoice/create')}}";
   var _fk_client = "{{$provider->id}}";
-  var _invoice_detail = "{{URL::to('/invoice/')}}";
+  var _invoice_detail = "{{URL::to('/provider_invoice/')}}";
 </script>
 <script src="{{URL::to('/angular/invoiceProvider.js')}}"></script>
 @stop

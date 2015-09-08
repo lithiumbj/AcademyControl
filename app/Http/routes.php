@@ -101,5 +101,11 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/provider/delete/{id}', 'ProviderController@getDelete');
   Route::post('/provider/update', 'ProviderController@postUpdate');
   //Provider invoices
+  Route::get('/provider_invoice/', 'ProviderInvoiceController@getList');
   Route::get('/provider_invoice/create/{id}', 'ProviderInvoiceController@getCreateInvoice');
+  Route::get('/provider_invoice/{id}', 'ProviderInvoiceController@getView');
+  Route::get('/provider_invoice/delete/{id}', 'ProviderInvoiceController@getDelete');
+  Route::get('/provider_invoice/pay/{id}', 'ProviderInvoiceController@setPayedInvoice');
+  Route::get('/provider_invoice/unpay/{id}', 'ProviderInvoiceController@setUnpayedInvoice');
+  Route::post('/provider_invoice/create/', 'ProviderInvoiceController@ajaxCreateInvoice');
 });

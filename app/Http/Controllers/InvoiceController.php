@@ -35,7 +35,7 @@ class InvoiceController extends Controller
     //Second create the line
     $newLine = new InvoiceLine;
     $newLine->fk_service = $service->id;
-    $newLine->prod_name = $service->name;
+    $newLine->prod_name = $service->name. ' Reserva de plaza / Matricula';
     $newLine->prod_description = $service->description;
     $newLine->tax_base = $service->matricula;
     $newLine->tax = $service->iva;

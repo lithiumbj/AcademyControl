@@ -98,8 +98,8 @@ use App\Models\Client;
           </thead>
           <tbody>
             <tr ng-repeat="(keyLine, line) in invoice.lines">
-              <td><% line.name %></td>
-              <td><% line.description %></td>
+              <td><% line.prod_name %></td>
+              <td><% line.prod_description %></td>
               <td><% line.tax_base %> <b>€</b></td>
               <td><% line.tax %> <b>€</b></td>
               <td><% line.tax_base + (line.tax_base * (line.tax/100)) %> <b>€</b></td>

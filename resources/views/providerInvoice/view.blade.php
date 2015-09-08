@@ -37,10 +37,6 @@ use App\Http\Controllers\RoomController;
           <div class="col-md-6">
             <table class="table table-bordered">
               <tr>
-                <td style="width:300px;">Referencia</td>
-                <td>{{$invoice->facnumber}}</td>
-              </tr>
-              <tr>
                 <td>Estado</td>
                 <td>
                   @if($invoice->status == 0)

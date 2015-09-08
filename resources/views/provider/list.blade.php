@@ -7,11 +7,11 @@ use App\Models\Provider;
 ?>
 <section class="content-header">
   <h1>
-    Clientes
+    Proveedores
     <small>Listado</small>
   </h1>
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Clientes</a></li>
+    <li><a href="#"><i class="fa fa-dashboard"></i> Proveedores</a></li>
     <li class="active">Listado</li>
   </ol>
 </section>

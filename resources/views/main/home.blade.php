@@ -4,6 +4,7 @@
 <?php
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\InvoiceProvider;
 use App\Models\InvoicePayment;
 use App\Http\Controllers\ServicesController;
 ?>
@@ -130,10 +131,10 @@ use App\Http\Controllers\ServicesController;
     <!-- Box -->
     <div class="box box-success">
       <div class="box-header with-border">
-        <h3 class="box-title">Ingresos mensuales</h3>
+        <h3 class="box-title">Ingresos mensuales / Gastos mensuales</h3>
       </div><!-- /.box-header -->
       <div class="box-body" id="graphBoxBody">
-        <canvas id="monthlyMoney" width="100%" height="200"></canvas>
+        <canvas id="monthlyMoney" width="100%" height="250"></canvas>
       </div><!-- /.box-body -->
     </div>
     <!-- //Box -->
@@ -236,15 +237,29 @@ window.onload = function()
       ],
       datasets: [
           {
-              label: "Money",
-              fillColor: "rgba(220,220,220,0.2)",
-              strokeColor: "rgba(220,220,220,1)",
-              pointColor: "rgba(220,220,220,1)",
+              label: "Ingresos",
+              fillColor: "rgba(46, 204, 113,0.3)",
+              strokeColor: "rgba(46, 204, 113,1.0)",
+              pointColor: "rgba(46, 204, 113,1.0)",
               pointStrokeColor: "#fff",
               pointHighlightFill: "#fff",
               pointHighlightStroke: "rgba(220,220,220,1)",
               data: [
                   @foreach(InvoicePayment::getMonthlyMoney() as $money)
+                    "{{$money->total}}",
+                  @endforeach
+              ]
+          },
+          {
+              label: "Gastos",
+              fillColor: "rgba(231, 76, 60,0.3)",
+              strokeColor: "rgba(231, 76, 60,1.0)",
+              pointColor: "rgba(231, 76, 60,1.0)",
+              pointStrokeColor: "#fff",
+              pointHighlightFill: "#fff",
+              pointHighlightStroke: "rgba(220,220,220,1)",
+              data: [
+                  @foreach(InvoiceProvider::getMonthlyMoney() as $money)
                     "{{$money->total}}",
                   @endforeach
               ]

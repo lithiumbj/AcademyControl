@@ -242,8 +242,8 @@
                 <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li><a href=""><i class="fa fa-circle-o"></i> Dar de alta</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Ver costes</a></li>
+                <li><a href="{{URL::to('/user/create')}}"><i class="fa fa-circle-o"></i> Dar de alta</a></li>
+                <li><a href="{{URL::to('/user/list')}}"><i class="fa fa-circle-o"></i> Listar empleados</a></li>
               </ul>
             </li>
             <!-- //Element -->

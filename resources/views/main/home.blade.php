@@ -98,7 +98,7 @@ use App\Http\Controllers\ServicesController;
       <div class="box-header with-border">
         <h3 class="box-title">Facturas vencidas (10 días)</h3>
         <div class="box-settings pull-right">
-          <small class="label pull-right bg-green">{{count(Invoice::get5DaysInvoices())}}</small>
+          <small class="label pull-right bg-green">{{count(Invoice::get10DaysInvoices())}}</small>
         </div>
       </div><!-- /.box-header -->
       <div class="box scrollable-box">
@@ -112,7 +112,7 @@ use App\Http\Controllers\ServicesController;
                 </tr>
               </thead>
               <tbody>
-                @foreach(Invoice::get5DaysInvoices() as $invoice)
+                @foreach(Invoice::get10DaysInvoices() as $invoice)
                 <tr>
                   <td>{{$invoice->facnumber}}</td>
                   <td>{{Client::getClientName($invoice->fk_client)}}</td>

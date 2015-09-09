@@ -19,7 +19,7 @@ use App\Models\Client;
 <section class="content" id="invoice-container" ng-controller="InvoiceController as invoice">
   <div class="box box-success">
     <div class="box-header with-border">
-      <h3 class="box-title">Crear nuevo </h3>
+      <h3 class="box-title">Crear nuevo --> {{$client->name}} {{$client->lastname_1}} </h3>
       <div class="box-tools pull-right">
         <button class="btn btn-success btn-xs" ng-click="invoice.createInvoice()"><i class="fa fa-floppy-o"></i> Crear recibo</button>
         <button class="btn btn-danger btn-xs"><i class="fa fa-minus"></i> Descartar</button>

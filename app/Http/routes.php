@@ -108,4 +108,10 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/provider_invoice/pay/{id}', 'ProviderInvoiceController@setPayedInvoice');
   Route::get('/provider_invoice/unpay/{id}', 'ProviderInvoiceController@setUnpayedInvoice');
   Route::post('/provider_invoice/create/', 'ProviderInvoiceController@ajaxCreateInvoice');
+  //Employee routes
+  Route::get('/user/create', 'UserController@getCreate');
+  Route::get('/user/list', 'UserController@getList');
+  Route::post('/user/create', 'UserController@postCreate');
+  Route::get('/user/view/{id}', 'UserController@getView');
+  Route::post('/user/update', 'UserController@postUpdate');
 });

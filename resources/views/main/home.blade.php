@@ -75,7 +75,7 @@ use App\Http\Controllers\ServicesController;
             <tbody>
               @foreach(Invoice::get5DaysInvoices() as $invoice)
               <tr>
-                <td>{{$invoice->facnumber}}</td>
+                <td><a href="{{URL::to('/invoice/'.$invoice->id)}}">{{$invoice->facnumber}}</a></td>
                 <td>{{Client::getClientName($invoice->fk_client)}}</td>
                 <td>{{date('Y/m/d', strtotime($invoice->date_creation))}}</td>
                 <td>{{$invoice->total}}</td>
@@ -114,7 +114,7 @@ use App\Http\Controllers\ServicesController;
               <tbody>
                 @foreach(Invoice::get10DaysInvoices() as $invoice)
                 <tr>
-                  <td>{{$invoice->facnumber}}</td>
+                  <td><a href="{{URL::to('/invoice/'.$invoice->id)}}">{{$invoice->facnumber}}</a></td>
                   <td>{{Client::getClientName($invoice->fk_client)}}</td>
                   <td>{{date('Y/m/d', strtotime($invoice->date_creation))}}</td>
                   <td>{{$invoice->total}}</td>

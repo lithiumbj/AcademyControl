@@ -442,7 +442,7 @@ use App\Models\Client;
                                     <button class="btn btn btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo Libre ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                     @else
                                     <!-- Mid occupance -->
-                                      @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) < 2 && ($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 0)
+                                      @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) <= 2 && ($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 0)
                                         <button class="btn btn btn-warning"data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo casi lleno ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                       @else
                                         <!-- Full! -->

@@ -6,6 +6,7 @@ use App\User;
 use App\Models\Service;
 use App\Models\Room;
 use App\Models\RoomService;
+use App\Models\Assistance;
 use App\Models\RoomReserve;
 use App\Http\Controllers\Controller;
 
@@ -185,7 +186,12 @@ class RoomController extends Controller
   public function postDelinkClient(Request $request)
   {
       $data = $request->all();
-      $roomReserve = RoomReserve::whereRaw('fk_client = '.$data['fk_client'].' AND fk_room_service = '.$data['fk_room_service']);
+      $roomReserve = RoomReserve::whereRaw('fk_client = '.$data['fk_client'].' AND fk_room_service = '.$data['fk_room_service'])->first();
+      //Pre-delete the assistance notes
+      $assistances = Assistance::where('fk_room_reserve','=', $roomReserve->id)->get();
+      foreach($assistances as $assistance){
+          $assistance->delete();
+      }
       //Delete it if exists
       if($roomReserve)
         $roomReserve->delete();

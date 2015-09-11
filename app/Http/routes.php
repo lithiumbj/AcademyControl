@@ -21,6 +21,9 @@ Route::get('/login',function(){
     return view('login');
 });
 Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/login',function(){
+    return view('login');
+});
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 //ONLY ON DEV
 Route::get('auth/register', 'Auth\AuthController@getRegister');

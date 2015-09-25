@@ -7,6 +7,7 @@ use App\Models\Service;
 use App\Models\ServiceClient;
 use App\Models\RoomService;
 use App\Models\RoomReserve;
+use App\Models\Assistance;
 use App\Http\Controllers\Controller;
 use App\Helpers\AngularHelper;
 
@@ -93,6 +94,11 @@ class ServicesController extends Controller
     {
       //Get the ServiceUser object
       $serviceClient = ServiceClient::find($id);
+      //Delete all the assistance data
+      $assistances = Assistance::where('fk_client', '=', $serviceClient->fk_client)->get();
+      foreach($assistances as $assistance){
+          $assistance->delete();
+      }
       //First of all unlink the room reserves (horario)
       $roomServices = RoomService::whereRaw('fk_service = '.$serviceClient->fk_service)->get();
       //for every roomservice look for a coincidence in the roomReserve and delete
@@ -106,6 +112,33 @@ class ServicesController extends Controller
       }
       //After all, delete the relation between user and service
       $serviceClient->delete();
+      //return a redirect
+      return redirect('/client/view/'.$serviceClient->fk_client);
+    }
+    /*
+     * Disables the link between a service and the client
+     */
+    public function getDisable($id)
+    {
+      //Get the ServiceUser object
+      $serviceClient = ServiceClient::find($id);
+      $serviceClient->active = 0;
+      $serviceClient->date_to = date('Y-m-d');
+      $serviceClient->save();
+      //return a redirect
+      return redirect('/client/view/'.$serviceClient->fk_client);
+    }
+    /*
+     * ENABLES the link between a service and the client
+     */
+    public function getEnable($id)
+    {
+      //Get the ServiceUser object
+      $serviceClient = ServiceClient::find($id);
+      $serviceClient->active = 1;
+      $serviceClient->created_at = date('Y-m-d');
+      $serviceClient->date_to = null;
+      $serviceClient->save();
       //return a redirect
       return redirect('/client/view/'.$serviceClient->fk_client);
     }

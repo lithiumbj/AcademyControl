@@ -1,17 +1,21 @@
 .center{
-  text-align: center;
+    text-align: center;
 }
 .text-right{
-  text-align: right;
+    text-align: right;
 }
 .white-text{
-  color: white;
+    color: white;
 }
 .scrollable-box{
-  max-height: 300px !important;
-  overflow-x: scroll !important;
+    max-height: 300px !important;
+    overflow-x: scroll !important;
 }
 .label-room{
-  margin-left: 11px;
-  margin-top: 3px;  
+    margin-left: 11px;
+    margin-top: 3px;  
+}
+.disaledService{
+    color:#cccccc !important;
+    text-decoration: line-through !important;
 }

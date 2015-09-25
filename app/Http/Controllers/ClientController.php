@@ -170,7 +170,7 @@ class ClientController extends Controller
       $services = DB::table('service_client')
         ->join('service', 'service.id', '=', 'service_client.fk_service')
         ->where('service_client.fk_client','=',$model->id)
-        ->select('service_client.id','service.id as serviceId', 'service.name', 'service_client.created_at')->get();
+        ->select('service_client.id','service.id as serviceId', 'service.name', 'service_client.created_at', 'service_client.active','service_client.reason','service_client.date_to')->get();
       //Get the client last invoices
       $invoices = Invoice::where('fk_client', '=', $model->id)->orderBy('date_creation', 'asc')->get();
 

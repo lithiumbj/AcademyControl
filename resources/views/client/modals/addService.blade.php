@@ -82,3 +82,56 @@
 <script src="{{URL::to('/angular/addService.js')}}"></script>
 
 <!-- //Scripts zone -->
+
+<!-- Transfer Service modal -->
+
+<div class="modal fade" id="transferService" tabindex="-1" role="dialog" aria-labelledby="transferService" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <form action="{{URL::to('/service/switch')}}" method="post">
+        {!! csrf_field() !!}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Transferir un servicio</h4>
+      </div>
+
+      <!-- Step 1 -->
+      <div class="modal-body">
+        <p>
+            Puede transferir un servicio de un cliente a otro servicio, esto permite hacer un cambio rápido entre servicios sin por ello perder las faltas registradas o la didáctica acumulada para el cliente
+        </p>
+        <div class="form-group">
+            <label>Servicio a transferir <b><i>(Solo figuran los activos)</i></b></label>
+            <select name="fk_origin" class="form-control">
+                @foreach($services as $service)
+                    @if($service->active != 0)
+                    <option value="{{$service->id}}">{{$service->name}}</option>
+                    @endif
+                @endforeach
+            </select>
+            
+        </div>
+        <div class="form-group">
+            <label>Servicio de destino </label>
+            <select name="fk_destiny" class="form-control">
+                @foreach(Service::fetchCompanyServices() as $srv)
+                  <option value="{{$srv->id}}">{{$srv->name}}</option>
+                @endforeach
+            </select>
+            
+        </div>
+      </div>
+      <!-- //Step 1 -->
+
+      <!-- //Step 2 -->
+
+      <div class="modal-footer">
+          <p style="text-align: left;">Esta acción solo se puede revertir realizando otra transferencia, si duda, póngase en contacto con el servicio de atención técnica</p>
+        <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left;">Cerrar</button>
+        <button type="submit" class="btn btn-success">Transferir</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Transfer Service modal //-->

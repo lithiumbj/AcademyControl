@@ -53,6 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/service/unlink/{id}', 'ServicesController@getUnlink');
   Route::get('/service/disable/{id}', 'ServicesController@getDisable');
   Route::get('/service/enable/{id}', 'ServicesController@getEnable');
+  Route::post('/service/switch/', 'ServicesController@switchService');
   Route::get('/services/delete/{id}', 'ServicesController@getDelete');
   //Rooms / Horarios
   Route::get('/rooms', 'RoomController@getPreview');

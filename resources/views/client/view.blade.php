@@ -298,6 +298,7 @@ use App\Models\Client;
                     <h3 class="box-title">Servicios</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-success btn-xs" onclick="startAddServiceApp()" data-toggle="modal" data-target="#addService"><i class="fa fa-plus"></i> Agregar servicio</button>
+                        <button class="btn btn-warning btn-xs" data-toggle="modal" data-target="#transferService"><i class="fa fa-undo"></i> Transferir servicio</button>
                     </div>
                 </div>
                 <div class="box-body scrollable-box">
@@ -405,19 +406,19 @@ use App\Models\Client;
                                                 @if(count(RoomController::getRoomsForService($service->serviceId, $i, $a))>0)
                                                 @foreach(RoomController::getRoomsForService($service->serviceId, $i, $a) as $roomService)
                                                 @if(count(RoomController::isClientEnroled($roomService->id, $model->id))>0)
-                                                <button class="btn btn btn-primary" data-toggle="modal" data-target="#delinkRoom" onclick="delinkModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Alumno en este grupo ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
+                                                <button class="btn btn-xs btn-primary" data-toggle="modal" data-target="#delinkRoom" onclick="delinkModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Alumno en este grupo ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                                 @else
                                                 <!-- Free occupance -->
                                                 @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 2)
-                                                <button class="btn btn btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo Libre ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
+                                                <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo Libre ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                                 @else
                                                 <!-- Mid occupance -->
                                                 @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) <= 2 && ($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) > 0)
-                                                <button class="btn btn btn-warning"data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo casi lleno ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
+                                                <button class="btn btn-xs btn-warning"data-toggle="modal" data-target="#enrolRoomModal" onclick="enrolModal({{$model->id}}, {{$roomService->id}}, {{$a}}, {{$i}})">Grupo casi lleno ({{RoomController::getRoomOcupance($roomService->id, $a, $i)}} / {{(RoomController::getCapacity($roomService->id))}})</button>
                                                 @else
                                                 <!-- Full! -->
                                                 @if(($roomService->capacity - RoomController::getRoomOcupance($roomService->id, $a, $i)) == 0)
-                                                <button class="btn btn btn-danger" onclick="alert('Este grupo está leno, tendrá que escoger otro')">Grupo lleno</button>
+                                                <button class="btn btn-xs btn-danger" onclick="alert('Este grupo está leno, tendrá que escoger otro')">Grupo lleno</button>
                                                 @endif
                                                 <!-- //Full! -->
                                                 @endif

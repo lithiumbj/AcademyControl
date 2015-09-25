@@ -142,7 +142,17 @@ class ServicesController extends Controller
       //return a redirect
       return redirect('/client/view/'.$serviceClient->fk_client);
     }
-
+    /*
+     * This function switches from service to another
+     */
+    public function switchService(Request $request)
+    {
+        $data = $request->all();
+        $serviceClient = ServiceClient::find($data['fk_origin']);
+        $serviceClient->fk_service = $data['fk_destiny'];
+        $serviceClient->save();
+        return redirect('/client/view/'.$serviceClient->fk_client);
+    }
     /*
      * This function updates the service based on his id
      */

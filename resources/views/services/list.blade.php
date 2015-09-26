@@ -67,7 +67,7 @@
             </td>
             <td class="center">
               <!-- Actions -->
-              <a class="btn btn-xs btn-success" onclick='updateService({{$service->id}}, "{{$service->name}}", "{{$service->description}}", {{$service->price}}, {{$service->matricula}}, {{$service->iva}}, {{$service->is_active}})' data-toggle="modal" data-target="#updateServiceModal"><i class="fa fa-pencil"></i></a>
+              <a class="btn btn-xs btn-success" onclick='updateService({{$service->id}}, "{{$service->name}}", "{{$service->description}}", {{$service->price}}, {{$service->matricula}}, {{$service->iva}}, {{$service->is_active}},{{$service->fk_teacher}})' data-toggle="modal" data-target="#updateServiceModal"><i class="fa fa-pencil"></i></a>
               <a class="btn btn-xs btn-danger" href="{{URL::to('/services/delete/'.$service->id)}}"><i class="fa fa-trash"></i></a>
               <!-- //Actions -->
             </td>
@@ -86,7 +86,7 @@
 /*
  * This function loads the service data into the form
 */
-function updateService(id, name, description, price, matricula, iva, is_active)
+function updateService(id, name, description, price, matricula, iva, is_active, fk_teacher)
 {
   alert('¡Atención!\n\nEsta operación alterará todas las futuras facturas / recibos de sus clientes que tengan contratado este servicio\n\nContacte con administración de sistemas antes de continuar');
   jQuery("#service_id").val(id);
@@ -96,6 +96,7 @@ function updateService(id, name, description, price, matricula, iva, is_active)
   jQuery("#service_matricula").val(matricula);
   jQuery("#service_iva").val(iva);
   jQuery("#service_is_active").val(is_active);
+  jQuery("#service_fk_teacher").val(fk_teacher);
 }
 
 /*
@@ -226,7 +227,7 @@ window.onload = function()
 
           <div class="form-group col-md-12">
             <label>Profesor que imparte la asignatura</label>
-            <select class="form-control" name="fk_teacher">
+            <select class="form-control" name="fk_teacher" id="service_fk_teacher">
               @foreach(User::getUsers() as $user)
                 <option value="{{$user->id}}">{{$user->name}}</option>
               @endforeach

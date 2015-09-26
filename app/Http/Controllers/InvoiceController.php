@@ -268,7 +268,7 @@ class InvoiceController extends Controller
      //After get the clients, get the services foreac
      foreach($clients as $client){
        //Get associated services
-       $services = ServiceClient::where('fk_client', '=', $client->id)->get();
+       $services = ServiceClient::whereRaw('fk_client = '.$client->id.' AND active = 1')->get();
        //For-each service generate the monthly due
        $lines = [];
        foreach($services as $serviceClient){
@@ -364,5 +364,31 @@ class InvoiceController extends Controller
      //Delete the invoice
      $invoice = Invoice::find($facid);
      $invoice->delete();
+   }
+   /*
+    * This function updates the public note of the invoice
+    */
+   public function updatePublicNote(Request $request)
+   {
+       $data = $request->all();
+       //Load the invoice
+       $invoice = Invoice::find($data['id']);
+       $invoice->text_public = $data['txt'];
+       $invoice->save();
+       //Redirect
+       return redirect('/invoice/'.$invoice->id);
+   }
+   /*
+    * This function updates the private note of the invoice
+    */
+   public function updatePrivateNote(Request $request)
+   {
+       $data = $request->all();
+       //Load the invoice
+       $invoice = Invoice::find($data['id']);
+       $invoice->text_private = $data['txt'];
+       $invoice->save();
+       //Redirect
+       return redirect('/invoice/'.$invoice->id);
    }
 }

@@ -92,7 +92,7 @@ use App\Http\Controllers\ServicesController;
 
 <div class="row">
 
-  <div class="col-md-4">
+  <div class="col-md-7">
     <!-- Box -->
     <div class="box box-danger">
       <div class="box-header with-border">
@@ -140,7 +140,11 @@ use App\Http\Controllers\ServicesController;
     <!-- //Box -->
   </div>
 
-  <div class="col-md-3">
+
+</div>
+<div class="row">
+    
+  <div class="col-md-4">
     <!-- Box -->
     <div class="box box-warning">
       <div class="box-header with-border">
@@ -162,10 +166,30 @@ use App\Http\Controllers\ServicesController;
     </div>
     <!-- //Box -->
   </div>
-
-</div>
-<div class="row">
-  <div class="col-md-3">
+    
+    
+  <div class="col-md-4">
+    <!-- Box -->
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Total a facturar</h3>
+      </div><!-- /.box-header -->
+      <div class="box-body">
+        <div class="info-box">
+          <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
+          <div class="info-box-content">
+            <span class="info-box-text">Facturación estimada del mes</span>
+            <span class="info-box-number">{{ServicesController::getEstimatedMoney()}} €</span>
+            <br/>
+            <span style="text-decoration: italic">* Valor estimativo</span>
+          </div><!-- /.info-box-content -->
+        </div>
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+    
+  <div class="col-md-4">
     <!-- Box -->
     <div class="box box-success">
       <div class="box-header with-border">
@@ -175,7 +199,7 @@ use App\Http\Controllers\ServicesController;
         <div class="info-box">
           <span class="info-box-icon bg-green"><i class="fa fa-certificate"></i></span>
           <div class="info-box-content">
-            <span class="info-box-text">Servicios contratados en este momento</span>
+            <span class="info-box-text">Servicios contratados ahora</span>
             <span class="info-box-number">{{ServicesController::getTotalLinkedServices()}} Servicios</span>
           </div><!-- /.info-box-content -->
         </div>
@@ -183,6 +207,8 @@ use App\Http\Controllers\ServicesController;
     </div>
     <!-- //Box -->
   </div>
+    
+    
 </div>
 </section>
 

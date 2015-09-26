@@ -36,7 +36,7 @@ use App\Http\Controllers\IncidenceController;
                 <td>{{$client[0]->name}}</td>
                 <td>{{$client[0]->lastname_1}} {{$client[0]->lastname_2}}</td>
                 <td class="center">
-                  <button class="btn btn-xs btn-success" onclick="prepareReport({{$client[0]->id}},{{$client[1]}})" data-toggle="modal" data-target="#modalReport"><i class="fa fa-briefcase"></i> Abrir informe</button>
+                  <button class="btn btn-xs btn-success" onclick="prepareReport({{$client[0]->id}},{{$client[1]}}, '{{$client[0]->name}} {{$client[0]->last_name_1}}')" data-toggle="modal" data-target="#modalReport"><i class="fa fa-briefcase"></i> Abrir informe</button>
                   <button class="btn btn-xs btn-warning" onclick="prepareIncidence({{$client[0]->id}})" data-toggle="modal" data-target="#modalIncidence"><i class="fa fa-bullseye"></i> Emitir incidencia</button>
                 </td>
               </tr>

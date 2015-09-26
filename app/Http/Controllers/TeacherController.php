@@ -45,7 +45,7 @@ class TeacherController extends Controller
     //Get the data
     $data = $_GET;
     //Get the client list
-    $roomReserves = RoomReserve::where('fk_room_service','=', $data['service'])->get();
+    $roomReserves = RoomReserve::whereRaw('fk_room = '.$data['room'].' AND hour = '.$data['hour'].' AND day = '.$data['day'])->get();
     $clients = [];
     foreach($roomReserves as $RoomReserve){
       $tmpArray = [];

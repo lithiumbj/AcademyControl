@@ -4,7 +4,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Informe / seguimiento del alumno</h4>
+        <h4 class="modal-title" id="myModalLabel">Informe / seguimiento del alumno -- <b id="cliName"></b></h4>
       </div>
       <div class="modal-body">
         <p>Mostrando todos los registros del alumno</p>
@@ -43,8 +43,10 @@ var client, room_reserve;
 /*
  * Get's the report
  */
-function prepareReport(fk_client, fk_room_reserve)
+function prepareReport(fk_client, fk_room_reserve, name)
 {
+  jQuery("#cliName").html(name);
+
   jQuery("#reportBody").html("");
   client = fk_client;
   room_reserve = fk_room_reserve;

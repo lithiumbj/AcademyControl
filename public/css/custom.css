@@ -19,3 +19,7 @@
     color:#cccccc !important;
     text-decoration: line-through !important;
 }
+.tdFormControl{
+    width: 84%;
+    display: inline-block;
+}

@@ -208,6 +208,7 @@ class ClientController extends Controller
         $serviceClient->fk_user = Auth::user()->id;
         $serviceClient->fk_service = $request->fk_service;
         $serviceClient->fk_client = $request->fk_client;
+        $serviceClient->active = 1;
         //Save the serviceClient
         if($serviceClient->save()){
           //Check if the system need's to make a invoice

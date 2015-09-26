@@ -60,11 +60,25 @@ use App\Http\Controllers\RoomController;
               </tr>
               <tr>
                 <td>Nota interna</td>
-                <td>{{$invoice->text_private}}</td>
+                <td id="notePrivateTxt">{{$invoice->text_private}} <button onclick="jQuery('#notePrivateTxt').hide();jQuery('#notePrivateTd').show();" class="btn btn-xs btn-default pull-right"><i class="fa fa-pencil"></i></button></td>
+                <td id="notePrivateTd" style="display:none;">
+                    <form action="{{URL::to('/invoice/update_private_note')}}" method="post">
+                       {!! csrf_field() !!}
+                       <input type="hidden" name="id" value="{{$invoice->id}}"/>
+                       <input type="text" class="form-control tdFormControl" value="{{$invoice->text_private}}" name="txt"/> <button class="btn btn-xs btn-success" type="submit"><i class="fa fa-save"></i></button>
+                   </form>
+                </td>
               </tr>
               <tr>
                 <td>Nota publica</td>
-                <td>{{$invoice->text_public}}</td>
+                <td id="notePublicTxt">{{$invoice->text_public}} <button onclick="jQuery('#notePublicTxt').hide();jQuery('#notePublicTd').show();" class="btn btn-xs btn-default pull-right"><i class="fa fa-pencil"></i></button></td>
+                <td id="notePublicTd" style="display:none">
+                    <form action="{{URL::to('/invoice/update_public_note')}}" method="post">
+                        {!! csrf_field() !!}
+                        <input type="hidden" name="id" value="{{$invoice->id}}"/>
+                        <input type="text" class="form-control tdFormControl" value="{{$invoice->text_public}}" name="txt"/> <button class="btn btn-xs btn-success" type="submit"><i class="fa fa-save"></i></button>
+                    </form>
+                </td>
               </tr>
               <tr>
                 <td>Fecha de creación</td>

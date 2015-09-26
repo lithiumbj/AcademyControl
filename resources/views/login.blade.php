@@ -41,11 +41,7 @@
             </div>
             <div class="row">
               <div class="col-xs-8">
-                <div class="checkbox icheck">
-                  <label>
-                    <div aria-disabled="false" aria-checked="false" style="position: relative;" class="icheckbox_square-blue"><input style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" type="checkbox"><ins style="position: absolute; top: -20%; left: -20%; display: block; width: 140%; height: 140%; margin: 0px; padding: 0px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; border: 0px none; opacity: 0;" class="iCheck-helper"></ins></div> Remember Me
-                  </label>
-                </div>
+                
               </div><!-- /.col -->
               <div class="col-xs-4">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
@@ -73,6 +69,11 @@
           });
         });
       </script>
-
+      <style>
+          body{
+              background-image: url('{{URL::to("/img/lbg.png")}}') !important;
+              background-size: cover;
+          }
+      </style>
   </body>
 </html>

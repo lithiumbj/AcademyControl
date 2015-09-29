@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Invoice;
 use App\Models\InvoiceProvider;
 use App\Models\InvoicePayment;
+use App\Models\ClientIncidence;
 use App\Http\Controllers\ServicesController;
 ?>
 <section class="content-header">
@@ -17,7 +18,16 @@ use App\Http\Controllers\ServicesController;
 
 <!-- Main content -->
 <section class="content">
-
+@if(ClientIncidence::getIncidencesCount() > 0)
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-xs-12">
+        <div class="alert alert-warning alert-dismissible">
+          <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
+          Existen una o varias incidencias sobre alumnos abiertas en estos momentos <a href="{{URL::to('/incidence/client')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
+        </div>
+    </div>
+</div>
+@endif
 <div class="row">
 
   <div class="col-md-8">

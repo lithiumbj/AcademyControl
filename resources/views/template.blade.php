@@ -1,3 +1,6 @@
+<?php
+use App\Models\ClientIncidence;
+?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -301,7 +304,12 @@
               <a href="#">
                 <i class="fa fa-exclamation"></i>
                 <span>Incidencias</span>
-                <i class="fa fa-angle-left pull-right"></i>
+                @if(ClientIncidence::getIncidencesCount() > 0)
+                <small class="label pull-right bg-yellow">
+                    {{ClientIncidence::getIncidencesCount()}}
+                </small>
+                @endif
+                    <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/incidence/client')}}"><i class="fa fa-circle-o"></i> Incidencias (Alumnos)</a></li>

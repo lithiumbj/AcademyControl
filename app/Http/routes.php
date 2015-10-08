@@ -72,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/invoice/massiveprint', 'InvoiceController@postMassivePrint');
   Route::get('/invoice/{id}', 'InvoiceController@getView');
   Route::get('/invoice/delete/{id}', 'InvoiceController@getDelete');
-  Route::get('/invoice/pay/{id}', 'InvoiceController@setPayedInvoice');
+  Route::post('/invoice/pay/', 'InvoiceController@setPayedInvoice');
   Route::get('/invoice/print/{id}', 'InvoiceController@printInvoice');
   Route::get('/invoice/unpay/{id}', 'InvoiceController@setUnpayedInvoice');
   Route::get('/invoice/create/{id}', 'InvoiceController@getCreateInvoice');

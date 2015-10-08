@@ -17,6 +17,7 @@ window.onload = function()
       this.tmpDescription = '';
       this.tmpIVA = 0.0;
       this.note_public = '';
+      this.date = _curr_date;
       //total Variables
       this.iva = 0.0;
       this.bi = 0.0;
@@ -55,7 +56,18 @@ window.onload = function()
           this.total += this.lines[i].tax + this.lines[i].tax_base;
         }
       };
-
+      /*
+       * This function deletes the line
+       */
+      this.deleteLine = function(fk_line)
+      {
+          var lines = this.lines;
+          this.lines = [];
+          for(var i=0; i<lines.length; i++){
+              if(i!=fk_line)
+                  this.lines.push(lines[i]);
+          }
+      };
       /*
        * This function adds a new line to the invoice
        */
@@ -79,7 +91,7 @@ window.onload = function()
        */
        this.createInvoice = function()
        {
-         $http.post(_createInvoice, {fk_client : _fk_client, lines : this.lines, note: this.note_public}).
+         $http.post(_createInvoice, {fk_client : _fk_client, lines : this.lines, note: this.note_public, date: this.date}).
          then(angular.bind(this, function(response) {
            //Ok
            if(response.data.status != 'ko'){
@@ -98,4 +110,7 @@ window.onload = function()
   angular.bootstrap(angular.element("#invoice-container")[0], ['invoice']);
   //Other jQuery stuff
   jQuery("#serviceSelector").select2();
+  jQuery("#invoice_date").datepicker({
+      format : 'yyyy-mm-dd'
+  });
 }

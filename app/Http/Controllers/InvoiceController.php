@@ -47,7 +47,7 @@ class InvoiceController extends Controller {
     public function ajaxCreateInvoice() {
         $request = AngularHelper::parseClientSideData();
         if ($request) {
-            $finalId = InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $request->fk_client, Auth::user()->fk_company, 1, $request->note, $request->note, date('Y-m-d'), $request->lines);
+            $finalId = InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $request->fk_client, Auth::user()->fk_company, 1, $request->note, $request->note, $request->date, $request->lines);
             if ($finalId)
                 print_r(json_encode(['status' => 'ok', 'id' => $finalId]));
             else

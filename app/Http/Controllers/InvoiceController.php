@@ -213,7 +213,7 @@ class InvoiceController extends Controller {
         //Generate a exit money cashflow
         $payment->fk_cashflow = CashflowController::createInMovement('Devolución de recibo de ' . Client::getClientName($invoice->fk_client), ($invoice->total * -1));
         //return to the invoice list
-        return redirect('/invoice/');
+        return redirect('/invoice/'.$invoice->id);
     }
 
     /*

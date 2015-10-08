@@ -32,6 +32,7 @@ use App\User;
             <th>Teléfono</th>
             <th>Dirección</th>
             <th>Tipo</th>
+            <th>Fecha</th>
             <th>Empleado</th>
             <th>Acciones</th>
           </tr>
@@ -55,6 +56,9 @@ use App\User;
               @if($client->status == 2)
                 <small class="label bg-red">Ex-cliente</small>
               @endif
+            </td>
+            <td>
+                {{date('Y-m-d',strtotime($client->created_at))}}
             </td>
             <td class="center">
               {{User::getUserName($client->fk_user)}}

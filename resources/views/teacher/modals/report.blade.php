@@ -59,7 +59,10 @@ function prepareReport(fk_client, fk_room_reserve, name)
       var jData = JSON.parse(data);
       if(jData.length > 0){
         for(var i = 0; i < jData.length; i++){
-          jQuery("#reportBody").append("<tr><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td>"+jData[i].observations+"</td></tr>");
+            if(jData[i].fk_user != {{\Auth::user()->id}})
+                jQuery("#reportBody").append("<tr style='background-color:#f39c12;'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td>"+jData[i].observations+"</td></tr>");
+            else
+                jQuery("#reportBody").append("<tr><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td>"+jData[i].observations+"</td></tr>");
         }
       }else{
         jQuery("#reportBody").append("<tr><td colspan='3'>Sin registros</td></tr>");

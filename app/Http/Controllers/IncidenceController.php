@@ -53,11 +53,18 @@ class IncidenceController extends Controller {
             //Update
             $checkIn->assist = $data['assist'];
             //Save
-            if ($checkIn->save())
+            if ($checkIn->save()) {
+                if ($data['assist'] == 0) {
+                    $client = Client::find($assistance->fk_client);
+                    //Only do the sms send if the user have parents phone
+                    if (strlen($client->phone_parents) > 8)
+                        var_dump(SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id));die;
+                }
                 echo 'ok';
-            else
+            }else {
                 echo 'ko';
-        }else {
+            }
+        } else {
             //Create and save
             $assistance = new Assistance;
             $assistance->fk_user = Auth::user()->id;
@@ -77,7 +84,6 @@ class IncidenceController extends Controller {
             else
                 echo 'ko';
             //Send sms if need
-            
         }
     }
 

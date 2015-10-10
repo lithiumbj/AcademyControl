@@ -122,4 +122,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/user/create', 'UserController@postCreate');
   Route::get('/user/view/{id}', 'UserController@getView');
   Route::post('/user/update', 'UserController@postUpdate');
+  //Chat
+  Route::get('/chat/list','ChatController@getList');
+  Route::post('/chat/getMessages','ChatController@getMessagesForUser');
+  Route::post('/chat/sendMessage','ChatController@sendMessage');
+  Route::get('/chat/checkFeed', 'ChatController@checkFeed');
 });

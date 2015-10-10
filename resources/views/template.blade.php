@@ -63,6 +63,12 @@ use App\Models\ClientIncidence;
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+                <li class="dropdown messages-menu">
+                <a href="{{URL::to('/chat/list')}}" class="dropdown-toggle">
+                  <i class="fa fa-envelope-o"></i>
+                  <span class="label label-success" id="chatCounter"><i class="fa fa-hourglass-half"></i></span>
+                </a>
+              </li>
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -330,7 +336,7 @@ use App\Models\ClientIncidence;
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 3.0.2
+          <b>Version</b> 3.1.0
         </div>
         <strong>Copyright &copy; 2015 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
       </footer>
@@ -387,5 +393,31 @@ use App\Models\ClientIncidence;
     <script src="{{URL::to('/')}}/js/demo.js"></script>
     <!-- Extra libs -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+    
+    <script>
+        setTimeout(function(){
+            checkForMessages();
+        },850);
+        /*
+         * Checks for messages
+         */
+        function checkForMessages()
+        {
+            jQuery.ajax({
+            url: "{{URL::to('/chat/checkFeed')}}",
+            method: "GET",
+          }).done(function(data) {
+                  jQuery("#chatCounter").html(data);
+              //Reexecute
+                setTimeout(function(){
+                    checkForMessages();
+                },5000);
+          }).fail(function(){
+                setTimeout(function(){
+                    checkForMessages();
+                },5000);  
+          });
+        }
+    </script>
   </body>
 </html>

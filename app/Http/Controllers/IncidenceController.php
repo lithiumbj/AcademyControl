@@ -71,12 +71,12 @@ class IncidenceController extends Controller {
             else
                 echo 'ko';
             //Send sms if need
-            /*if ($data['assist'] == 0) {
+            if ($data['assist'] == 0) {
                 $client = Client::find($assistance->fk_client);
                 //Only do the sms send if the user have parents phone
                 if (strlen($client->phone_parents) > 8)
                     SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id);
-            }*/
+            }
         }
     }
 

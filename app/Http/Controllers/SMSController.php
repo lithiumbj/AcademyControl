@@ -12,7 +12,7 @@ use DB;
 
 class SMSController extends Controller {
 
-    public static $sid = "PN1438223ace347a99ddec8b0780f78f94";
+    public static $sid = "AC113689b3ade38f49b712aa925d17dffd";
     public static $token = "d36d960a6b5b01908d6ce1f02354ee95";
     public static $limit = 10;
 
@@ -30,7 +30,7 @@ class SMSController extends Controller {
             $smsLog->client = $fk_client;
             $smsLog->save();
             //Start sms send
-            $client = new \Services_Twilio("PN1438223ace347a99ddec8b0780f78f94", "d36d960a6b5b01908d6ce1f02354ee95");
+            $client = new \Services_Twilio("AC113689b3ade38f49b712aa925d17dffd", "d36d960a6b5b01908d6ce1f02354ee95");
             //Send the message
             $client->account->messages->create(array(
                 'To' => $phone,

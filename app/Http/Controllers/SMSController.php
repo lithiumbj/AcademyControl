@@ -37,9 +37,7 @@ class SMSController extends Controller {
                 'From' => "34986080671",
                 'Body' => "El alumno " . $clientName . " ha faltado hoy (" . date('d-m-Y') . ") a clase de repaso en la academia Inforfenix",
             ));
-            if ($client->id != null) {
                 return true;
-            }
         } else {
             return false;
         }

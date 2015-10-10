@@ -27,7 +27,7 @@ use App\Http\Controllers\RoomController;
           <div class="box-tools pull-right">
             <a href="{{URL::to('/invoice/print/'.$invoice->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-print"></i> Imprimir</a>
             @if($invoice->status != 2)
-            <a href="{{URL::to('/invoice/pay/'.$invoice->id)}}" class="btn btn-xs btn-success"><i class="fa fa-money"></i> Pagar</a>
+            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#paybox"><i class="fa fa-money"></i> Pagar</button>
             @else
               <a href="{{URL::to('/invoice/unpay/'.$invoice->id)}}" class="btn btn-xs btn-warning"><i class="fa fa-trash"></i> Eliminar pago</a>
             @endif
@@ -92,6 +92,18 @@ use App\Http\Controllers\RoomController;
                   <td>Sin pagos registrados</td>
                 @endif
               </tr>
+              @if($invoice->status == 1)
+              <tr>
+                <td>Falta por pagar</td>
+                <?php
+                $totalToPay = 0;
+                foreach($payments as $payment){
+                    $totalToPay += $payment->total;
+                }
+                ?>
+                <td>{{$invoice->total - $totalToPay}}€</td>
+              </tr>
+              @endif
               <tr>
                 <td>Importe total</td>
                 <td>{{$invoice->total}}€</td>
@@ -159,4 +171,5 @@ use App\Http\Controllers\RoomController;
     </div>
   </div>
 </section>
+@include('invoice.modals.paybox')
 @stop

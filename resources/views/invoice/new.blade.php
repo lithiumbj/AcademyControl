@@ -28,7 +28,7 @@ use App\Models\Client;
     <div class="box-body">
       <div class="row">
 
-        <div class="col-md-3">
+        <div class="col-md-5">
           <table class="table table-bordered">
             <tr>
               <td style="width:175px;">Base imponible</td>
@@ -46,10 +46,14 @@ use App\Models\Client;
               <td>Nota pública</td>
               <td><input type="text" class="form-control" ng-model="invoice.note_public"/></td>
             </tr>
+            <tr>
+                <td>Fecha de factura</td>
+                <td><input type="text" name="date" class="form-control" id="invoice_date" ng-model="invoice.date" value="{{date('Y-m-d')}}"/></td>
+            </tr>
           </table>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-7">
           <table class="table table-bordered">
             <tr>
               <td style="width:300px;"></td>
@@ -100,7 +104,7 @@ use App\Models\Client;
               <td><% line.tax_base + line.tax %> <b>€</b></td>
               <!-- actions -->
               <td>
-
+                  <button class="btn btn-xs btn-danger" ng-click="invoice.deleteLine(keyLine)"><i class="fa fa-trash"></i></button>
               </td>
               <!-- //actions -->
             </tr>
@@ -167,6 +171,7 @@ use App\Models\Client;
   var _createInvoice = "{{URL::to('/invoice/ajaxCreate')}}";
   var _fk_client = "{{$client->id}}";
   var _invoice_detail = "{{URL::to('/invoice/')}}";
+  var _curr_date = "{{date('Y-m-d')}}";
 </script>
 <script src="{{URL::to('/angular/invoice.js')}}"></script>
 @stop

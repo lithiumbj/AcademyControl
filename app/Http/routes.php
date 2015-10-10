@@ -72,7 +72,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/invoice/massiveprint', 'InvoiceController@postMassivePrint');
   Route::get('/invoice/{id}', 'InvoiceController@getView');
   Route::get('/invoice/delete/{id}', 'InvoiceController@getDelete');
-  Route::get('/invoice/pay/{id}', 'InvoiceController@setPayedInvoice');
+  Route::post('/invoice/pay/', 'InvoiceController@setPayedInvoice');
   Route::get('/invoice/print/{id}', 'InvoiceController@printInvoice');
   Route::get('/invoice/unpay/{id}', 'InvoiceController@setUnpayedInvoice');
   Route::get('/invoice/create/{id}', 'InvoiceController@getCreateInvoice');
@@ -122,4 +122,9 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/user/create', 'UserController@postCreate');
   Route::get('/user/view/{id}', 'UserController@getView');
   Route::post('/user/update', 'UserController@postUpdate');
+  //Chat
+  Route::get('/chat/list','ChatController@getList');
+  Route::post('/chat/getMessages','ChatController@getMessagesForUser');
+  Route::post('/chat/sendMessage','ChatController@sendMessage');
+  Route::get('/chat/checkFeed', 'ChatController@checkFeed');
 });

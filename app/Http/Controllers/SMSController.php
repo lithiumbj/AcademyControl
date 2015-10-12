@@ -22,9 +22,9 @@ class SMSController extends Controller {
 
     public static function sendAssistanceSms($phone, $clientName, $fk_client) {
         //First get how much sms have sended yet
-        $sends = SMS::whereRaw('DATE(created_at) = "' . date('Y-m-d') . '"')->count();
+        $sends = SMS::whereRaw('DATE(created_at) = "' . date('Y-m-d') . '"')->get();
         //If not sended up to the limit, continue
-        if ($sends < 10) {
+        if (count($sends) <= 10) {
             //Generate the log
             $smsLog = new SMS();
             $smsLog->client = $fk_client;

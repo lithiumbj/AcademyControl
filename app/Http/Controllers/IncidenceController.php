@@ -76,14 +76,13 @@ class IncidenceController extends Controller {
                 $client = Client::find($assistance->fk_client);
                 //Only do the sms send if the user have parents phone
                 if (strlen($client->phone_parents) > 8)
-                    var_dump(SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id));die;
+                    SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id);
             }
             //Save
             if ($assistance->save())
                 echo 'ok';
             else
                 echo 'ko';
-            //Send sms if need
         }
     }
 

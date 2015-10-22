@@ -17,10 +17,12 @@ class InvoicePayment extends Model
      */
      public static function getMonthlyMoney()
      {
-       $data = DB::table('invoice_payments')
-          ->select(DB::raw("SUM(total) AS total, MONTH(created_at) AS month"))
-          ->whereRaw("fk_company = ".Auth::user()->fk_company." AND YEAR(created_at) = ".date('Y')." GROUP BY MONTH(created_at)")
-          ->get();
+       //SELECT MONTH(date_creation) AS mes, SUM(total) AS total FROM `invoice` WHERE status = 1 AND YEAR(date_creation) = "2015" GROUP BY MONTH(date_creation)
+        $data = DB::table('invoice')
+                ->groupBy(DB::raw('MONTH(date_creation)'))
+                ->whereRaw('status = 2 AND YEAR(date_creation) = "'.date('Y').'"')
+                ->select(DB::raw('MONTH(date_creation) AS month, SUM(total) AS total'))
+                ->get();
       //Return the data
       return $data;
      }

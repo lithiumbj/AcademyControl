@@ -101,12 +101,19 @@ function clientIsIn(fk_client, fk_room_reserve, assist)
     method : "POST",
     data : {fk_client: fk_client, fk_room_reserve: fk_room_reserve, assist: assist, _token : "{{csrf_token()}}"}
   }).done(function(data) {
-    if(data == 'ok')
+    if(data == 'ok'){
       location.reload();
-    else
-      alert("Error al establecer el estado de la falta del alumno");
+  }else{
+      //No only ok, maybe ok and sended SMS?
+      if(data == 'okWithSMS'){
+          alert("Se ha notificado vía SMS");
+          location.reload();
+      }else{
+        alert("Error al establecer el estado de la falta del alumno");
+      }
+  }
   }).fail(function(){
-
+        alert("Error al establecer el estado de la falta del alumno");
   });
 }
 </script>

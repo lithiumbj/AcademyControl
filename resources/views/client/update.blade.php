@@ -121,7 +121,7 @@
             </div>
 
             <div class="form-group col-md-4">
-              <label >Teléfono (Padres / Tutores)</label>
+              <label >Teléfono (Padres / Tutores) (Envío de SMS)</label>
               <input class="form-control"  name="phone_parents"  type="phone" value="{{$model->phone_parents}}">
             </div>
 
@@ -131,7 +131,7 @@
             </div>
 
             <div class="form-group col-md-4">
-              <label >Teléfono de contacto esencial (whatsapp / sms)</label>
+              <label >Teléfono de contacto esencial </label>
               <input class="form-control"  name="phone_whatsapp"  type="phone" value="{{$model->phone_whatsapp}}">
             </div>
 

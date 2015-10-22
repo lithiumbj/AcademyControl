@@ -97,6 +97,8 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/incidence/client/complete/{id}', 'IncidenceController@completeIncidence');
   Route::post('/report/client/get','IncidenceController@getClientReport');
   Route::post('/report/client/create','IncidenceController@crateClientReport');
+  Route::post('/report/client/delete','IncidenceController@deleteClientReport');
+  Route::post('/report/client/edit','IncidenceController@editClientReport');
   //Stats routes
   Route::get('/stats/new_clients', 'StatsController@getNewClients');
   Route::get('/stats/new_infos', 'StatsController@getNewInfos');

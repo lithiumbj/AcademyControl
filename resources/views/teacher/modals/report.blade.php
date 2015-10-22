@@ -11,9 +11,10 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <td>Fecha</td>
+              <td style="width:93px;">Fecha</td>
               <td>Concepto</td>
               <td>Notas</td>
+              <td style="width:65px;text-align:center;"></td>
             </tr>
           </thead>
           <tbody id="reportBody">
@@ -60,9 +61,9 @@ function prepareReport(fk_client, fk_room_reserve, name)
       if(jData.length > 0){
         for(var i = 0; i < jData.length; i++){
             if(jData[i].fk_user != {{\Auth::user()->id}})
-                jQuery("#reportBody").append("<tr style='background-color:#f39c12;'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td>"+jData[i].observations+"</td></tr>");
+                jQuery("#reportBody").append("<tr style='background-color:#f39c12;'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
             else
-                jQuery("#reportBody").append("<tr><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td>"+jData[i].observations+"</td></tr>");
+                jQuery("#reportBody").append("<tr><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
         }
       }else{
         jQuery("#reportBody").append("<tr><td colspan='3'>Sin registros</td></tr>");
@@ -92,5 +93,73 @@ function sendReport()
   }).fail(function(){
       alert("Error al crear el reporte del alumno");
   });
+}
+/*
+ * This function deletes the report via AJAX request (POST) 
+ */
+function deleteReport(id)
+{
+    if (confirm('¿Seguro que desea eliminar el registro?')) {
+        jQuery.ajax({
+            url: "{{URL::to('/report/client/delete')}}",
+            method : "POST",
+            data : {id : id, _token : "{{csrf_token()}}"}
+          }).done(function(data) {
+              if(data == 'ok'){
+                alert("Reporte eliminado correctamente");
+                jQuery("#close_report").trigger("click");
+                jQuery("#report_concept").val("");
+                jQuery("#report_observations").val("");
+              }else{
+                alert("Error al eliminar el reporte del alumno");
+              }
+          }).fail(function(){
+              alert("Error al eliminar el reporte del alumno");
+          });
+    } else {
+        
+    }
+}
+/*
+ * This function (and variable) sets the gui to edit a report, stores the
+ * id in a safe temp variable and hide/shows the correct buttons to inter-operate
+ * with the new form
+ */
+var tmpId;
+function editReport(id)
+{
+    tmpId = id;
+    //Hide the delete/edit buttons
+    jQuery("#editBtn"+id).hide();
+    jQuery("#deleteBtn"+id).hide();
+    jQuery("#originalObservations"+id).hide();
+    //Show edit gui elements
+    jQuery("#saveEditBtn"+id).show();
+    jQuery("#observationsEdit"+id).show();
+}
+/*
+ * This function sends the new info (report data) to the server 
+ */
+function goEditReport()
+{
+    jQuery("#saveEditBtn"+tmpId).html('Un momento');
+    var text = jQuery("#observationsEdit"+tmpId).val();
+    //Send the request
+    jQuery.ajax({
+            url: "{{URL::to('/report/client/edit')}}",
+            method : "POST",
+            data : {id : tmpId, _token : "{{csrf_token()}}", observations : text}
+          }).done(function(data) {
+              if(data == 'ok'){
+                alert("Reporte modificado correctamente");
+                jQuery("#close_report").trigger("click");
+                jQuery("#report_concept").val("");
+                jQuery("#report_observations").val("");
+              }else{
+                alert("Error al modificar el reporte del alumno");
+              }
+          }).fail(function(){
+              alert("Error al modificar el reporte del alumno");
+          });
 }
 </script>

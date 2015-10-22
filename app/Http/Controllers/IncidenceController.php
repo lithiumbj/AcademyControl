@@ -198,4 +198,36 @@ class IncidenceController extends Controller {
         return $assistance;
     }
 
+    /*
+     * This function deletes the client report by their id
+     */
+
+    public function deleteClientReport(Request $request) {
+        $id = $request->all()['id'];
+        //Get the report
+        $report = ClientReport::where('id', '=', $id)->first();
+        //Delete and return awnser to script
+        if ($report->delete())
+            echo 'ok';
+        else
+            echo 'ko';
+    }
+
+    /*
+     * This function modifies the client report by their id (And text)
+     */
+
+    public function editClientReport(Request $request) {
+        $id = $request->all()['id'];
+        $observations = $request->all()['observations'];
+        //Get the report
+        $report = ClientReport::where('id', '=', $id)->first();
+        //Modify the data
+        $report->observations = $observations;
+        if ($report->save())
+            echo 'ok';
+        else
+            echo 'ko';
+    }
+
 }

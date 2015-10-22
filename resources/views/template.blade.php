@@ -395,6 +395,7 @@ use App\Models\ClientIncidence;
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     
     <script>
+        var popedUp = false;
         setTimeout(function(){
             checkForMessages();
         },850);
@@ -408,6 +409,7 @@ use App\Models\ClientIncidence;
             method: "GET",
           }).done(function(data) {
                   jQuery("#chatCounter").html(data);
+                  }
               //Reexecute
                 setTimeout(function(){
                     checkForMessages();
@@ -418,6 +420,7 @@ use App\Models\ClientIncidence;
                 },5000);  
           });
         }
+        
     </script>
   </body>
 </html>

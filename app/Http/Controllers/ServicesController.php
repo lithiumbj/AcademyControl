@@ -245,7 +245,7 @@ class ServicesController extends Controller {
      */
 
     public static function getEstimatedMoney() {
-        $serviceClients = ServiceClient::all();
+        $serviceClients = ServiceClient::where('active', '=', 1)->get();
         $total = 0;
         foreach($serviceClients as $srvC){
             $service = Service::find($srvC->fk_service);
@@ -260,8 +260,8 @@ class ServicesController extends Controller {
 
     public static function fetchServiceFromFkRoomReserve($fk_room_reserve) {
         $roomReserve = RoomReserve::find($fk_room_reserve);
-        $roomService = RoomService::find($roomReserve->fk_room_service)->first();
-        $service = Service::find($roomService->fk_service)->first();
+        $roomService = RoomService::find($roomReserve->fk_room_service);
+        $service = Service::find($roomService->fk_service);
         //Return the service
         return $service;
     }

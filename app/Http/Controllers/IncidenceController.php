@@ -57,8 +57,10 @@ class IncidenceController extends Controller {
                 if ($data['assist'] == 0) {
                     $client = Client::find($assistance->fk_client);
                     //Only do the sms send if the user have parents phone
-                    if (strlen($client->phone_parents) > 8)
+                    if (strlen($client->phone_parents) > 8 && (substr($client->phone_parents, 0, 1) == 6 || (substr($client->phone_parents, 0, 1) == 7)))
                         SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id);
+                    echo 'okWithSMS';
+                    die;
                 }
                 echo 'ok';
             }else {
@@ -72,14 +74,17 @@ class IncidenceController extends Controller {
             $assistance->fk_room_reserve = $data['fk_room_reserve'];
             $assistance->fk_client = $data['fk_client'];
             $assistance->assist = $data['assist'];
+            $saveStatus  = $assistance->save();
             if ($data['assist'] == 0) {
                 $client = Client::find($assistance->fk_client);
                 //Only do the sms send if the user have parents phone
-                if (strlen($client->phone_parents) > 8)
+                if (strlen($client->phone_parents) > 8 && (substr($client->phone_parents, 0, 1) == 6 || (substr($client->phone_parents, 0, 1) == 7)))
                     SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id);
+                    echo 'okWithSMS';
+                    die;
             }
             //Save
-            if ($assistance->save())
+            if ($saveStatus)
                 echo 'ok';
             else
                 echo 'ko';
@@ -133,6 +138,8 @@ class IncidenceController extends Controller {
         $report->fk_user = Auth::user()->id;
         $report->fk_company = Auth::user()->fk_company;
         $report->fk_client = $data['fk_client'];
+        $report->color = $data['color'];
+        
         //Get the service
         $roomReserve = RoomReserve::find($data['fk_service']);
         $roomService = RoomService::find($roomReserve->fk_room_service);
@@ -196,6 +203,38 @@ class IncidenceController extends Controller {
     public static function fetchAssitanceList($fk_client) {
         $assistance = Assistance::whereRaw('fk_client = ' . $fk_client . ' AND assist = 0')->get();
         return $assistance;
+    }
+
+    /*
+     * This function deletes the client report by their id
+     */
+
+    public function deleteClientReport(Request $request) {
+        $id = $request->all()['id'];
+        //Get the report
+        $report = ClientReport::where('id', '=', $id)->first();
+        //Delete and return awnser to script
+        if ($report->delete())
+            echo 'ok';
+        else
+            echo 'ko';
+    }
+
+    /*
+     * This function modifies the client report by their id (And text)
+     */
+
+    public function editClientReport(Request $request) {
+        $id = $request->all()['id'];
+        $observations = $request->all()['observations'];
+        //Get the report
+        $report = ClientReport::where('id', '=', $id)->first();
+        //Modify the data
+        $report->observations = $observations;
+        if ($report->save())
+            echo 'ok';
+        else
+            echo 'ko';
     }
 
 }

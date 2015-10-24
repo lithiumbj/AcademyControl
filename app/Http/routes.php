@@ -97,6 +97,8 @@ Route::group(['middleware' => 'auth'], function () {
   Route::get('/incidence/client/complete/{id}', 'IncidenceController@completeIncidence');
   Route::post('/report/client/get','IncidenceController@getClientReport');
   Route::post('/report/client/create','IncidenceController@crateClientReport');
+  Route::post('/report/client/delete','IncidenceController@deleteClientReport');
+  Route::post('/report/client/edit','IncidenceController@editClientReport');
   //Stats routes
   Route::get('/stats/new_clients', 'StatsController@getNewClients');
   Route::get('/stats/new_infos', 'StatsController@getNewInfos');
@@ -127,4 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/chat/getMessages','ChatController@getMessagesForUser');
   Route::post('/chat/sendMessage','ChatController@sendMessage');
   Route::get('/chat/checkFeed', 'ChatController@checkFeed');
+  //SMS Send routes
+  Route::post('/sms/sendReport','SMSController@sendReport');
+  
 });

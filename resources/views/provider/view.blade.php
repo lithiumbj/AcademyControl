@@ -182,10 +182,5 @@ use App\Models\InvoiceProvider;
         </div>
         <!-- //Abonos box -->
     </div>
-
-    <!--- Modals zone -->
-    @include('client.modals.addService')
-    @include('client.modals.enrolRoom')
-    <!--- //Modals zone -->
 </section>
 @stop

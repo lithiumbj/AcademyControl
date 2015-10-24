@@ -59,7 +59,7 @@ use App\Http\Controllers\IncidenceController;
               <tr>
                 <th>Nombre</th>
                 <th>Apellidos</th>
-                <th style="width: 65px;">¿Asiste?</th>
+                <th style="width: 98px;">¿Asiste?</th>
               </tr>
             </thead>
             <tbody>
@@ -72,11 +72,12 @@ use App\Http\Controllers\IncidenceController;
                       @if(IncidenceController::isChekedIn($client[0]->id, $client[1]) == 1)
                         <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 0)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i> Si, cambiar</button>
                       @else
-                        <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 1)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i> No, cambiar</button>
+                        <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 1)" class="btn btn-xs btn-danger"><i class="fa fa-thumbs-down"></i> No, cambiar</button>
                       @endif
                     @else
                     <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 1)" class="btn btn-xs btn-success"><i class="fa fa-thumbs-up"></i></button>
-                    <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 0)" class="btn btn-xs btn-danger"><i class="fa fa-times"></i></button>
+                    <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 2)" class="btn btn-xs btn-warning"><i class="fa fa-circle-o-notch"></i></button>
+                    <button onclick="clientIsIn({{$client[0]->id}}, {{$client[1]}}, 0)" class="btn btn-xs btn-danger"><i class="fa fa-thumbs-down"></i></button>
                     @endif
                   </td>
                 </tr>
@@ -101,12 +102,19 @@ function clientIsIn(fk_client, fk_room_reserve, assist)
     method : "POST",
     data : {fk_client: fk_client, fk_room_reserve: fk_room_reserve, assist: assist, _token : "{{csrf_token()}}"}
   }).done(function(data) {
-    if(data == 'ok')
+    if(data == 'ok'){
       location.reload();
-    else
-      alert("Error al establecer el estado de la falta del alumno");
+  }else{
+      //No only ok, maybe ok and sended SMS?
+      if(data == 'okWithSMS'){
+          alert("Se ha notificado vía SMS");
+          location.reload();
+      }else{
+        alert("Error al establecer el estado de la falta del alumno");
+      }
+  }
   }).fail(function(){
-
+        alert("Error al establecer el estado de la falta del alumno");
   });
 }
 </script>

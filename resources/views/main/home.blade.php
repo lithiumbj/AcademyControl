@@ -141,7 +141,14 @@ use App\Http\Controllers\ServicesController;
     <!-- Box -->
     <div class="box box-success">
       <div class="box-header with-border">
-        <h3 class="box-title">Ingresos mensuales / Gastos mensuales</h3>
+        <h3 class="box-title" style="width:100%;">Flujo de dinero
+            <br/>
+            <i style="font-size: 12px;color:gray">Leyenda de colores: </i>
+            <small class="btn btn-xs" style="background-color:#e74c3c;color:white;float:right;margin-left:5px;">Gastos</small>
+            <small class="btn btn-xs" style="background-color:#e67e22;color:white;float:right;margin-left:5px;">Deuda</small>
+            <small class="btn btn-xs" style="background-color:#2ecc71;color:white;float:right;margin-left:5px;">Ingresos</small>
+            <small class="btn btn-xs" style="background-color:#3498db;color:white;float:right;margin-left:5px;">Facturado</small>
+        </h3>
       </div><!-- /.box-header -->
       <div class="box-body" id="graphBoxBody">
         <canvas id="monthlyMoney" width="100%" height="250"></canvas>
@@ -221,7 +228,6 @@ use App\Http\Controllers\ServicesController;
     
 </div>
 </section>
-
 <script>
 window.onload = function()
 {
@@ -232,8 +238,9 @@ window.onload = function()
   /*
    * Chartjs
    */
-   var options = {
-        ///Boolean - Whether grid lines are shown across the chart
+   var options = {//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+        scaleBeginAtZero : true,
+        //Boolean - Whether grid lines are shown across the chart
         scaleShowGridLines : true,
         //String - Colour of the grid lines
         scaleGridLineColor : "rgba(0,0,0,.05)",
@@ -243,43 +250,81 @@ window.onload = function()
         scaleShowHorizontalLines: true,
         //Boolean - Whether to show vertical lines (except Y axis)
         scaleShowVerticalLines: true,
-        //Boolean - Whether the line is curved between points
-        bezierCurve : true,
-        //Number - Tension of the bezier curve between points
-        bezierCurveTension : 0.4,
-        //Boolean - Whether to show a dot for each point
-        pointDot : true,
-        //Number - Radius of each point dot in pixels
-        pointDotRadius : 4,
-        //Number - Pixel width of point dot stroke
-        pointDotStrokeWidth : 1,
-        //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-        pointHitDetectionRadius : 20,
-        //Boolean - Whether to show a stroke for datasets
-        datasetStroke : true,
-        //Number - Pixel width of dataset stroke
-        datasetStrokeWidth : 2,
-        //Boolean - Whether to fill the dataset with a colour
-        datasetFill : true,
-        //String - A legend template
-        legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
+        //Boolean - If there is a stroke on each bar
+        barShowStroke : true,
+        //Number - Pixel width of the bar stroke
+        barStrokeWidth : 2,
+        //Number - Spacing between each of the X value sets
+        barValueSpacing : 5,
+        //Number - Spacing between data sets within X values
+        barDatasetSpacing : 1,
     };
     //Options array
    var data = {
       labels: [
         @foreach(InvoicePayment::getMonthlyMoney() as $month)
-          "{{$month->month}}",
+        <?php
+            switch($month->month){
+              case 1:
+                  echo '"Enero",';
+                  break;
+              case 2:
+                  echo '"Febrero",';
+                  break;
+              case 3:
+                  echo '"Marzo",';
+                  break;
+              case 4:
+                  echo '"Abril",';
+                  break;
+              case 5:
+                  echo '"Mayo",';
+                  break;
+              case 6:
+                  echo '"Junio",';
+                  break;
+              case 7:
+                  echo '"Julio",';
+                  break;
+              case 8:
+                  echo '"Agosto",';
+                  break;
+              case 9:
+                  echo '"Septiembre",';
+                  break;
+              case 10:
+                  echo '"Octubre",';
+                  break;
+              case 11:
+                  echo '"Noviembre",';
+                  break;
+              case 12:
+                  echo '"Diciembre",';
+                  break;
+            }
+        ?>
         @endforeach
       ],
       datasets: [
+          
+          {
+              label: "Facturado",
+              fillColor: "rgba(52, 152, 219,0.3)",
+              strokeColor: "rgba(52, 152, 219,1.0)",
+              highlightFill: "rgba(52, 152, 219,1.0)",
+              highlightStroke: "rgba(41, 128, 185,1.0)",
+              data: [
+                  @foreach(Invoice::getMonthlyInvoiced() as $money)
+                    "{{$money->total}}",
+                  @endforeach
+              ]
+          },
           {
               label: "Ingresos",
               fillColor: "rgba(46, 204, 113,0.3)",
               strokeColor: "rgba(46, 204, 113,1.0)",
-              pointColor: "rgba(46, 204, 113,1.0)",
-              pointStrokeColor: "#fff",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(220,220,220,1)",
+              highlightFill: "rgba(46, 204, 113,1.0)",
+              highlightStroke: "rgba(220,220,220,1)",
               data: [
                   @foreach(InvoicePayment::getMonthlyMoney() as $money)
                     "{{$money->total}}",
@@ -287,13 +332,23 @@ window.onload = function()
               ]
           },
           {
+              label: "Deuda",
+              fillColor: "rgba(230, 126, 34, 0.3)",
+              strokeColor: "rgba(211, 84, 0,1.0)",
+              highlightFill: "rgba(211, 84, 0,1.0)",
+              highlightStroke: "rgba(230, 126, 34,1.0)",
+              data: [
+                  @foreach(Invoice::getMonthlyDue() as $money)
+                    "{{$money->total}}",
+                  @endforeach
+              ]
+          },
+          {
               label: "Gastos",
-              fillColor: "rgba(231, 76, 60,0.3)",
+              fillColor: "rgba(231, 76, 60, 0.3)",
               strokeColor: "rgba(231, 76, 60,1.0)",
-              pointColor: "rgba(231, 76, 60,1.0)",
-              pointStrokeColor: "#fff",
-              pointHighlightFill: "#fff",
-              pointHighlightStroke: "rgba(220,220,220,1)",
+              highlightFill: "rgba(231, 76, 60,1.0)",
+              highlightStroke: "rgba(220,220,220,1)",
               data: [
                   @foreach(InvoiceProvider::getMonthlyMoney() as $money)
                     "{{$money->total}}",
@@ -304,9 +359,9 @@ window.onload = function()
     };
     //Start the chart
     jQuery("#monthlyMoney").width(jQuery("#graphBoxBody").width());
-    jQuery("#monthlyMoney").height("200px");
+    jQuery("#monthlyMoney").height("250px");
     var ctx = document.getElementById("monthlyMoney").getContext("2d");
-    var myLineChart = new Chart(ctx).Line(data, options);
+    var myLineChart = new Chart(ctx).Bar(data, options);
     }
 </script>
 @stop

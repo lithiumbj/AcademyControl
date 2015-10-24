@@ -336,7 +336,7 @@ use App\Models\ClientIncidence;
       </div><!-- /.content-wrapper -->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 3.1.0
+          <b>Version</b> 3.2.0
         </div>
         <strong>Copyright &copy; 2015 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
       </footer>
@@ -395,6 +395,7 @@ use App\Models\ClientIncidence;
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     
     <script>
+        var popedUp = false;
         setTimeout(function(){
             checkForMessages();
         },850);
@@ -418,6 +419,7 @@ use App\Models\ClientIncidence;
                 },5000);  
           });
         }
+        
     </script>
   </body>
 </html>

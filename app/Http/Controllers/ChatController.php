@@ -26,7 +26,7 @@ class ChatController extends Controller {
 
     public function getMessagesForUser(Request $request) {
         $data = $request->all();
-        $messages = Chat::whereRaw('fk_receiver = ' . $request['fk_user'] . ' OR fk_sender = ' . $request['fk_user'])->get();
+        $messages = Chat::whereRaw('(fk_receiver = ' . \Auth::user()->id . ' AND fk_sender = ' . $request['fk_user'].') OR (fk_receiver = ' . $request['fk_user'] . ' AND fk_sender = ' . \Auth::user()->id.')')->get();
         //Set my read messages as readed
         foreach ($messages as $message) {
             if ($message->fk_sender == $request['fk_user']) {

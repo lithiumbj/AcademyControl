@@ -138,6 +138,8 @@ class IncidenceController extends Controller {
         $report->fk_user = Auth::user()->id;
         $report->fk_company = Auth::user()->fk_company;
         $report->fk_client = $data['fk_client'];
+        $report->color = $data['color'];
+        
         //Get the service
         $roomReserve = RoomReserve::find($data['fk_service']);
         $roomService = RoomService::find($roomReserve->fk_room_service);

@@ -25,7 +25,17 @@
               <td>Nuevo registro</td>
               <td><input type="text" class="form-control" id="report_concept" placeholder="Materia, concepto, resumen"/></td>
               <td>
-                <input type="text" class="form-control" id="report_observations" placeholder="Observaciones" style="width:85%; display:inline;"/>
+                <input type="text" class="form-control" id="report_observations" placeholder="Observaciones" style="width:75%; display:inline;"/>
+                <select class="form-control" style="width: 19%;display: inline-block;" id="report_color" onchange="switchColor()">
+                    <option value="#ffffff">Blanco</option>
+                    <option value="#e74c3c">Rojo</option>
+                    <option value="#e67e22">Naranja</option>
+                    <option value="#2ecc71">Verde</option>
+                    <option value="#3498db">Azul</option>
+                    <option value="#9b59b6">Rosa</option>
+                </select>
+              </td>
+              <td>
                 <button class="btn btn-success" onclick="sendReport()"><i class="fa fa-paper-plane-o"></i></button>
               </td>
             </tr>
@@ -60,10 +70,14 @@ function prepareReport(fk_client, fk_room_reserve, name)
       var jData = JSON.parse(data);
       if(jData.length > 0){
         for(var i = 0; i < jData.length; i++){
-            if(jData[i].fk_user != {{\Auth::user()->id}})
-                jQuery("#reportBody").append("<tr style='background-color:#f39c12;'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
-            else
-                jQuery("#reportBody").append("<tr><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
+            if(jData[i].color == "#ffffff"){
+                if(jData[i].fk_user != {{\Auth::user()->id}})
+                    jQuery("#reportBody").append("<tr style='background-color:#f39c12;'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
+                else
+                    jQuery("#reportBody").append("<tr><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
+            }else{
+                    jQuery("#reportBody").append("<tr style='background-color:"+jData[i].color+";'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
+            }
         }
       }else{
         jQuery("#reportBody").append("<tr><td colspan='3'>Sin registros</td></tr>");
@@ -80,13 +94,15 @@ function sendReport()
   jQuery.ajax({
     url: "{{URL::to('/report/client/create')}}",
     method : "POST",
-    data : {fk_client: client, fk_service: room_reserve, _token : "{{csrf_token()}}", concept: jQuery("#report_concept").val(), observations: jQuery("#report_observations").val()}
+    data : {fk_client: client, fk_service: room_reserve, _token : "{{csrf_token()}}", concept: jQuery("#report_concept").val(), observations: jQuery("#report_observations").val(), color: jQuery("#report_color").val()}
   }).done(function(data) {
       if(data == 'ok'){
         alert("Reporte creado correctamente");
         jQuery("#close_report").trigger("click");
         jQuery("#report_concept").val("");
         jQuery("#report_observations").val("");
+        jQuery("#report_color").val("#ffffff");
+        switchColor();
       }else{
         alert("Error al crear el reporte del alumno");
       }
@@ -161,5 +177,23 @@ function goEditReport()
           }).fail(function(){
               alert("Error al modificar el reporte del alumno");
           });
+}
+/*
+ * This function changes the color of the observations field to "simulate"
+ * the final result
+ */
+function switchColor()
+{
+    if(jQuery("#report_color").val() == "#ffffff"){
+        jQuery("#report_observations").css({
+          "background-color": jQuery("#report_color").val(),
+          "color":"#000000"
+        });
+    }else{
+        jQuery("#report_observations").css({
+          "background-color": jQuery("#report_color").val(),
+          "color":"#ffffff"
+        });
+    }
 }
 </script>

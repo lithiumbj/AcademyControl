@@ -63,7 +63,7 @@ use App\Models\ClientIncidence;
           <!-- Navbar Right Menu -->
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
-                <li class="dropdown messages-menu">
+                <li class="dropdown messages-menu" id='messageTxtMenu'>
                 <a href="{{URL::to('/chat/list')}}" class="dropdown-toggle">
                   <i class="fa fa-envelope-o"></i>
                   <span class="label label-success" id="chatCounter"><i class="fa fa-hourglass-half"></i></span>
@@ -409,6 +409,9 @@ use App\Models\ClientIncidence;
             method: "GET",
           }).done(function(data) {
                   jQuery("#chatCounter").html(data);
+                  if(data != 0){
+                      blinkMessage();
+                  }
               //Reexecute
                 setTimeout(function(){
                     checkForMessages();
@@ -419,7 +422,17 @@ use App\Models\ClientIncidence;
                 },5000);  
           });
         }
+        var isRed = false;
+        var blinkStarted = false;
         
+        function blinkMessage()
+        {
+            if(!isRed){
+                jQuery("#messageTxtMenu").css({
+                    "background-color": "red",
+                });
+            }
+        }
     </script>
   </body>
 </html>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Models\SMS;
+use App\Models\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,9 +38,32 @@ class SMSController extends Controller {
                 'From' => "34986080671",
                 'Body' => "El alumno " . $clientName . " ha faltado hoy (" . date('d-m-Y') . ") a clase de repaso en la academia Inforfenix",
             ));
-                return true;
+            return true;
         } else {
             return false;
+        }
+    }
+
+    /*
+     * This function gets the post request to send a report SMS
+     */
+
+    public function sendReport(Request $request) {
+        $data = $request->all();
+        $client = Client::find($data['fk_client']);
+        //Check if have phone
+        if (strlen($client->phone_parents) > 8 && (substr($client->phone_parents, 0, 1) == 6 || (substr($client->phone_parents, 0, 1) == 7))) {
+            //Start sms send
+            $smsClient = new \Services_Twilio("AC113689b3ade38f49b712aa925d17dffd", "d36d960a6b5b01908d6ce1f02354ee95");
+            //Send the message
+            $smsClient->account->messages->create(array(
+                'To' => $client->phone_parents,
+                'From' => "34986080671",
+                'Body' => $data['message'],
+            ));
+            echo 'ok';
+        }else{
+            echo 'badPhone';
         }
     }
 

@@ -129,4 +129,7 @@ Route::group(['middleware' => 'auth'], function () {
   Route::post('/chat/getMessages','ChatController@getMessagesForUser');
   Route::post('/chat/sendMessage','ChatController@sendMessage');
   Route::get('/chat/checkFeed', 'ChatController@checkFeed');
+  //SMS Send routes
+  Route::post('/sms/sendReport','SMSController@sendReport');
+  
 });

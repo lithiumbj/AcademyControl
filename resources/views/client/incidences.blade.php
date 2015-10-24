@@ -44,6 +44,8 @@ use App\Models\Client;
             <td>
               <button class="btn btn-success btn-xs" onclick="alert('Incidencia completa: \n\n{{$incidence->observations}}')"><i class="fa fa-eye"></i></button>
               <a class="btn btn-warning btn-xs" href="{{URL::to('/incidence/client/complete/'.$incidence->id)}}"><i class="fa fa-mail-reply-all"></i> Completar</a>
+              <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#smsReport" onclick="launchSmsApp('{{$incidence->observations}}', {{$incidence->fk_client}})"><i class="fa fa-commenting"></i> Revisar y SMS</button>
+              <!-- <button class="btn btn-default btn-xs"><i class="fa fa-print"></i> Revisar e imprimir</button> -->
             </td>
           </tr>
           @endforeach
@@ -53,4 +55,9 @@ use App\Models\Client;
   </div>
 </section>
 
+<!-- Only will use tinyMce for this so...-->
+<script src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<!-- //Only will use tinyMce for this so... END-->
+
+@include('client.modals.tinymceSms')
 @stop

@@ -172,6 +172,7 @@ use App\Models\ClientIncidence;
                 <li><a href="{{URL::to('/client/list/1')}}"><i class="fa fa-circle-o"></i> Listar clientes</a></li>
                 <li><a href="{{URL::to('/client/list/0')}}"><i class="fa fa-circle-o"></i> Listar informaciones</a></li>
                 <li><a href="{{URL::to('/client/list/2')}}"><i class="fa fa-circle-o"></i> Listar ex-clientes</a></li>
+                <li><a href="{{URL::to('/client/undue')}}"><i class="fa fa-circle-o"></i> Clientes sin factura</a></li>
                 <!-- Role checking -->
                 @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
                 <li><a href=""><i class="fa fa-circle-o"></i> Control de bajas</a></li>
@@ -393,7 +394,7 @@ use App\Models\ClientIncidence;
     <script src="{{URL::to('/')}}/js/demo.js"></script>
     <!-- Extra libs -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
-    
+
     <script>
         var popedUp = false;
         setTimeout(function(){
@@ -419,12 +420,12 @@ use App\Models\ClientIncidence;
           }).fail(function(){
                 setTimeout(function(){
                     checkForMessages();
-                },5000);  
+                },5000);
           });
         }
         var isRed = false;
         var blinkStarted = false;
-        
+
         function blinkMessage()
         {
             if(!isRed){

@@ -102,6 +102,30 @@ use App\Http\Controllers\ServicesController;
 
 <div class="row">
 
+  <div class="col-md-12">
+    <!-- Box -->
+    <div class="box box-success">
+      <div class="box-header with-border">
+        <h3 class="box-title" style="width:100%;">Flujo de dinero
+            <br/>
+            <i style="font-size: 12px;color:gray">Leyenda de colores: </i>
+            <small class="btn btn-xs" style="background-color:#e74c3c;color:white;float:right;margin-left:5px;">Gastos</small>
+            <small class="btn btn-xs" style="background-color:#e67e22;color:white;float:right;margin-left:5px;">Deuda</small>
+            <small class="btn btn-xs" style="background-color:#2ecc71;color:white;float:right;margin-left:5px;">Ingresos</small>
+            <small class="btn btn-xs" style="background-color:#3498db;color:white;float:right;margin-left:5px;">Facturado</small>
+        </h3>
+      </div><!-- /.box-header -->
+      <div class="box-body" id="graphBoxBody">
+        <canvas id="monthlyMoney" width="100%" height="250"></canvas>
+      </div><!-- /.box-body -->
+    </div>
+    <!-- //Box -->
+  </div>
+
+</div>
+
+<div class="row">
+
   <div class="col-md-7">
     <!-- Box -->
     <div class="box box-danger">
@@ -137,95 +161,48 @@ use App\Http\Controllers\ServicesController;
     <!-- //Box -->
   </div>
 
-  <div class="col-md-5">
-    <!-- Box -->
-    <div class="box box-success">
-      <div class="box-header with-border">
-        <h3 class="box-title" style="width:100%;">Flujo de dinero
-            <br/>
-            <i style="font-size: 12px;color:gray">Leyenda de colores: </i>
-            <small class="btn btn-xs" style="background-color:#e74c3c;color:white;float:right;margin-left:5px;">Gastos</small>
-            <small class="btn btn-xs" style="background-color:#e67e22;color:white;float:right;margin-left:5px;">Deuda</small>
-            <small class="btn btn-xs" style="background-color:#2ecc71;color:white;float:right;margin-left:5px;">Ingresos</small>
-            <small class="btn btn-xs" style="background-color:#3498db;color:white;float:right;margin-left:5px;">Facturado</small>
-        </h3>
-      </div><!-- /.box-header -->
-      <div class="box-body" id="graphBoxBody">
-        <canvas id="monthlyMoney" width="100%" height="250"></canvas>
-      </div><!-- /.box-body -->
+    <div class="col-md-5">
+      <!-- Box -->
+      <div class="box box-warning">
+        <div class="box-header with-border">
+          <h3 class="box-title">Deuda actual</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="info-box">
+            @if(InvoicePayment::getDue()>0)
+              <span class="info-box-icon bg-red"><i class="fa fa-thumbs-o-down"></i></span>
+            @else
+              <span class="info-box-icon bg-green"><i class="fa fa-thumbs-o-up"></i></span>
+            @endif
+            <div class="info-box-content">
+              <span class="info-box-text">A dia de hoy se adeuda</span>
+              <span class="info-box-number">{{InvoicePayment::getDue()}}€</span>
+            </div><!-- /.info-box-content -->
+          </div>
+        </div><!-- /.box-body -->
+      </div>
+      <!-- //Box -->
     </div>
-    <!-- //Box -->
-  </div>
 
+    <div class="col-md-5">
+      <!-- Box -->
+      <div class="box box-success">
+        <div class="box-header with-border">
+          <h3 class="box-title">Matriculas activas</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+          <div class="info-box">
+            <span class="info-box-icon bg-green"><i class="fa fa-certificate"></i></span>
+            <div class="info-box-content">
+              <span class="info-box-text">Servicios contratados ahora</span>
+              <span class="info-box-number">{{ServicesController::getTotalLinkedServices()}} Servicios</span>
+            </div><!-- /.info-box-content -->
+          </div>
+        </div><!-- /.box-body -->
+      </div>
+      <!-- //Box -->
+    </div>
 
-</div>
-<div class="row">
-    
-  <div class="col-md-4">
-    <!-- Box -->
-    <div class="box box-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Deuda actual</h3>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="info-box">
-          @if(InvoicePayment::getDue()>0)
-            <span class="info-box-icon bg-red"><i class="fa fa-thumbs-o-down"></i></span>
-          @else
-            <span class="info-box-icon bg-green"><i class="fa fa-thumbs-o-up"></i></span>
-          @endif
-          <div class="info-box-content">
-            <span class="info-box-text">A dia de hoy se adeuda</span>
-            <span class="info-box-number">{{InvoicePayment::getDue()}}€</span>
-          </div><!-- /.info-box-content -->
-        </div>
-      </div><!-- /.box-body -->
-    </div>
-    <!-- //Box -->
-  </div>
-    
-    
-  <div class="col-md-4">
-    <!-- Box -->
-    <div class="box box-primary">
-      <div class="box-header with-border">
-        <h3 class="box-title">Total a facturar</h3>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="info-box">
-          <span class="info-box-icon bg-blue"><i class="fa fa-money"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">Facturación estimada del mes</span>
-            <span class="info-box-number">{{ServicesController::getEstimatedMoney()}} €</span>
-            <br/>
-            <span style="text-decoration: italic">* Valor estimativo</span>
-          </div><!-- /.info-box-content -->
-        </div>
-      </div><!-- /.box-body -->
-    </div>
-    <!-- //Box -->
-  </div>
-    
-  <div class="col-md-4">
-    <!-- Box -->
-    <div class="box box-success">
-      <div class="box-header with-border">
-        <h3 class="box-title">Matriculas activas</h3>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="fa fa-certificate"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">Servicios contratados ahora</span>
-            <span class="info-box-number">{{ServicesController::getTotalLinkedServices()}} Servicios</span>
-          </div><!-- /.info-box-content -->
-        </div>
-      </div><!-- /.box-body -->
-    </div>
-    <!-- //Box -->
-  </div>
-    
-    
 </div>
 </section>
 <script>
@@ -306,7 +283,7 @@ window.onload = function()
         @endforeach
       ],
       datasets: [
-          
+
           {
               label: "Facturado",
               fillColor: "rgba(52, 152, 219,0.3)",

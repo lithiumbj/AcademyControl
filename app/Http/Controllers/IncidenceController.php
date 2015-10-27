@@ -55,7 +55,7 @@ class IncidenceController extends Controller {
             //Save
             if ($checkIn->save()) {
                 if ($data['assist'] == 0) {
-                    $client = Client::find($assistance->fk_client);
+                    $client = Client::find($checkIn->fk_client);
                     //Only do the sms send if the user have parents phone
                     if (strlen($client->phone_parents) > 8 && (substr($client->phone_parents, 0, 1) == 6 || (substr($client->phone_parents, 0, 1) == 7)))
                         SMSController::sendAssistanceSms($client->phone_parents, $client->name, $client->id);
@@ -139,7 +139,7 @@ class IncidenceController extends Controller {
         $report->fk_company = Auth::user()->fk_company;
         $report->fk_client = $data['fk_client'];
         $report->color = $data['color'];
-        
+
         //Get the service
         $roomReserve = RoomReserve::find($data['fk_service']);
         $roomService = RoomService::find($roomReserve->fk_room_service);

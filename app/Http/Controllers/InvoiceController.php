@@ -404,5 +404,26 @@ class InvoiceController extends Controller {
         //Redirect
         return redirect('/invoice/' . $invoice->id);
     }
+    /*
+     * This functiobn returns an array with the clients that not have a
+     * invoice due in this month
+     */
+    public static function getUnDueClientsForMonth()
+    {
+      $noDueClients = [];
+      //fetch all the clients (first)
+      $clients = Client::where('status','=',1)->get();
+      //for each client, get who not have a invoice for this month
+      foreach($clients as $client){
 
+        //Have a invoice for this month??
+        $invoices = Invoice::whereRaw("MONTH(date_creation) = ".date("m")." AND YEAR(date_creation) = ".date("Y"). " AND fk_client = ".$client->id)->get();
+        //check if have invoices
+        if(count($invoices)==0){
+          $noDueClients[] = $client;
+        }
+      }
+      //Return the data
+      return $noDueClients;
+    }
 }

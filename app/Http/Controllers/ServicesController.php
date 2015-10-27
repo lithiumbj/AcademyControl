@@ -235,7 +235,7 @@ class ServicesController extends Controller {
      */
 
     public static function getTotalLinkedServices() {
-        $services = ServiceClient::all();
+        $services = ServiceClient::where('active','=',1)->get();
         return count($services);
     }
 

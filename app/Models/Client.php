@@ -29,7 +29,7 @@ class Client extends Model
      */
     public static function getClients()
     {
-      $clients = Client::where('fk_company', '=', \Auth::user()->fk_company)->get();
+      $clients = Client::where('fk_company', '=', \Auth::user()->fk_company)->where('status','=',1)->get();
       return $clients;
     }
 }

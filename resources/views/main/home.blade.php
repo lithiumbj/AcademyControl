@@ -207,7 +207,10 @@ use App\Http\Controllers\InvoiceController;
     <!-- Box -->
     <div class="box box-primary">
       <div class="box-header with-border">
-        <h3 class="box-title">Alumnos sin facturas</h3>
+        <h3 class="box-title">
+          Alumnos sin facturas
+          <a href="{{URL::to('/client/undue')}}" class="btn btn-xs btn-success" style="float:rigth;"><i class="fa fa-eye"></i> Ver</a>
+        </h3>
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="info-box">

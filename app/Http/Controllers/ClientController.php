@@ -265,4 +265,12 @@ class ClientController extends Controller
       //Return to the view
       return redirect('/client/list/1');
     }
+    /*
+     * This function render's a list with the undue clients for this month
+     */
+    public function getUndue()
+    {
+        $clients = InvoiceController::getUnDueClientsForMonth();
+        return view('client.list', ['clients' => $clients]);
+    }
 }

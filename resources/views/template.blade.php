@@ -173,10 +173,9 @@ use App\Models\ClientIncidence;
                 <li><a href="{{URL::to('/client/list/0')}}"><i class="fa fa-circle-o"></i> Listar informaciones</a></li>
                 <li><a href="{{URL::to('/client/list/2')}}"><i class="fa fa-circle-o"></i> Listar ex-clientes</a></li>
                 <li><a href="{{URL::to('/client/undue')}}"><i class="fa fa-circle-o"></i> Clientes sin factura</a></li>
+                <li><a href="{{URL::to('/client/noService')}}"><i class="fa fa-circle-o"></i> Clientes sin servicios</a></li>
                 <!-- Role checking -->
                 @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2)
-                <li><a href=""><i class="fa fa-circle-o"></i> Control de bajas</a></li>
-                <li><a href=""><i class="fa fa-circle-o"></i> Control de altas</a></li>
                 <li><a href="{{URL::to('/invoice/generate')}}"><i class="fa fa-plus"></i> Generar recibos</a></li>
                 @endif
               </ul>

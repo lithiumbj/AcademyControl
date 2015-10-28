@@ -273,4 +273,24 @@ class ClientController extends Controller
         $clients = InvoiceController::getUnDueClientsForMonth();
         return view('client.list', ['clients' => $clients]);
     }
+
+    /*
+     * This function render's a list with clients without services or services
+     * enabled
+     */
+    public function getWithoutService()
+    {
+      $clients = Client::where('fk_company','=',\Auth::user()->fk_company)->where('status','=',1)->get();
+      $clientsWithoutServices = [];
+      //Iterate over the clients
+      foreach($clients as $client){
+        //get services for the client
+        $services = ServiceClient::where('active','=',1)->where('fk_client','=',$client->id)->get();
+        //if not have any service enter the client into the array
+        if(count($services)==0)
+          $clientsWithoutServices[] = $client;
+      }
+      //render the view
+      return view('client.list', ['clients' => $clientsWithoutServices]);
+    }
 }

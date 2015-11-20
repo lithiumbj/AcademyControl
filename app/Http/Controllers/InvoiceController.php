@@ -277,25 +277,27 @@ class InvoiceController extends Controller {
         }
         //After get the clients, get the services foreac
         foreach ($clients as $client) {
-            //Get associated services
-            $services = ServiceClient::whereRaw('fk_client = ' . $client->id . ' AND active = 1')->get();
-            //For-each service generate the monthly due
-            $lines = [];
-            foreach ($services as $serviceClient) {
-                //Get service details
-                $service = Service::where('id', '=', $serviceClient->fk_service)->first();
-                //Second create the line
-                $newLine = new InvoiceLine;
-                $newLine->fk_service = $service->id;
-                $newLine->prod_name = $service->name;
-                $newLine->prod_description = $service->description;
-                $newLine->tax_base = $service->price;
-                $newLine->tax = $service->iva;
-                //Set into an array
-                $lines[] = $newLine;
-            }
-            //Create the invoice
-            InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, $data['note_public'], '', date('Y-m-d'), $lines);
+          if($client->status == 1){
+              //Get associated services
+              $services = ServiceClient::whereRaw('fk_client = ' . $client->id . ' AND active = 1')->get();
+              //For-each service generate the monthly due
+              $lines = [];
+              foreach ($services as $serviceClient) {
+                  //Get service details
+                  $service = Service::where('id', '=', $serviceClient->fk_service)->first();
+                  //Second create the line
+                  $newLine = new InvoiceLine;
+                  $newLine->fk_service = $service->id;
+                  $newLine->prod_name = $service->name;
+                  $newLine->prod_description = $service->description;
+                  $newLine->tax_base = $service->price;
+                  $newLine->tax = $service->iva;
+                  //Set into an array
+                  $lines[] = $newLine;
+              }
+              //Create the invoice
+              InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, $data['note_public'], '', date('Y-m-d'), $lines);
+          }
         }
         //Return to the invoice list
         return redirect('/invoice');

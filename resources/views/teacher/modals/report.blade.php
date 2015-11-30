@@ -49,7 +49,7 @@
   </div>
 </div>
 <script>
-var client, room_reserve;
+var client, room_reserve, name;
 
 /*
  * Get's the report
@@ -60,6 +60,7 @@ function prepareReport(fk_client, fk_room_reserve, name)
 
   jQuery("#reportBody").html("");
   client = fk_client;
+  name = name;
   room_reserve = fk_room_reserve;
   //Get actual report
   jQuery.ajax({
@@ -79,6 +80,10 @@ function prepareReport(fk_client, fk_room_reserve, name)
                     jQuery("#reportBody").append("<tr style='background-color:"+jData[i].color+";'><td>"+jData[i].created_at+"</td><td>"+jData[i].concept+"</td><td><i id='originalObservations"+jData[i].id+"'>"+jData[i].observations+"</i><input type='text' class='form-control' value='"+jData[i].observations+"' id='observationsEdit"+jData[i].id+"' style='display:none'/></td><td><button onclick='editReport("+jData[i].id+")' id='editBtn"+jData[i].id+"' class='btn btn-xs btn-warning'><i class='fa fa-pencil'></i></button> <button id='deleteBtn"+jData[i].id+"' onclick='deleteReport("+jData[i].id+")' class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button> <button id='saveEditBtn"+jData[i].id+"' style='display:none;' class='btn btn-xs btn-success pull-right' onclick='goEditReport()'><i class='fa fa-floppy-o'></i></button> </td></tr>");
             }
         }
+        //Scroll to the last position
+         $('#modalReport').animate({
+             scrollTop: $("#close_report").offset().top
+         }, 750);
       }else{
         jQuery("#reportBody").append("<tr><td colspan='3'>Sin registros</td></tr>");
       }
@@ -98,10 +103,12 @@ function sendReport()
   }).done(function(data) {
       if(data == 'ok'){
         alert("Reporte creado correctamente");
-        jQuery("#close_report").trigger("click");
+        //jQuery("#close_report").trigger("click");
         jQuery("#report_concept").val("");
         jQuery("#report_observations").val("");
         jQuery("#report_color").val("#ffffff");
+        //reload report view
+        prepareReport(client, room_reserve, name);
         switchColor();
       }else{
         alert("Error al crear el reporte del alumno");
@@ -111,7 +118,7 @@ function sendReport()
   });
 }
 /*
- * This function deletes the report via AJAX request (POST) 
+ * This function deletes the report via AJAX request (POST)
  */
 function deleteReport(id)
 {
@@ -133,7 +140,7 @@ function deleteReport(id)
               alert("Error al eliminar el reporte del alumno");
           });
     } else {
-        
+
     }
 }
 /*
@@ -154,7 +161,7 @@ function editReport(id)
     jQuery("#observationsEdit"+id).show();
 }
 /*
- * This function sends the new info (report data) to the server 
+ * This function sends the new info (report data) to the server
  */
 function goEditReport()
 {

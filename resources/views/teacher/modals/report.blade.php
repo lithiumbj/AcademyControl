@@ -36,7 +36,7 @@
                 </select>
               </td>
               <td>
-                <button class="btn btn-success" onclick="sendReport()"><i class="fa fa-paper-plane-o"></i></button>
+                <button class="btn btn-success" onclick="sendReport()" id="createBtn"><i class="fa fa-paper-plane-o"></i></button>
               </td>
             </tr>
           </tfoot>
@@ -96,17 +96,18 @@ function prepareReport(fk_client, fk_room_reserve, name)
  */
 function sendReport()
 {
+  jQuery("#createBtn").html("Espere....");
   jQuery.ajax({
     url: "{{URL::to('/report/client/create')}}",
     method : "POST",
     data : {fk_client: client, fk_service: room_reserve, _token : "{{csrf_token()}}", concept: jQuery("#report_concept").val(), observations: jQuery("#report_observations").val(), color: jQuery("#report_color").val()}
   }).done(function(data) {
       if(data == 'ok'){
-        alert("Reporte creado correctamente");
         //jQuery("#close_report").trigger("click");
         jQuery("#report_concept").val("");
         jQuery("#report_observations").val("");
         jQuery("#report_color").val("#ffffff");
+        jQuery("#createBtn").html('<i class="fa fa-paper-plane-o"></i>');
         //reload report view
         prepareReport(client, room_reserve, name);
         switchColor();

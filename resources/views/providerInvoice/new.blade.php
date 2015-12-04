@@ -58,7 +58,7 @@ use App\Models\Client;
             <tr>
               <td style="width:300px;"></td>
               <td><b>Datos del proveedor</b></td>
-            </tr>  
+            </tr>
             <tr>
                 <td style="width:300px;">Nombre </td>
                 <td>{{$provider->name}}</td>
@@ -101,7 +101,7 @@ use App\Models\Client;
               <td><% line.prod_name %></td>
               <td><% line.prod_description %></td>
               <td><% line.tax_base %> <b>€</b></td>
-              <td><% line.tax %> <b>€</b></td>
+              <td><% line.tax %> <b>%</b></td>
               <td><% line.tax_base + (line.tax_base * (line.tax/100)) %> <b>€</b></td>
               <!-- actions -->
               <td>
@@ -137,7 +137,7 @@ use App\Models\Client;
             <input class="form-control" ng-model="invoice.tmpPrice" type="text"/>
           </div>
           <!-- //Product price changer -->
-          
+
           <!-- Product price changer -->
           <div class="col-md-1">
             IVA (%) <br/>

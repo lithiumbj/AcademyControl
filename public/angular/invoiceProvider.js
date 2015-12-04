@@ -32,9 +32,9 @@ window.onload = function()
         this.total = 0.0;
         //Iterate all the lines and
         for(var i=0; i < this.lines.length; i++){
-          this.iva += this.lines[i].tax;
+          this.iva += (this.lines[i].tax_base * (this.lines[i].tax/100));
           this.bi += this.lines[i].tax_base;
-          this.total += this.lines[i].tax + this.lines[i].tax_base;
+          this.total += this.lines[i].tax_base + (this.lines[i].tax_base * (this.lines[i].tax/100));
         }
       };
 
@@ -53,7 +53,7 @@ window.onload = function()
         //recalculate the totals
         this.recalculateTotals();
       };
-      
+
       /*
        * Deletes the line
        */

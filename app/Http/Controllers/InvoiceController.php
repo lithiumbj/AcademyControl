@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\InvoicePayment;
 use App\Models\InvoiceLine;
 use App\Models\Client;
+use App\Models\ContactWay;
 use App\Models\ServiceClient;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
@@ -213,7 +214,7 @@ class InvoiceController extends Controller {
         //Generate a exit money cashflow
         $payment->fk_cashflow = CashflowController::createInMovement('Devolución de recibo de ' . Client::getClientName($invoice->fk_client), ($invoice->total * -1));
         //return to the invoice list
-        return redirect('/invoice/'.$invoice->id);
+        return redirect('/invoice/' . $invoice->id);
     }
 
     /*
@@ -277,27 +278,27 @@ class InvoiceController extends Controller {
         }
         //After get the clients, get the services foreac
         foreach ($clients as $client) {
-          if($client->status == 1){
-              //Get associated services
-              $services = ServiceClient::whereRaw('fk_client = ' . $client->id . ' AND active = 1')->get();
-              //For-each service generate the monthly due
-              $lines = [];
-              foreach ($services as $serviceClient) {
-                  //Get service details
-                  $service = Service::where('id', '=', $serviceClient->fk_service)->first();
-                  //Second create the line
-                  $newLine = new InvoiceLine;
-                  $newLine->fk_service = $service->id;
-                  $newLine->prod_name = $service->name;
-                  $newLine->prod_description = $service->description;
-                  $newLine->tax_base = $service->price;
-                  $newLine->tax = $service->iva;
-                  //Set into an array
-                  $lines[] = $newLine;
-              }
-              //Create the invoice
-              InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, $data['note_public'], '', date('Y-m-d'), $lines);
-          }
+            if ($client->status == 1) {
+                //Get associated services
+                $services = ServiceClient::whereRaw('fk_client = ' . $client->id . ' AND active = 1')->get();
+                //For-each service generate the monthly due
+                $lines = [];
+                foreach ($services as $serviceClient) {
+                    //Get service details
+                    $service = Service::where('id', '=', $serviceClient->fk_service)->first();
+                    //Second create the line
+                    $newLine = new InvoiceLine;
+                    $newLine->fk_service = $service->id;
+                    $newLine->prod_name = $service->name;
+                    $newLine->prod_description = $service->description;
+                    $newLine->tax_base = $service->price;
+                    $newLine->tax = $service->iva;
+                    //Set into an array
+                    $lines[] = $newLine;
+                }
+                //Create the invoice
+                InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $client->id, Auth::user()->fk_company, 1, $data['note_public'], '', date('Y-m-d'), $lines);
+            }
         }
         //Return to the invoice list
         return redirect('/invoice');
@@ -406,26 +407,53 @@ class InvoiceController extends Controller {
         //Redirect
         return redirect('/invoice/' . $invoice->id);
     }
+
     /*
      * This functiobn returns an array with the clients that not have a
      * invoice due in this month
      */
-    public static function getUnDueClientsForMonth()
-    {
-      $noDueClients = [];
-      //fetch all the clients (first)
-      $clients = Client::where('status','=',1)->get();
-      //for each client, get who not have a invoice for this month
-      foreach($clients as $client){
 
-        //Have a invoice for this month??
-        $invoices = Invoice::whereRaw("MONTH(date_creation) = ".date("m")." AND YEAR(date_creation) = ".date("Y"). " AND fk_client = ".$client->id)->get();
-        //check if have invoices
-        if(count($invoices)==0){
-          $noDueClients[] = $client;
+    public static function getUnDueClientsForMonth() {
+        $noDueClients = [];
+        //fetch all the clients (first)
+        $clients = Client::where('status', '=', 1)->get();
+        //for each client, get who not have a invoice for this month
+        foreach ($clients as $client) {
+
+            //Have a invoice for this month??
+            $invoices = Invoice::whereRaw("MONTH(date_creation) = " . date("m") . " AND YEAR(date_creation) = " . date("Y") . " AND fk_client = " . $client->id)->get();
+            //check if have invoices
+            if (count($invoices) == 0) {
+                $noDueClients[] = $client;
+            }
         }
-      }
-      //Return the data
-      return $noDueClients;
+        //Return the data
+        return $noDueClients;
     }
+
+    /*
+     * Returns in json way the client invoices
+     */
+
+    public function getInvoicesForClient() {
+        $clientId = $_GET['userid'];
+        $token = $_GET['uuid'];
+        //Security check
+        if (!SettingsHelper::checkAuth($clientId, $token))
+            die;
+        
+        $model = Client::find($clientId);
+        //get the contat way's
+        $contactWays = ContactWay::all();
+        //Get the client services
+        $services = DB::table('service_client')
+                        ->join('service', 'service.id', '=', 'service_client.fk_service')
+                        ->where('service_client.fk_client', '=', $model->id)
+                        ->select('service_client.id', 'service.id as serviceId', 'service.name', 'service_client.created_at', 'service_client.active', 'service_client.reason', 'service_client.date_to')->get();
+        //Get the client last invoices
+        $invoices = Invoice::where('fk_client', '=', $model->id)->orderBy('date_creation', 'asc')->get();
+        
+        print_r(json_encode($invoices));
+    }
+
 }

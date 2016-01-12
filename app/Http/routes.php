@@ -21,6 +21,7 @@ Route::get('/login',function(){
     return view('login');
 });
 Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/login_app', 'Auth\AuthController@appLogin');
 Route::get('auth/login',function(){
     return view('login');
 });

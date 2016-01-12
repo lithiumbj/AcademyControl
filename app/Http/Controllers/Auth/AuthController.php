@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Models\Client;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -69,5 +70,16 @@ class AuthController extends Controller
         Auth::logout();
         return redirect('/login');
 
+    }
+    
+    public function appLogin()
+    {
+        //Find the client
+        $client = Client::whereRaw('nif = "'.$_GET['nif'].'" AND phone_parents = '.$_GET['phone'])->first();
+        if($client){
+            echo 'ok';
+        }else{
+            echo 'notFound';
+        }
     }
 }

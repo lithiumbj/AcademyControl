@@ -61,7 +61,11 @@ $counterB = 0;
                                 </td>
                                 @for($a = 1; $a < 7; $a++)
                                 <td class="center">
-                                    <a href="{{URL::to('/teacher/teach?hour='.$i.'&day='.$a.'&room='.$room->id)}}" class="btn btn-primary btn-xs">Seleccionar</a>
+                                    @if(TeacherController::getClientsForHour($room->id, $i, $a)>0)
+                                        <a href="{{URL::to('/teacher/teach?hour='.$i.'&day='.$a.'&room='.$room->id)}}" class="btn btn-primary btn-xs">Seleccionar</a>
+                                    @else
+                                        <a href="#" class="btn btn-disabled btn-xs">Sin alumnos</a>
+                                    @endif
                                 </td>
                                 @endfor
                             </tr>

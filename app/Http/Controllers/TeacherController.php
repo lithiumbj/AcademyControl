@@ -56,4 +56,31 @@ class TeacherController extends Controller
     //Render the view
     return view('teacher.teach',['clients' => $clients]);
   }
+  
+  
+  /*
+   * This function returns the amounth of clients for a specific room, hour, and day
+   * 
+   * @param {String} $room - The room id
+   * @param {String} $hour - The room id
+   * @param {String} $day - The room id
+   * 
+   * return {Integer} The quantity of people
+   */
+  public static function getClientsForHour($room, $hour, $day)
+  {
+    //Get the data
+    $data = $_GET;
+    //Get the client list
+    $roomReserves = RoomReserve::whereRaw('fk_room = '.$room.' AND hour = '.$hour.' AND day = '.$day)->get();
+    $clients = [];
+    foreach($roomReserves as $RoomReserve){
+      $tmpArray = [];
+      $tmpArray[] = Client::find($RoomReserve->fk_client);
+      $tmpArray[] = $RoomReserve->id;
+      $clients[] = $tmpArray;
+    }
+    //Render the view
+    return count($clients);
+  }
 }

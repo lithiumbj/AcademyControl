@@ -74,6 +74,7 @@ use App\Http\Controllers\RoomController;
                             
                         </tbody>
                     </table>
+                    En desarrollo...
                 </div>
             </div>
         </div>

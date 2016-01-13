@@ -43,7 +43,7 @@ use App\Models\Client;
             <td>{{date('d/m/Y', strtotime($incidence->created_at))}}</td>
             <td>
               <button class="btn btn-success btn-xs" onclick="alert('Incidencia completa: \n\n{{$incidence->observations}}')"><i class="fa fa-eye"></i></button>
-              <a class="btn btn-warning btn-xs" href="{{URL::to('/incidence/client/complete/'.$incidence->id)}}"><i class="fa fa-mail-reply-all"></i> Completar</a>
+              <a class="btn btn-warning btn-xs" href="{{URL::to('/incidence/client/complete/'.$incidence->id)}}"><i class="fa fa-mail-reply-all"></i> Descartar</a>
               <button class="btn btn-default btn-xs" data-toggle="modal" data-target="#smsReport" onclick="launchSmsApp('{{$incidence->observations}}', {{$incidence->fk_client}})"><i class="fa fa-commenting"></i> Revisar y SMS</button>
               <!-- <button class="btn btn-default btn-xs"><i class="fa fa-print"></i> Revisar e imprimir</button> -->
             </td>

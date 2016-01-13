@@ -133,6 +133,10 @@ class ClientController extends Controller {
             $client->poblation = $data['poblation'];
             $client->city = $data['city'];
             $client->status = $data['status'];
+            //Check if the client was a client, and is not being it anymore
+            if ($client->status == "2")
+                $client->date_cancelation = date('Y-m-d');
+            
             $client->phone_parents = $data['phone_parents'];
             $client->phone_client = $data['phone_client'];
             $client->phone_whatsapp = $data['phone_whatsapp'];

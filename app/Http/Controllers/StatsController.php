@@ -26,9 +26,9 @@ class StatsController extends Controller
   public function getNewClients()
   {
     $clients = DB::table('client')
-                ->groupBy(DB::raw('MONTH(client.created_at)'))
-                ->whereRaw('YEAR(client.created_at) = "'.date('Y').'"')
-                ->select(DB::raw('count(id) AS count, MONTH(created_at) AS month'))
+                ->groupBy(DB::raw('YEAR(client.created_at), MONTH(client.created_at)'))
+                ->whereRaw('client.status = 1')
+                ->select(DB::raw('count(id) AS count, YEAR(created_at) AS year, MONTH(created_at) AS month'))
                 ->get();
     return view('stats.newClients', ['data' => $clients]);
   }
@@ -38,7 +38,37 @@ class StatsController extends Controller
    */
   public function getNewInfos()
   {
+    $clients = DB::table('client')
+                ->groupBy(DB::raw('YEAR(client.created_at), MONTH(client.created_at)'))
+                ->whereRaw('client.status = 0 OR (client.status = 1 AND client.was_info = 1)')
+                ->select(DB::raw('count(id) AS count, YEAR(created_at) AS year, MONTH(created_at) AS month'))
+                ->get();
+    return view('stats.newInfos', ['data' => $clients]);
+  }
 
-    return view('stats.newInfos');
+  /*
+   * Renders a view with information to client conversion
+   */
+  public function getInfoToClientConversions()
+  {
+    $clients = DB::table('client')
+                ->groupBy(DB::raw('YEAR(client.created_at), MONTH(client.created_at)'))
+                ->whereRaw('client.status = 1 AND client.was_info = 1')
+                ->select(DB::raw('count(id) AS count, YEAR(created_at) AS year, MONTH(created_at) AS month'))
+                ->get();
+    return view('stats.conversions', ['data' => $clients]);
+  }
+
+  /*
+   * Renders a view with information refered to client to ex-client conversion
+   */
+  public function getClientToExclientConversions()
+  {
+    $clients = DB::table('client')
+                ->groupBy(DB::raw('YEAR(client.date_cancelation), MONTH(client.date_cancelation)'))
+                ->whereRaw('client.status = 2')
+                ->select(DB::raw('count(id) AS count, YEAR(date_cancelation) AS year, MONTH(date_cancelation) AS month'))
+                ->get();
+    return view('stats.newExclients', ['data' => $clients]);
   }
 }

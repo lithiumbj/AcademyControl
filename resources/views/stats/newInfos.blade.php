@@ -8,11 +8,11 @@ use App\Http\Controllers\RoomController;
 <section class="content-header">
   <h1>
     Estadísticas
-    <small>Clientes matriculados</small>
+    <small>Informaciones a clientes</small>
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Estadísticas</a></li>
-    <li class="active">Clientes matriculados</li>
+    <li class="active">Informaciones a clientes</li>
   </ol>
 </section>
 

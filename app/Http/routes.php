@@ -110,6 +110,8 @@ Route::group(['middleware' => 'auth'], function () {
     //Stats routes
     Route::get('/stats/new_clients', 'StatsController@getNewClients');
     Route::get('/stats/new_infos', 'StatsController@getNewInfos');
+    Route::get('/stats/info_conversion', 'StatsController@getInfoToClientConversions');
+    Route::get('/stats/cancelation_conversion', 'StatsController@getClientToExclientConversions');
     //Provider Routes
     Route::get('/provider/', 'ProviderController@getList');
     Route::get('/provider/create', 'ProviderController@getCreate');

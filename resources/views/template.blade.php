@@ -297,6 +297,8 @@ use App\Models\ClientIncidence;
               <ul class="treeview-menu">
                 <li><a href="{{URL::to('/stats/new_clients')}}"><i class="fa fa-circle-o"></i> Nuevos clientes</a></li>
                 <li><a href="{{URL::to('/stats/new_infos')}}"><i class="fa fa-circle-o"></i> Informaciones</a></li>
+                <li><a href="{{URL::to('/stats/info_conversion')}}"><i class="fa fa-circle-o"></i> Conversiones</a></li>
+                <li><a href="{{URL::to('/stats/cancelation_conversion')}}"><i class="fa fa-circle-o"></i> Abandono de clientes</a></li>
               </ul>
             </li>
             <!-- //Element -->

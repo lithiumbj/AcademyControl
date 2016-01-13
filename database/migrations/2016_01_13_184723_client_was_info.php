@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ClientReportCalifications extends Migration {
+class ClientWasInfo extends Migration {
 
     /**
      * Run the migrations.
@@ -11,9 +11,9 @@ class ClientReportCalifications extends Migration {
      * @return void
      */
     public function up() {
-        Schema::table('client_report', function ($table) {
+        Schema::table('client', function ($table) {
             //Set columns
-            $table->integer('is_calification')->nullable();
+            $table->integer('was_info')->nullable();
         });
     }
 

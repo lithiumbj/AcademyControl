@@ -299,6 +299,7 @@ use App\Models\ClientIncidence;
                 <li><a href="{{URL::to('/stats/new_infos')}}"><i class="fa fa-circle-o"></i> Informaciones</a></li>
                 <li><a href="{{URL::to('/stats/info_conversion')}}"><i class="fa fa-circle-o"></i> Conversiones</a></li>
                 <li><a href="{{URL::to('/stats/cancelation_conversion')}}"><i class="fa fa-circle-o"></i> Abandono de clientes</a></li>
+                <li><a href="{{URL::to('/stats/clients_by_service')}}"><i class="fa fa-circle-o"></i> Clientes por servicio</a></li>
               </ul>
             </li>
             <!-- //Element -->

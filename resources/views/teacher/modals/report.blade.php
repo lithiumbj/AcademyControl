@@ -130,8 +130,7 @@ function deleteReport(id)
             data : {id : id, _token : "{{csrf_token()}}"}
           }).done(function(data) {
               if(data == 'ok'){
-                alert("Reporte eliminado correctamente");
-                jQuery("#close_report").trigger("click");
+                prepareReport(client, room_reserve, name);
                 jQuery("#report_concept").val("");
                 jQuery("#report_observations").val("");
               }else{
@@ -175,8 +174,7 @@ function goEditReport()
             data : {id : tmpId, _token : "{{csrf_token()}}", observations : text}
           }).done(function(data) {
               if(data == 'ok'){
-                alert("Reporte modificado correctamente");
-                jQuery("#close_report").trigger("click");
+                prepareReport(client, room_reserve, name);
                 jQuery("#report_concept").val("");
                 jQuery("#report_observations").val("");
               }else{

@@ -122,7 +122,21 @@ class IncidenceController extends Controller {
         $roomReserve = RoomReserve::find($data['fk_service']);
         $roomService = RoomService::find($roomReserve->fk_room_service);
         //Execute final query
-        $reports = ClientReport::whereRaw('fk_client = ' . $data['fk_client'] . ' AND fk_service = ' . $roomService->fk_service)->get();
+        $reports = ClientReport::whereRaw('fk_client = ' . $data['fk_client'] . ' AND fk_service = ' . $roomService->fk_service." AND is_calification IS NULL")->get();
+        //Print return
+        print_r(json_encode($reports));
+    }
+    /*
+     * This function returns the client califications
+     */
+
+    public function getClientCalifications(Request $request) {
+        $data = $request->all();
+        //Get the service
+        $roomReserve = RoomReserve::find($data['fk_service']);
+        $roomService = RoomService::find($roomReserve->fk_room_service);
+        //Execute final query
+        $reports = ClientReport::whereRaw('fk_client = ' . $data['fk_client'] . ' AND fk_service = ' . $roomService->fk_service." AND is_calification = 1")->get();
         //Print return
         print_r(json_encode($reports));
     }
@@ -139,6 +153,9 @@ class IncidenceController extends Controller {
         $report->fk_company = Auth::user()->fk_company;
         $report->fk_client = $data['fk_client'];
         $report->color = $data['color'];
+        //check if is a calification
+        if(isset($data['is_calification']))
+            $report->is_calification = $data['is_calification'];
 
         //Get the service
         $roomReserve = RoomReserve::find($data['fk_service']);

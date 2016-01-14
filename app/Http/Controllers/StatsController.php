@@ -75,7 +75,38 @@ class StatsController extends Controller {
 
     public function getClientByService() {
         $services = Service::fetchCompanyServices();
-        return view('stats.clientsByService',['services' => $services]);
+        return view('stats.clientsByService', ['services' => $services]);
+    }
+
+    /*
+     * This function returns the client search query for the requested services
+     * 
+     * @param {Request} $request - The post request
+     * 
+     * @return {JSON} the data
+     */
+
+    public function postClientByService(Request $request) {
+        $data = $request->all();
+        $where = '';
+        $isFirst = true;
+        //Generate a dinamic where for the query
+        foreach ($data['data'] as $fk_service) {
+            if (!$isFirst)
+                $where.=' ' . $data['condition'] . ' ';
+            $where.= 'service_client.fk_service = ' . $fk_service['id'];
+            //Set the initial value to false
+            $isFirst = false;
+        }
+        //Generate the query
+        $clients = DB::table('client')
+                ->whereRaw($where)
+                ->join('service_client', 'service_client.fk_client', '=', 'client.id')
+                ->join('users', 'users.id', '=', 'client.fk_user')
+                ->select(DB::raw('client.*, users.name AS username'))
+                ->get();
+        //generate the JSON
+        print_r(json_encode($clients));
     }
 
 }

@@ -29,8 +29,14 @@ use App\Http\Controllers\RoomController;
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body center">
-                    <div class="col-md-9" id="selectors">
+                    <div class="col-md-8" id="selectors">
 
+                    </div>
+                    <div class="col-md-1">
+                        <select class="form-control" id="serviceCondition" onchange="getAjax()">
+                            <option value="AND">Y</option>
+                            <option value="OR">O</option>
+                        </select>
                     </div>
                     <div class="col-md-2">
                         <select class="form-control" id="serviceSelector">
@@ -64,17 +70,15 @@ use App\Http\Controllers\RoomController;
                                 <th>Ciudad</th>
                                 <th>Teléfono</th>
                                 <th>Dirección</th>
-                                <th>Tipo</th>
                                 <th>Fecha</th>
                                 <th>Empleado</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            
+                        <tbody id="tbody">
+
                         </tbody>
                     </table>
-                    En desarrollo...
                 </div>
             </div>
         </div>
@@ -87,6 +91,7 @@ use App\Http\Controllers\RoomController;
     {
 
     };
+    var datatable;
     var services = [];
     /*
      * Adds the service to the services array and reload's the view
@@ -98,6 +103,8 @@ use App\Http\Controllers\RoomController;
     {
         var srv = {id: id, name: name};
         services.push(srv);
+        //Download the info
+        getAjax();
         //refresh the gui
         refreshGUI();
     }
@@ -124,6 +131,8 @@ use App\Http\Controllers\RoomController;
             if (i != id)
                 services.push(backup[i]);
         }
+        //Download the info
+        getAjax();
         //Reload the top-level gui
         refreshGUI();
     }
@@ -137,6 +146,51 @@ use App\Http\Controllers\RoomController;
         var name = jQuery("#serviceSelector option:selected").text();
         //add to the array
         addService(id, name);
+    }
+
+    /*
+     * Download the info to put into the table
+     */
+    function getAjax()
+    {
+        if (services.length > 0) {
+            jQuery.ajax({
+                method: "POST",
+                url: "{{URL::to('/stats/clients_by_service')}}",
+                data: {data: services, _token: "{{csrf_token()}}", condition: jQuery("#serviceCondition").val()}
+            }).done(function (data) {
+                //reload the grid
+                reloadGrid(JSON.parse(data));
+            }).fail(function () {
+                alert("Error al obtener los datos");
+            }).always(function () {
+            });
+        } else {
+            reloadGrid([]);
+        }
+    }
+    /*
+     * Reloads the grid (table) with the new data 
+     */
+    function reloadGrid(data)
+    {
+        //Destroy table
+        if (datatable != null) {
+            datatable.destroy();
+        }
+        jQuery("#tbody").html("");
+        for (var i = 0; i < data.length; i++) {
+            console.log(data[i]);
+            jQuery("#tbody").append("<tr><td>" + data[i].name + "</td><td>" + data[i].lastname_1 + " " + data[i].lastname_2 + "</td><td>" + data[i].city + "</td><td>" + data[i].phone_parents + "</td><td>" + data[i].address + "</td><td>" + data[i].created_at + "</td><td>" + data[i].username + "</td><td>--</td></tr>");
+        }
+        //Set the datatable
+        datatable = jQuery("#clientsTable").DataTable({
+            dom: 'Bfrtip',
+            retrieve: true,
+            buttons: [
+                'excel', 'pdf'
+            ]
+        });
     }
 </script>
 

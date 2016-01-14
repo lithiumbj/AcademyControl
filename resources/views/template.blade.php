@@ -34,8 +34,7 @@ use App\Models\ClientIncidence;
     <!-- bootstrap wysihtml5 - text editor -->
     <link rel="stylesheet" href="{{URL::to('/')}}/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
     <!-- datatables css -->
-    <link rel="stylesheet" href="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.css">
-    <link rel="stylesheet" href="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/s/bs/pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fh-3.1.0,r-2.0.0,sc-1.4.0,se-1.1.0/datatables.min.css"/>
     <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -352,8 +351,7 @@ use App\Models\ClientIncidence;
     <!-- Datatables -->
     <script></script>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="{{URL::to('/')}}/plugins/datatables/jquery.dataTables.js"></script>
-    <script src="{{URL::to('/')}}/plugins/datatables/dataTables.bootstrap.js"></script>
+    <script src="https://cdn.datatables.net/s/bs/pdfmake-0.1.18,dt-1.10.10,af-2.1.0,b-1.1.0,b-colvis-1.1.0,b-html5-1.1.0,b-print-1.1.0,cr-1.3.0,fh-3.1.0,r-2.0.0,sc-1.4.0,se-1.1.0/datatables.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
@@ -363,6 +361,7 @@ use App\Models\ClientIncidence;
     <!-- Bootstrap 3.3.5 -->
     <script src="{{URL::to('/')}}/bootstrap/js/bootstrap.min.js"></script>
     <script src="{{URL::to('/')}}/js/angular.js"></script>
+    <script src="{{URL::to('/')}}/js/jszip.min.js"></script>
     <!-- Morris.js charts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
     <script src="{{URL::to('/')}}/plugins/morris/morris.min.js"></script>

@@ -34,7 +34,7 @@ use App\Http\Controllers\RoomController;
                             <tr>
                                 <th>Nombre</th>
                                 <th>Apellidos</th>
-                                <th>Ciudad</th>
+                                <th>Población</th>
                                 <th>Teléfono</th>
                                 <th>Dirección</th>
                                 <th>Fecha</th>
@@ -47,7 +47,7 @@ use App\Http\Controllers\RoomController;
                             <tr>
                                 <td>{{$client->name}}</td>
                                 <td>{{$client->lastname_1}} {{$client->lastname_2}}</td>
-                                <td>{{$client->city}}</td>
+                                <td>{{$client->poblation}}</td>
                                 <td>{{$client->phone_parents}}</td>
                                 <td>{{$client->address}}</td>
                                 <td>{{date('Y-m-d', strtotime($client->created_at))}}</td>

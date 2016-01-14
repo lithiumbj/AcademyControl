@@ -50,7 +50,7 @@ use App\Http\Controllers\RoomController;
                                 <td>{{$client->city}}</td>
                                 <td>{{$client->phone_parents}}</td>
                                 <td>{{$client->address}}</td>
-                                <td>{{date('d-m-Y', strtotime($client->created_at))}}</td>
+                                <td>{{date('Y-m-d', strtotime($client->created_at))}}</td>
                                 <td>{{$client->username}}</td>
                                 <td>
                                     <a class="btn btn-xs btn-success" href="{{URL::to('/client/view/'.$client->id)}}"><i class="fa fa-eye"></i></a>

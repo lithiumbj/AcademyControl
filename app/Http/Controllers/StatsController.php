@@ -117,7 +117,7 @@ class StatsController extends Controller {
     public static function fetchIncompleteClients() {
         //Generate the query
         $clients = DB::table('client')
-                ->whereRaw("client.status = 1 AND (lastname_1 = '' OR client.address = '' OR client.address = 'C/' OR client.poblation = '' OR client.city = '' OR ((phone_parents = '' AND phone_client = '' AND phone_whatsapp = '') OR (phone_parents = 0 AND phone_client = 0 AND phone_whatsapp = 0)) OR fk_contact_way = 99) OR (nif = '' OR parnet_nif = '')")
+                ->whereRaw("client.status = 1 AND (lastname_1 = '' OR client.address = '' OR client.address = 'C/' OR client.poblation = '' OR client.city = '' OR ((phone_parents = '' AND phone_client = '' AND phone_whatsapp = '') OR (phone_parents = 0 AND phone_client = 0 AND phone_whatsapp = 0) OR (client.nif = '' OR client.parent_nif = '') OR fk_contact_way = 99))")
                 ->join('users', 'users.id', '=', 'client.fk_user')
                 ->select(DB::raw('client.*, users.name AS username'))
                 ->get();

@@ -92,6 +92,8 @@ class StatsController extends Controller {
         $isFirst = true;
         //Generate a dinamic where for the query
         foreach ($data['data'] as $fk_service) {
+            if ($isFirst)
+                $where.=" (";
             if (!$isFirst)
                 $where.=' ' . $data['condition'] . ' ';
             $where.= 'service_client.fk_service = ' . $fk_service['id'];
@@ -100,7 +102,7 @@ class StatsController extends Controller {
         }
         //Generate the query
         $clients = DB::table('client')
-                ->whereRaw($where)
+                ->whereRaw($where . " ) AND service_client.active = 1")
                 ->join('service_client', 'service_client.fk_client', '=', 'client.id')
                 ->join('users', 'users.id', '=', 'client.fk_user')
                 ->select(DB::raw('client.*, users.name AS username'))

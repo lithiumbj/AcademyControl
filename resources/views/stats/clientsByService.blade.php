@@ -186,6 +186,7 @@ use App\Http\Controllers\RoomController;
         //Set the datatable
         datatable = jQuery("#clientsTable").DataTable({
             dom: 'Bfrtip',
+            paging : false,
             retrieve: true,
             buttons: [
                 'excel', 'pdf'

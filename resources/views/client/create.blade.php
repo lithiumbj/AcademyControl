@@ -113,6 +113,7 @@
             <div class="form-group col-md-4">
               <label >¿Como nos ha conocido? *</label>
               <select class="form-control" name="fk_contact_way" >
+                <option value="99" selected="selected">--</option>
                 @foreach($contactWays as $contactWay)
                 <option value="{{$contactWay->id}}">{{$contactWay->name}}</option>
                 @endforeach

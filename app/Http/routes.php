@@ -114,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stats/cancelation_conversion', 'StatsController@getClientToExclientConversions');
     Route::get('/stats/clients_by_service', 'StatsController@getClientByService');
     Route::post('/stats/clients_by_service', 'StatsController@postClientByService');
+    Route::get('/stats/incomplete_clients', 'StatsController@getIncompleteClients');
     //Provider Routes
     Route::get('/provider/', 'ProviderController@getList');
     Route::get('/provider/create', 'ProviderController@getCreate');

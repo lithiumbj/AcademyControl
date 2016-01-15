@@ -35,8 +35,19 @@ use App\Http\Controllers\StatsController;
 <div class="row">
     <div class="col-md-12 col-lg-12 col-xs-12">
         <div class="alert alert-danger alert-dismissible">
-          <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
+          <h4><i class="icon fa fa-users"></i> ¡Atención!</h4>
           Existen {{count(StatsController::fetchIncompleteClients())}} fichas de alumnos sin completar <a href="{{URL::to('/stats/incomplete_clients')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
+        </div>
+    </div>
+</div>
+@endif
+@if(count(Invoice::get60DaysInvoices())>0)
+
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-xs-12">
+        <div class="alert alert-danger alert-dismissible">
+          <h4><i class="icon fa fa-money"></i> ¡Atención!</h4>
+          Existen {{count(Invoice::get60DaysInvoices())}} Factura/as impagadas con más de dos meses de retraso en estos momentos <a href="{{URL::to('/invoice/list')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
         </div>
     </div>
 </div>

@@ -26,6 +26,15 @@ class Invoice extends Model
       $invoices = Invoice::whereRaw('fk_company = '.\Auth::user()->fk_company.' AND (status != 0 AND status != 2) AND date_creation < "'.date('Y-m-d', strtotime(date('Y-m-d').' -10 days')).'"')->get();
       return $invoices;
     }
+    
+    /*
+     * Return's the 60 days lapsed invoices
+     */
+    public static function get60DaysInvoices()
+    {
+      $invoices = Invoice::whereRaw('fk_company = '.\Auth::user()->fk_company.' AND (status != 0 AND status != 2) AND date_creation < "'.date('Y-m-d', strtotime(date('Y-m-d').' -2 months')).'"')->get();
+      return $invoices;
+    }
 
     /*
      * Returns the invoice DUE's for every month in the current year

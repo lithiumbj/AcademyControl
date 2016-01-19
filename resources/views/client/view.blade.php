@@ -95,7 +95,7 @@ use App\Models\Client;
                         </div>
 
                         <div class="form-group col-md-4">
-                            <label >1º Apellido de padre / madre</label>
+                            <label >2º Apellido de padre / madre</label>
                             <br/>
                             <i>{{$model->parent_lastname_2}}</i>
                         </div>

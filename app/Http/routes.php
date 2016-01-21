@@ -144,4 +144,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/chat/checkFeed', 'ChatController@checkFeed');
     //SMS Send routes
     Route::post('/sms/sendReport', 'SMSController@sendReport');
+    //LMS Routes
+    Route::get('/lms', 'LMSController@showLMS');
+    Route::get('/lms/fetch/{path}', 'LMSController@ajaxFetch');
+    Route::post('/lms/new_folder', 'LMSController@ajaxCreateFolder');
 });

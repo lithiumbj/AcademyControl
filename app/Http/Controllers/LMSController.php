@@ -67,4 +67,27 @@ class LMSController extends Controller {
             print_r('ko');
     }
 
+    /*
+     * This function catches the POST request and handles the file saving
+     */
+
+    public function ajaxUploadFile(Request $request) {
+        $data = $request->all();
+        //Create an empty LMSFile object
+        $fileToSave = new LMSFile;
+        $fileToSave->name = $data[0]->getClientOriginalName();
+        $hash = time()*rand(0, 4);
+        $fileToSave->path = "/";
+        $fileToSave->hash = $hash;
+        $fileToSave->type = $data[0]->getExtension();
+        //Fk's
+        $fileToSave->fk_parent = $data['parent'];
+        $fileToSave->fk_user = \Auth::user()->id;
+        $fileToSave->fk_company = \Auth::user()->fk_company;
+        //Move the file
+        $data[0]->move(storage_path().'/lms', $hash);
+        //Save
+        $fileToSave->save();
+    }
+
 }

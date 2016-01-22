@@ -17,13 +17,13 @@ use App\User;
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-12" id="filesContainer">
             <div class="box">
                 <div class="box-header with-border">
                     <h3>Ficheros</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#newFolderModal"><i class="fa fa-folder"></i> Nueva carpeta</button>
-                        <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#uploadFileModal"><i class="fa fa-file-code-o"></i> Subir archivo</button>
+                        <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#newFileModal"><i class="fa fa-file-code-o"></i> Subir archivo</button>
                     </div>
                 </div><!-- /.box-header -->
                 <div class="box-body">
@@ -45,12 +45,29 @@ use App\User;
                 </div><!-- /.box-body -->
             </div>
         </div>
+        <div class="col-md-4" id="filesDetails" style="display: none;">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 id="detailsTitle"></h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <hr/>
+                    <button class="btn btn-success"><i class="fa fa-cloud-download"></i> Descargar</button>
+                    <button class="btn btn-danger"><i class="fa fa-trash"></i> Borrar</button>
+                    <button class="btn btn-primary"><i class="fa fa-share"></i> Compartir</button>
+
+                </div><!-- /.box-body -->
+            </div>
+        </div>
     </div>
 
 </section>
 
 <script>
     var currentPath = null;
+    var file = null;
+    var tmpData = null;
+    var tmpFile = null;
 
     /*
      * Fires a AJAX GET request to get the content of a folder
@@ -75,12 +92,24 @@ use App\User;
      * Draw's the content into the white space
      */
     function drawContent(data) {
+        tmpData = data;
         jQuery("#whiteZone").html("");
         //First the folders
         for (var i = 0; i < data.folders.length; i++) {
-            jQuery("#whiteZone").append('<a class="btn btn-app"><i class="fa fa-folder"></i> '+data.folders[i].name+' </a>');
+            jQuery("#whiteZone").append('<a class="btn btn-app" onclick="navigateTo(' + data.folders[i].id + ')"><i class="fa fa-folder"></i> ' + data.folders[i].name + ' </a>');
         }
         //After, the files
+        for (var i = 0; i < data.files.length; i++) {
+            jQuery("#whiteZone").append('<a class="btn btn-app" onclick="showDetails(' + data.files[i].id + ')"><i class="fa fa-file-code-o"></i> ' + data.files[i].name + ' </a>');
+        }
+    }
+
+    /*
+     * Allows to enter into a sub-folder
+     * */
+    function navigateTo(path)
+    {
+        fetchContent(path);
     }
 
     /*
@@ -103,10 +132,80 @@ use App\User;
         });
     }
     /*
+     * Prepares the file to upload 
+     */
+    function prepareUpload(event)
+    {
+        file = event.target.files;
+    }
+    /*
+     * Uploads the file to the server
+     * */
+    function uploadFile()
+    {
+        // Create a formdata object and add the files
+        var data = new FormData();
+        $.each(file, function (key, value)
+        {
+            data.append(key, value);
+        });
+        //Add the token and path to the data array
+        data.append('_token', "{{csrf_token()}}");
+        data.append('parent', currentPath);
+        //Send data to the server
+        $.ajax({
+            url: '{{URL::to("/lms/upload_file")}}',
+            type: 'POST',
+            data: data,
+            cache: false,
+            dataType: 'json',
+            processData: false, // Don't process the files
+            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+            success: function (data, textStatus, jqXHR)
+            {
+                if (typeof data.error === 'undefined')
+                {
+                    // Success so call function to process the form
+                    submitForm(event, data);
+                } else
+                {
+                    // Handle errors here
+                    console.log('ERRORS: ' + data.error);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                // Handle errors here
+                console.log('ERRORS: ' + textStatus);
+                // STOP LOADING SPINNER
+            }
+        });
+    }
+    /*
+     * Shows the deails panel
+     */
+    function showDetails(fileId)
+    {
+        //Stores the file in a temporal variable for future pourposes
+        tmpFile = fileId;
+        //Changue the classes to show the sidebar
+        jQuery("#filesContainer").removeClass("col-md-12");
+        jQuery("#filesContainer").addClass("col-md-8");
+        jQuery("#filesDetails").show();
+        //set the name to the sidebar
+        for (var i = 0; i < tmpData.files.length; i++) {
+            if (tmpData.files[i].id = fileId) {
+                jQuery("#detailsTitle").html(tmpData.files[i].name);
+            }
+        }
+    }
+    /*
      * On-load script
      */
     window.onload = function () {
         fetchContent(null);
+        //Upload file input trigger
+        jQuery("#fileChooser").on('change', prepareUpload);
     };
 </script>
 
@@ -127,6 +226,24 @@ use App\User;
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModalCreateFolder">Cerrar</button>
                 <button type="button" class="btn btn-primary" onclick="createFolder(jQuery('#folderName').val())">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="newFileModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nueva carpeta</h4>
+            </div>
+            <div class="modal-body">
+                <input type="file" id="fileChooser"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModalCreateFolder">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="uploadFile()">Subir</button>
             </div>
         </div>
     </div>

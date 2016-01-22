@@ -20,8 +20,9 @@ class InvoicePayment extends Model
        //SELECT MONTH(date_creation) AS mes, SUM(total) AS total FROM `invoice` WHERE status = 1 AND YEAR(date_creation) = "2015" GROUP BY MONTH(date_creation)
         $data = DB::table('invoice')
                 ->groupBy(DB::raw('YEAR(date_creation), MONTH(date_creation)'))
-                ->whereRaw('status = 2 AND date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'"')
-                ->select(DB::raw('MONTH(date_creation) AS month, YEAR(date_creation) AS year, SUM(total) AS total '))
+                ->join('invoice_payments','invoice_payments.fk_invoice','=','invoice.id')
+                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'"')
+                ->select(DB::raw('MONTH(date_creation) AS month, YEAR(date_creation) AS year, SUM(invoice_payments.total) AS total '))
                 ->get();
       //Return the data
       return $data;

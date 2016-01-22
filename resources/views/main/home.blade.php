@@ -360,8 +360,14 @@ window.onload = function()
               highlightFill: "rgba(211, 84, 0,1.0)",
               highlightStroke: "rgba(230, 126, 34,1.0)",
               data: [
-                  @foreach(Invoice::getMonthlyDue() as $money)
-                    "{{$money->total}}",
+                  @foreach(Invoice::getMonthlyInvoiced() as $money)
+                    @foreach(InvoicePayment::getMonthlyMoney() as $due)
+                        @if($money->year == $due->year)
+                            @if($money->month == $due->month)
+                                "{{$money->total - $due->total}}",
+                            @endif
+                        @endif
+                    @endforeach
                   @endforeach
               ]
           },

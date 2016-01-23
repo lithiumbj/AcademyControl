@@ -76,7 +76,7 @@ class LMSController extends Controller {
         //Create an empty LMSFile object
         $fileToSave = new LMSFile;
         $fileToSave->name = $data[0]->getClientOriginalName();
-        $hash = time()*rand(0, 4);
+        $hash = time() * rand(0, 4);
         $fileToSave->path = "/";
         $fileToSave->hash = $hash;
         $fileToSave->type = $data[0]->getExtension();
@@ -85,9 +85,11 @@ class LMSController extends Controller {
         $fileToSave->fk_user = \Auth::user()->id;
         $fileToSave->fk_company = \Auth::user()->fk_company;
         //Move the file
-        $data[0]->move(storage_path().'/lms', $hash);
+        $data[0]->move(storage_path() . '/lms', $hash);
         //Save
         $fileToSave->save();
+        //Output
+        print_r(json_encode(['result' => 'ok']));
     }
 
 }

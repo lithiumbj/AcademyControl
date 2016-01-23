@@ -20,7 +20,7 @@ use App\User;
         <div class="col-md-12" id="filesContainer">
             <div class="box">
                 <div class="box-header with-border">
-                    <h3>Ficheros</h3>
+                    <h3><a href="#" style="color:back;margin-right: 10px;" onclick="goBack()"><i class="fa fa-backward"></i></a>Ficheros</h3>
                     <div class="box-tools pull-right">
                         <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#newFolderModal"><i class="fa fa-folder"></i> Nueva carpeta</button>
                         <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#newFileModal"><i class="fa fa-file-code-o"></i> Subir archivo</button>
@@ -68,12 +68,36 @@ use App\User;
     var file = null;
     var tmpData = null;
     var tmpFile = null;
+    var navigation = [0];
+
+    /*
+     * This function returns to the previous position
+     */
+    function goBack()
+    {
+        var backup = navigation;
+        //check's to avoid the outOfBoundsException
+        if (navigation.length > 1)
+            fetchContent(navigation[navigation.length - 1]);
+        else
+            fetchContent(0);
+        //re-generate the navigation array
+        navigation = [];
+        for (i = 0; i < backup.length - 1; i++) {
+            navigation.push(backup[i]);
+        }
+        //Final check
+        if (navigation.length == 0) {
+            navigation.push(0);
+        }
+    }
 
     /*
      * Fires a AJAX GET request to get the content of a folder
      */
     function fetchContent(path)
     {
+        currentPath = path;
         jQuery("#loadingBar").show();
         //Do the query request
         jQuery.ajax({
@@ -143,6 +167,10 @@ use App\User;
      * */
     function uploadFile()
     {
+        //Show spinner
+        jQuery("#uploadProgressBar").show();
+        jQuery("#uploadButonMdl").html("Un momento...");
+        console.log(currentPath);
         // Create a formdata object and add the files
         var data = new FormData();
         $.each(file, function (key, value)
@@ -163,23 +191,17 @@ use App\User;
             contentType: false, // Set content type to false as jQuery will tell the server its a query string request
             success: function (data, textStatus, jqXHR)
             {
-                if (typeof data.error === 'undefined')
-                {
-                    // Success so call function to process the form
-                    submitForm(event, data);
-                } else
-                {
-                    // Handle errors here
-                    console.log('ERRORS: ' + data.error);
-                }
+                jQuery("#closeModalUploadFile").trigger('click');
+                fetchContent(currentPath);
             },
             error: function (jqXHR, textStatus, errorThrown)
             {
-                // Handle errors here
-                console.log('ERRORS: ' + textStatus);
-                // STOP LOADING SPINNER
+                alert("Error: "+errorThrown);
             }
         });
+        //Hide spinner
+        jQuery("#uploadProgressBar").hide();
+        jQuery("#uploadButonMdl").html("Subir");
     }
     /*
      * Shows the deails panel
@@ -242,8 +264,15 @@ use App\User;
                 <input type="file" id="fileChooser"/>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModalCreateFolder">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="uploadFile()">Subir</button>
+                <!-- Progress bar -->
+                <div class="progress progress-sm active" id="uploadProgressBar" style="display:none;">
+                    <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+                <!-- //Progress bar -->
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModalUploadFile">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="uploadFile()" id="uploadButonMdl">Subir</button>
             </div>
         </div>
     </div>

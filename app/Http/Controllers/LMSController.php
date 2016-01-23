@@ -10,6 +10,8 @@ use App\Models\LMSFile;
 use App\Models\ServiceClient;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\AngularHelper;
 use Validator;
@@ -78,18 +80,46 @@ class LMSController extends Controller {
         $fileToSave->name = $data[0]->getClientOriginalName();
         $hash = time() * rand(0, 4);
         $fileToSave->path = "/";
-        $fileToSave->hash = $hash;
-        $fileToSave->type = $data[0]->getExtension();
+        //get the extension
+        $extension = explode(".", $data[0]->getClientOriginalName());
+        $fileToSave->hash = $hash.'.'.$extension[count($extension)-1];
+        $fileToSave->type = $extension[count($extension)-1];
         //Fk's
         $fileToSave->fk_parent = $data['parent'];
         $fileToSave->fk_user = \Auth::user()->id;
         $fileToSave->fk_company = \Auth::user()->fk_company;
         //Move the file
-        $data[0]->move(storage_path() . '/lms', $hash);
+        $data[0]->move(storage_path() . '/lms', $hash.'.'.$extension[count($extension)-1]);
         //Save
         $fileToSave->save();
         //Output
         print_r(json_encode(['result' => 'ok']));
+    }
+
+    /*
+     * Deletes via AJAX a file
+     */
+
+    public function ajaxDeleteFile(Request $request) {
+        $data = $request->all();
+        $file = LMSFile::find($data['id']);
+        unlink(storage_path() . '/lms/' . $file->hash);
+        //Deletes the db object
+        $file->delete();
+        echo 'ok';
+    }
+
+    /*
+     * Allows to download a file
+     */
+
+    public function downloadFile($id) {
+        $lmsFile = LMSFile::find($id);
+        //$file = Storage::disk('local')->get('lms/'.$lmsFile->hash);
+        //Alternaive method
+        $url = public_path().'/../storage/lms/'.$lmsFile->hash;
+        return response()->download($url);
+        //return (new Response($file, 200));
     }
 
 }

@@ -50,10 +50,11 @@ use App\User;
                 <div class="box-header with-border">
                     <h3 id="detailsTitle"></h3>
                 </div><!-- /.box-header -->
-                <div class="box-body">
+                <div class="box-body" style="text-align:center;">
+                    <i class="fa fa-file-code-o" style="font-size:134px;"></i>
                     <hr/>
-                    <button class="btn btn-success"><i class="fa fa-cloud-download"></i> Descargar</button>
-                    <button class="btn btn-danger"><i class="fa fa-trash"></i> Borrar</button>
+                    <button class="btn btn-success" onclick="downloadFile(tmpFile)"><i class="fa fa-cloud-download"></i> Descargar</button>
+                    <button class="btn btn-danger" onclick="deleteFile(tmpFile)"><i class="fa fa-trash"></i> Borrar</button>
                     <button class="btn btn-primary"><i class="fa fa-share"></i> Compartir</button>
 
                 </div><!-- /.box-body -->
@@ -71,10 +72,24 @@ use App\User;
     var navigation = [0];
 
     /*
+     * Generates a download link for the file
+     */
+    function downloadFile(fileId)
+    {
+        //The file
+        location.href = "{{URL::to('/lms/download/')}}/" + fileId;
+    }
+
+    /*
      * This function returns to the previous position
      */
     function goBack()
     {
+        //Changue the classes to show the sidebar
+        jQuery("#filesContainer").removeClass("col-md-8");
+        jQuery("#filesContainer").addClass("col-md-12");
+        jQuery("#filesDetails").hide();
+        //Continue navigation
         var backup = navigation;
         //check's to avoid the outOfBoundsException
         if (navigation.length > 1)
@@ -155,6 +170,25 @@ use App\User;
             jQuery("#loadingBar").hide();
         });
     }
+
+    /*
+     * Deletes the file
+     * */
+    function deleteFile(id) {
+        jQuery.ajax({
+            url: "{{URL::to('/lms/delete_file')}}",
+            method: "POST",
+            data: {id: id, _token: "{{csrf_token()}}"}
+        }).done(function (data) {
+            if (data == 'ok')
+                fetchContent(currentPath);
+            else
+                alert("Error al borrar el fichero, contacte con soporte");
+        }).fail(function () {
+            alert("Error al borrar el fichero, contacte con soporte");
+            jQuery("#loadingBar").hide();
+        });
+    }
     /*
      * Prepares the file to upload 
      */
@@ -170,38 +204,40 @@ use App\User;
         //Show spinner
         jQuery("#uploadProgressBar").show();
         jQuery("#uploadButonMdl").html("Un momento...");
-        console.log(currentPath);
-        // Create a formdata object and add the files
-        var data = new FormData();
-        $.each(file, function (key, value)
-        {
-            data.append(key, value);
-        });
-        //Add the token and path to the data array
-        data.append('_token', "{{csrf_token()}}");
-        data.append('parent', currentPath);
-        //Send data to the server
-        $.ajax({
-            url: '{{URL::to("/lms/upload_file")}}',
-            type: 'POST',
-            data: data,
-            cache: false,
-            dataType: 'json',
-            processData: false, // Don't process the files
-            contentType: false, // Set content type to false as jQuery will tell the server its a query string request
-            success: function (data, textStatus, jqXHR)
+        setTimeout(function () {
+            // Create a formdata object and add the files
+            var data = new FormData();
+            $.each(file, function (key, value)
             {
-                jQuery("#closeModalUploadFile").trigger('click');
-                fetchContent(currentPath);
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert("Error: "+errorThrown);
-            }
-        });
-        //Hide spinner
-        jQuery("#uploadProgressBar").hide();
-        jQuery("#uploadButonMdl").html("Subir");
+                data.append(key, value);
+            });
+            //Add the token and path to the data array
+            data.append('_token', "{{csrf_token()}}");
+            data.append('parent', currentPath);
+            //Send data to the server
+            $.ajax({
+                url: '{{URL::to("/lms/upload_file")}}',
+                type: 'POST',
+                data: data,
+                cache: false,
+                dataType: 'json',
+                processData: false, // Don't process the files
+                contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+                success: function (data, textStatus, jqXHR)
+                {
+                    jQuery("#closeModalUploadFile").trigger('click');
+                    fetchContent(currentPath);
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert("Error: " + errorThrown);
+                }
+            });
+            //Hide spinner
+            jQuery("#uploadProgressBar").hide();
+            jQuery("#uploadButonMdl").html("Subir");
+            //do what you need here
+        }, 2000);
     }
     /*
      * Shows the deails panel
@@ -216,7 +252,7 @@ use App\User;
         jQuery("#filesDetails").show();
         //set the name to the sidebar
         for (var i = 0; i < tmpData.files.length; i++) {
-            if (tmpData.files[i].id = fileId) {
+            if (tmpData.files[i].id == fileId) {
                 jQuery("#detailsTitle").html(tmpData.files[i].name);
             }
         }
@@ -228,6 +264,7 @@ use App\User;
         fetchContent(null);
         //Upload file input trigger
         jQuery("#fileChooser").on('change', prepareUpload);
+        jQuery("#uploadProgressBar").hide();
     };
 </script>
 
@@ -265,7 +302,7 @@ use App\User;
             </div>
             <div class="modal-footer">
                 <!-- Progress bar -->
-                <div class="progress progress-sm active" id="uploadProgressBar" style="display:none;">
+                <div class="progress progress-sm active" id="uploadProgressBar">
                     <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
                         <span class="sr-only"></span>
                     </div>

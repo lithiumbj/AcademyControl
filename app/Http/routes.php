@@ -149,4 +149,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/lms/fetch/{path}', 'LMSController@ajaxFetch');
     Route::post('/lms/new_folder', 'LMSController@ajaxCreateFolder');
     Route::post('/lms/upload_file', 'LMSController@ajaxUploadFile');
+    Route::post('/lms/delete_file', 'LMSController@ajaxDeleteFile');
+    Route::get('/lms/download/{id}', 'LMSController@downloadFile');
 });

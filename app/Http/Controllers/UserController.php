@@ -31,7 +31,6 @@ class UserController extends Controller {
                     'password' => 'required|max:254',
                     'address' => 'required|max:254',
                     'nif' => 'required|max:254',
-                    'nomina' => 'required|max:254',
         ]);
         //Check if validator fails
         if (!$validator->fails()) {
@@ -39,13 +38,13 @@ class UserController extends Controller {
             $user->name = $data['name'];
             $user->email = $data['email'];
             $user->password = Hash::make($data['password']);
-            $user->fk_company = 1;
+            $user->fk_company = $data['fk_company'];
             $user->fk_role = $data['fk_role'];
             $user->address = $data['address'];
             $user->cp = $data['cp'];
             $user->poblation = $data['poblation'];
             $user->nif = $data['nif'];
-            $user->nomina = $data['nomina'];
+            $user->nomina = 0;
 
             //Save the client
             if ($user->save()) {
@@ -128,7 +127,7 @@ class UserController extends Controller {
      */
 
     public function getList() {
-        $users = User::all();
+        $users = User::where('fk_company', '=', \Auth::user()->fk_company)->get();
         return view('user.list', ['users' => $users]);
     }
 

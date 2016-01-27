@@ -8,4 +8,5 @@ class Settings extends Model
 {
     //Table definition
     protected $table = 'settings';
+    
 }

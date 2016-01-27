@@ -11,6 +11,7 @@ use App\Models\Assistance;
 use App\Http\Controllers\Controller;
 use App\Helpers\AngularHelper;
 use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
@@ -235,7 +236,11 @@ class ServicesController extends Controller {
      */
 
     public static function getTotalLinkedServices() {
-        $services = ServiceClient::where('active','=',1)->get();
+        $services = DB::table('service_client')
+                ->whereRaw("service_client.active = 1 AND client.fk_company = ".\Auth::user()->fk_company)
+                ->join('client', 'client.id', '=', 'service_client.fk_client')
+                ->select(DB::raw('service_client.*'))
+                ->get();
         return count($services);
     }
 

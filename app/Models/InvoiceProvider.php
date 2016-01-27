@@ -28,13 +28,13 @@ class InvoiceProvider extends Model {
         //Get the invoiced monhts
         $months = DB::table('invoice')
                 ->groupBy(DB::raw('YEAR(date_creation), MONTH(date_creation)'))
-                ->whereRaw('date_creation BETWEEN "' . date('Y-m-d', strtotime(date('Y-m-d') . " - 1 year")) . '" AND "' . date('Y-m-d') . '"')
+                ->whereRaw('date_creation BETWEEN "' . date('Y-m-d', strtotime(date('Y-m-d') . " - 1 year")) . '" AND "' . date('Y-m-d') . '" AND invoice.fk_company = '.\Auth::user()->fk_company)
                 ->select(DB::raw('MONTH(date_creation) AS month, YEAR(date_creation) AS year, \'0\' AS total'))
                 ->get();
 
         $data = DB::table('invoice_provider')
                 ->select(DB::raw("SUM(total + tax) AS total, MONTH(date_creation) AS month, YEAR(date_creation)"))
-                ->whereRaw("fk_company = " . Auth::user()->fk_company . " AND date_creation BETWEEN '" . date('Y-m-d', strtotime(date('Y-m-d') . " - 1 year")) . "' AND '" . date('Y-m-d') . "' GROUP BY MONTH(date_creation)")
+                ->whereRaw("fk_company = " . Auth::user()->fk_company . " AND date_creation BETWEEN '" . date('Y-m-d', strtotime(date('Y-m-d') . " - 1 year")) . "' AND '" . date('Y-m-d') . "' AND invoice_provider.fk_company = ".\Auth::user()->fk_company." GROUP BY MONTH(date_creation)")
                 ->get();
         //Set the due for the months
         foreach ($data as $dueMonth) {

@@ -1,6 +1,9 @@
 @extends('template')
 <!-- Content Header (Page header) -->
 @section('content')
+<?php
+use App\Models\Company;
+?>
 <section class="content-header">
     <h1>
         Empleados
@@ -104,8 +107,12 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label>Importe bruto de nómina</label>
-                                    <input class="form-control" placeholder="" type="text" name="nomina">
+                                    <label>Empresa</label>
+                                    <select name="fk_company" class="form-control">
+                                        @foreach(Company::fetchCompanies() as $company)
+                                        <option value="{{$company->id}}">{{$company->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 

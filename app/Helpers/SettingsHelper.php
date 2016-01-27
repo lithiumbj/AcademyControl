@@ -36,7 +36,28 @@ class SettingsHelper {
             $property->fk_company = Auth::user()->fk_company;
             $property->clave = $key;
             $property->value = $value;
-            $propery->save();
+            $property->save();
+        }
+    }
+    
+    /*
+     * Sets a setting property from the db if not exists, creates it
+     */
+
+    public static function setSettingForeignCompany($key, $value, $fk_company) {
+        $property = Settings::whereRaw('clave = "' . $key . '" AND fk_company = ' . $fk_company)->first();
+        //Check if propery exists
+        if ($property) {
+            //Update value
+            $property->value = $value;
+            $property->save();
+        } else {
+            //Create new one
+            $property = new Settings;
+            $property->fk_company = $fk_company;
+            $property->clave = $key;
+            $property->value = $value;
+            $property->save();
         }
     }
 

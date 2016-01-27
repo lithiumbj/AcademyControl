@@ -44,13 +44,13 @@ class Invoice extends Model
         //Get the invoiced monhts
         $months = DB::table('invoice')
                 ->groupBy(DB::raw('YEAR(date_creation), MONTH(date_creation)'))
-                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'"')
+                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'" AND invoice.fk_company = '.\Auth::user()->fk_company)
                 ->select(DB::raw('MONTH(date_creation) AS month, YEAR(date_creation) AS year, \'0\' AS total'))
                 ->get();
         //SELECT MONTH(date_creation) AS mes, SUM(total) AS total FROM `invoice` WHERE status = 1 AND YEAR(date_creation) = "2015" GROUP BY MONTH(date_creation)
         $due = DB::table('invoice')
                 ->groupBy(DB::raw('YEAR(date_creation), MONTH(date_creation)'))
-                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'" AND status = 1')
+                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'" AND status = 1 AND invoice.fk_company = '.\Auth::user()->fk_company)
                 ->select(DB::raw('MONTH(date_creation) AS month, YEAR(date_creation) AS year, SUM(total) AS total '))
                 ->get();
         //Set the due for the months
@@ -72,7 +72,7 @@ class Invoice extends Model
         //SELECT MONTH(date_creation) AS mes, SUM(total) AS total FROM `invoice` WHERE status = 1 AND YEAR(date_creation) = "2015" GROUP BY MONTH(date_creation)
         $due = DB::table('invoice')
                 ->groupBy(DB::raw('YEAR(date_creation), MONTH(date_creation)'))
-                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'" ')
+                ->whereRaw('date_creation BETWEEN "'.date('Y-m-d', strtotime(date('Y-m-d')." - 1 year")).'" AND "'.date('Y-m-d').'" AND invoice.fk_company = '.\Auth::user()->fk_company)
                 ->select(DB::raw('MONTH(date_creation) AS month, YEAR(date_creation) AS year, SUM(total) AS total'))
                 ->get();
         //return the array

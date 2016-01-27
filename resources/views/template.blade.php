@@ -161,7 +161,7 @@ use App\Models\ClientIncidence;
                         <!-- Role checking -->
 
                         <!-- Role checking -->
-                        @if(Auth::user()->fk_role == 1 || Auth::user()->fk_role == 2 || Auth::user()->fk_role == 3)
+                        @if(false)
                         <!-- Element -->
                         <li class="treeview">
                             <a href="{{URL::to('/lms/')}}">

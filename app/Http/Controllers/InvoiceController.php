@@ -251,7 +251,7 @@ class InvoiceController extends Controller {
         //Current month client invoices
         $currentMonthClientInvoices = DB::table('invoice')
                         ->join('client', 'client.id', '=', 'invoice.fk_client')
-                        ->whereRaw("YEAR(invoice.date_creation) = " . date('Y') . " AND MONTH(invoice.date_creation) = " . date('m'))
+                        ->whereRaw("YEAR(invoice.date_creation) = " . date('Y') . " AND MONTH(invoice.date_creation) = " . date('m')." AND client.fk_company = ".\Auth::user()->fk_company)
                         ->select(DB::raw('client.*'))->get();
         return view('invoice.generate', ['clientsWithInvoices' => $currentMonthClientInvoices]);
     }
@@ -416,7 +416,7 @@ class InvoiceController extends Controller {
     public static function getUnDueClientsForMonth() {
         $noDueClients = [];
         //fetch all the clients (first)
-        $clients = Client::where('status', '=', 1)->get();
+        $clients = Client::where('status', '=', 1)->where('fk_company','=',\Auth::user()->fk_company)->get();
         //for each client, get who not have a invoice for this month
         foreach ($clients as $client) {
 

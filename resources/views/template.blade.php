@@ -63,12 +63,22 @@ use App\Models\ClientIncidence;
                     <!-- Navbar Right Menu -->
                     <div class="navbar-custom-menu">
                         <ul class="nav navbar-nav">
+                            <!-- Chat -->
                             <li class="dropdown messages-menu" id='messageTxtMenu'>
                                 <a href="{{URL::to('/chat/list')}}" class="dropdown-toggle">
                                     <i class="fa fa-envelope-o"></i>
                                     <span class="label label-success" id="chatCounter"><i class="fa fa-hourglass-half"></i></span>
                                 </a>
                             </li>
+                            @if(\Auth::user()->fk_role == 1)
+                            <!-- Chat (app) -->
+                            <li class="dropdown messages-menu" id='appTxtMenu'>
+                                <a href="{{URL::to('/chat/app')}}" class="dropdown-toggle">
+                                    <i class="fa fa-commenting-o"></i>
+                                    <span class="label label-success" id="chatAppCounter"><i class="fa fa-hourglass-half"></i></span>
+                                </a>
+                            </li>
+                            @endif
                             <!-- User Account: style can be found in dropdown.less -->
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -422,6 +432,7 @@ use App\Models\ClientIncidence;
      */
     function checkForMessages()
     {
+        //Internal messagin check
         jQuery.ajax({
             url: "{{URL::to('/chat/checkFeed')}}",
             method: "GET",
@@ -439,14 +450,37 @@ use App\Models\ClientIncidence;
                 checkForMessages();
             }, 5000);
         });
+        
+        //Check the app-given messages
+        
+        jQuery.ajax({
+            url: "{{URL::to('/chat/checkAppFeed')}}",
+            method: "GET",
+        }).done(function (data) {
+            jQuery("#chatAppCounter").html(data);
+            if (data != 0) {
+                blinkAppMessage();
+            }
+        }).fail(function () {
+        });
+        
     }
     var isRed = false;
+    var isAppRed = false;
     var blinkStarted = false;
 
     function blinkMessage()
     {
         if (!isRed) {
             jQuery("#messageTxtMenu").css({
+                "background-color": "red",
+            });
+        }
+    }
+    function blinkAppMessage()
+    {
+        if (!isAppRed) {
+            jQuery("#appTxtMenu").css({
                 "background-color": "red",
             });
         }

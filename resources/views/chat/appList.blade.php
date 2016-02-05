@@ -3,12 +3,12 @@
 @section('content')
 <?php
 use App\User;
-use App\Models\Chat;
+use App\Models\AppChat;
 ?>
 <section class="content-header">
   <h1>
     Chat
-    <small>Mensajería interna</small>
+    <small>Mensajería externa</small>
   </h1>
 </section>
 
@@ -18,7 +18,7 @@ use App\Models\Chat;
         <div class="col-md-4">
             <div class="box box-warning direct-chat direct-chat-warning">
           <div class="box-header with-border">
-            <h3 class="box-title">Usuarios</h3>
+            <h3 class="box-title">Clientes</h3>
             <div class="box-tools pull-right">
             </div>
           </div><!-- /.box-header -->
@@ -27,10 +27,10 @@ use App\Models\Chat;
                   <tbody>
                       @foreach($users as $user)
                       <tr>
-                          <td style="cursor:pointer;" onclick="loadMessages({{$user->id}})">
-                              {{$user->name}} 
-                              @if(Chat::getMessageCountForUser($user->id)>0)
-                                <small class="label pull-right bg-green">{{Chat::getMessageCountForUser($user->id)}}</small>
+                          <td style="cursor:pointer;" onclick="loadMessages({{$user->fk_sender}})">
+                              {{$user->fk_sender}} 
+                              @if(AppChat::getAppMessageCountForUser($user->fk_sender)>0)
+                                <small class="label pull-right bg-green">{{AppChat::getAppMessageCountForUser($user->fk_sender)}}</small>
                               @endif
                           </td>
                       </tr>
@@ -45,7 +45,7 @@ use App\Models\Chat;
         <!-- DIRECT CHAT -->
         <div class="box box-warning direct-chat direct-chat-warning">
           <div class="box-header with-border">
-            <h3 class="box-title"> Mensajes del usuario</h3>
+            <h3 class="box-title"> Mensajes del cliente</h3>
           </div><!-- /.box-header -->
           <div class="box-body">
             <!-- Conversations are loaded here -->
@@ -78,7 +78,7 @@ use App\Models\Chat;
     {
         userId = fk_user;
         jQuery.ajax({
-            url: "{{URL::to('/chat/getMessages')}}",
+            url: "{{URL::to('/chat/getAppMessagesWeb')}}",
             method: "POST",
             data : {_token : "{{csrf_token()}}", fk_user: fk_user}
           }).done(function(data) {
@@ -88,7 +88,7 @@ use App\Models\Chat;
                 //Load the messages
                 for(var i=0; i<jsonData.messages.length; i++){
                     if(jsonData.messages[i].fk_sender != {{\Auth::user()->id}})
-                        jQuery("#chatContainer").append('<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right"></span><span class="direct-chat-timestamp pull-left">'+jsonData.messages[i].created_at+'</span></div><img class="direct-chat-img" src="{{URL::to("/images/")}}/'+jsonData.messages[i].fk_sender+'.png" alt="message user image"><div class="direct-chat-text">'+jsonData.messages[i].body+'</div></div>');
+                        jQuery("#chatContainer").append('<div class="direct-chat-msg"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-right"></span><span class="direct-chat-timestamp pull-left">'+jsonData.messages[i].created_at+'</span></div><img class="direct-chat-img" src="{{URL::to("/img/avatar2.png")}}" alt="message user image"><div class="direct-chat-text">'+jsonData.messages[i].body+'</div></div>');
                     else
                         jQuery("#chatContainer").append('<div class="direct-chat-msg right"><div class="direct-chat-info clearfix"><span class="direct-chat-name pull-left"></span><span class="direct-chat-timestamp pull-right">'+jsonData.messages[i].created_at+'</span></div><img class="direct-chat-img" src="{{URL::to("/images/")}}/'+jsonData.messages[i].fk_sender+'.png" alt="message user image"><div class="direct-chat-text">'+jsonData.messages[i].body+'</div></div>');
                 }
@@ -108,7 +108,7 @@ use App\Models\Chat;
     {
         var message = jQuery("#messageTxt").val();
         jQuery.ajax({
-            url: "{{URL::to('/chat/sendMessage')}}",
+            url: "{{URL::to('/chat/sendAppMessageWeb')}}",
             method: "POST",
             data : {_token : "{{csrf_token()}}", fk_sender: {{\Auth::user()->id}}, fk_receiver: userId, message: jQuery("#messageTxt").val()}
           }).done(function(data) {

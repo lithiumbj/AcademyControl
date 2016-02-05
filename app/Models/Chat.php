@@ -13,4 +13,5 @@ class Chat extends Model
     {
         return Chat::whereRaw('fk_sender = '.$fk_receiver.' AND seen = 0')->count();
     }
+    
 }

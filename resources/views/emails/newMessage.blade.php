@@ -1,0 +1,1 @@
+Nuevo mensaje espera su contestación en el chat foráneo del app

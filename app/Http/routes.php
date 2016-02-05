@@ -140,9 +140,14 @@ Route::group(['middleware' => 'auth'], function () {
     //Chat
     Route::get('/chat/list', 'ChatController@getList');
     Route::post('/chat/getMessages', 'ChatController@getMessagesForUser');
+    Route::post('/chat/getAppMessagesWeb', 'ChatController@getAppMessagesForUser');
     Route::post('/chat/sendMessage', 'ChatController@sendMessage');
+    Route::post('/chat/sendAppMessageWeb', 'ChatController@sendAppMessage');
     Route::get('/chat/checkFeed', 'ChatController@checkFeed');
-    //SMS Send routes
+    //App-given messaging
+    Route::get('/chat/checkAppFeed', 'ChatController@checkAppFeed');
+    Route::get('/chat/app', 'ChatController@getAppList');
+    //SMS Send routes 
     Route::post('/sms/sendReport', 'SMSController@sendReport');
     //LMS Routes
     Route::get('/lms', 'LMSController@showLMS');
@@ -157,3 +162,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/lms/delete_file', 'LMSController@ajaxDeleteFile');
     Route::get('/lms/download/{id}', 'LMSController@downloadFile');
 });
+//App post emmiting
+Route::post('/chat/sendAppMessage', 'ChatController@ajaxAppSendMessage');
+Route::post('/chat/getAppMessages', 'ChatController@ajaxAppGetMessages');

@@ -120,7 +120,7 @@ class ChatController extends Controller {
         //save
         $chatApp->save();
         //Send the message
-        //ChatController::sendAlertEmail();
+        ChatController::sendAlertEmail();
         //response
         print_r('ok');
     }

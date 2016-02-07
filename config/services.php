@@ -14,9 +14,19 @@ return [
     |
     */
 
-  
+    'mailgun' => [
+        'domain' => '',
+        'secret' => '',
+    ],
+
     'mandrill' => [
         'secret' => 'Q9TC-jt2NLdY6VAcnNph8Q',
+    ],
+
+    'ses' => [
+        'key'    => '',
+        'secret' => '',
+        'region' => 'us-east-1',
     ],
 
     'stripe' => [

@@ -165,3 +165,4 @@ Route::group(['middleware' => 'auth'], function () {
 //App post emmiting
 Route::post('/chat/sendAppMessage', 'ChatController@ajaxAppSendMessage');
 Route::post('/chat/getAppMessages', 'ChatController@ajaxAppGetMessages');
+Route::post('/chat/checkAppMessages', 'ChatController@ajaxAppCheckMessages');

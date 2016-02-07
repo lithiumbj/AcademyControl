@@ -131,7 +131,7 @@ class ChatController extends Controller {
 
     public static function sendAlertEmail() {
         $dummy = [];
-        Mail::send('emails.newMessage', [], function ($m)  {
+        Mail::send('emails.newMessage', [], function ($m) {
             $m->from('sat@inforfenix.com', 'Academy Control ERP - Inforfenix');
 
             $m->to("sat@inforfenix.com", "SAT - Inforfenix")->subject('Nuevo mensaje espera su contestación');
@@ -145,6 +145,12 @@ class ChatController extends Controller {
     public function ajaxAppGetMessages(Request $request) {
         $data = $request->all();
         $messages = AppChat::whereRaw('(fk_sender = ' . $data['fk_sender'] . ') OR (fk_receiver = ' . $data['fk_sender'] . ')')->distinct()->get();
+        //Mark messages as readen
+        foreach ($messages as $message) {
+            $message->seen = 1;
+            $message->save();
+        }
+        //return the messages
         print_r(json_encode($messages));
     }
 
@@ -159,6 +165,20 @@ class ChatController extends Controller {
                 ->select(DB::raw('DISTINCT fk_sender'))
                 ->get();
         return view('chat.appList', ['users' => $users]);
+    }
+
+    /*
+     * This function checks if the user have new messages to read
+     */
+
+    public function ajaxAppCheckMessages(Request $request) {
+        $data = $request->all();
+        $messages = AppChat::whereRaw('(fk_receiver = ' . $data['fk_sender'] . ') AND seen = 0')->distinct()->get();
+        if (count($messages) > 0) {
+            print_r('new');
+        } else {
+            print_r('no-new');
+        }
     }
 
 }

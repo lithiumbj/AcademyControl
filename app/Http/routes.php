@@ -21,7 +21,6 @@ Route::get('/login', function() {
     return view('login');
 });
 Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/login_app', 'Auth\AuthController@appLogin');
 
 //JSON Request's
 Route::get('invoice/ajaxinvoices', 'InvoiceController@getInvoicesForClient');
@@ -163,6 +162,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/lms/download/{id}', 'LMSController@downloadFile');
 });
 //App post emmiting
+//App - Chat
 Route::post('/chat/sendAppMessage', 'ChatController@ajaxAppSendMessage');
 Route::post('/chat/getAppMessages', 'ChatController@ajaxAppGetMessages');
-Route::post('/chat/checkAppMessages', 'ChatController@ajaxAppCheckMessages');
+Route::post('/chat/checkAppMessages', 'ChatController@ajaxAppCheckMessages'); 
+//App - login
+Route::get('auth/login_app', 'Auth\AuthController@appLogin');
+Route::post('invoice/app_get', 'InvoiceController@appGetInvoices');

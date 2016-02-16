@@ -75,16 +75,16 @@ class AuthController extends Controller
     public function appLogin()
     {
         //Find the client
-        $client = Client::whereRaw('nif = "'.$_GET['nif'].'" AND phone_parents = '.$_GET['phone'])->first();
+        $client = Client::whereRaw('parent_nif = "'.$_GET['nif'].'" AND phone_parents = '.$_GET['phone'])->first();
         if($client){
             //Update and save the cipher
             $ciph = $_GET['uuid'];
             $rawDate = explode("-", date('Y-m-d'));
             $currDate = intval($rawDate[0].$rawDate[1].$rawDate[2]);
-            $key = $ciph-$currDate;
+            $key = $ciph/$currDate;
             $client->auth = $key;
             $client->save();
-            echo 'ok';
+            echo $client->id;
         }else{
             echo 'notFound';
         }

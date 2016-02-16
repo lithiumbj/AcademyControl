@@ -455,5 +455,14 @@ class InvoiceController extends Controller {
         
         print_r(json_encode($invoices));
     }
-
+    /*
+     * This function will render all the invoices for a client in json way
+     * 
+     * @param {Request} $request - The POST request data
+     */
+    public function appGetInvoices(Request $request){
+        $data = $request->all();
+        $invoices = Invoice::where('fk_client', '=', $data['id'])->get();
+        print_r(json_encode($invoices));
+    }
 }

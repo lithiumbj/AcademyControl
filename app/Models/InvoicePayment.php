@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Auth;
 use DB;
 
+
+/*
+ * Detector de duplicados
+ * 
+ * SELECT SUM(invoice.total), invoice_payments.* FROM invoice_payments LEFT JOIN invoice ON invoice.id = invoice_payments.fk_invoice WHERE MONTH(invoice.date_creation) = 1 GROUP BY invoice_payments.fk_invoice;
+ * 
+ */
 class InvoicePayment extends Model
 {
     //Table definition

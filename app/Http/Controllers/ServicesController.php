@@ -50,7 +50,7 @@ class ServicesController extends Controller {
             $service->iva = $data['iva'];
             $service->price = $data['price'];
             $service->matricula = $data['matricula'];
-            $service->fk_company = $data['is_active'];
+            $service->fk_company = \Auth::user()->fk_company;
             $service->fk_teacher = $data['fk_teacher'];
             //Set fixed fk's
             $service->is_active = 1;

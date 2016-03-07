@@ -34,6 +34,7 @@ use App\Models\Client;
                     <div class="box-tools pull-right">
                         <a class="btn btn-box-tool" href="{{URL::to('/invoice/create/'.$model->id)}}"><i class="fa fa-money"></i> Crear recibo</a>
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i> Mas detalles</button>
+                        <button class="btn btn-box-tool" data-toggle="modal" data-target="#modalIncidence" onclick="prepareIncidence({{$model->id}})"><i class="fa fa-exclamation-triangle"></i> Emitir incidencia</button>
                     </div>
                     @endif
 
@@ -555,6 +556,7 @@ use App\Models\Client;
     <!--- Modals zone -->
     @include('client.modals.addService')
     @include('client.modals.enrolRoom')
+    @include('teacher.modals.incidence')
     <!--- //Modals zone -->
 </section>
 <script>

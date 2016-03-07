@@ -313,6 +313,7 @@ use App\Models\Client;
                 <div class="box-header with-border">
                     <h3 class="box-title">Horario</h3>
                     <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-default btn-xs" data-toggle="modal" data-target="#calendarCheckModal">Consultar disponibilidad</button>
                         <i>Leyenda:</i> &nbsp;
                         <small class="label pull-right bg-red" style="margin-right: 5px;">Grupo lleno</small>&nbsp;
                         <small class="label pull-right bg-yellow" style="margin-right: 5px;">Grupo casi lleno</small>&nbsp;
@@ -501,10 +502,65 @@ use App\Models\Client;
         <h4>¿Más datos?</h4>
         <p>No se pueden asignar ni consultar horarios, incidencias o recibos pendientes para clientes que no son alumnos</p>
     </div>
+    <button type="button" class="btn btn-default btn-lg" data-toggle="modal" data-target="#calendarCheckModal">Consultar disponibilidad de horarios</button>
     @endif
+    <!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="calendarCheckModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document" style="width: 80%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Disponibilidad de horarios</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-default color-palette-box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title"><i class="fa fa-tag"></i> Consultar horarios</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-8">
+                                Seleccione un servicio para consultar el horario:
+                            </div>
+                            <div class="col-md-4">
+                                <select class="form-control" onchange="reloadServicesOffer(jQuery('#serviceCalendarSelector').val())" id="serviceCalendarSelector">
+                                    <option value="--">N/A</option>
+                                    @foreach($servicesOffer as $srv)
+                                    <option value="{{$srv->id}}">{{$srv->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 col-lg-12">
+                                <iframe id="frameCalendar" style="width: 100%;min-height: 450px;">
+
+                                </iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+        </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
     <!--- Modals zone -->
     @include('client.modals.addService')
     @include('client.modals.enrolRoom')
     <!--- //Modals zone -->
 </section>
+<script>
+    function reloadServicesOffer(fk_service){
+        jQuery("#frameCalendar").attr('src', 'about:blank');
+        jQuery("#frameCalendar").attr('src', '{{URL::to("/client/calendar")}}/'+fk_service);
+    }
+</script>
 @stop

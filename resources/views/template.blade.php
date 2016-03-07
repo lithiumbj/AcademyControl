@@ -364,7 +364,7 @@ use App\Models\ClientIncidence;
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.3.1
+                    <b>Version</b> 3.3.2
                 </div>
                 <strong>Copyright &copy; 2016 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
             </footer>

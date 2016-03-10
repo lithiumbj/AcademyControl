@@ -65,7 +65,7 @@ class ClientController extends Controller {
             //Check if the client was registered as info
             if ($client->status == "0")
                 $client->was_info = 1;
-            
+
             $client->phone_parents = $data['phone_parents'];
             $client->phone_client = $data['phone_client'];
             $client->phone_whatsapp = $data['phone_whatsapp'];
@@ -135,9 +135,11 @@ class ClientController extends Controller {
             $client->city = $data['city'];
             $client->status = $data['status'];
             //Check if the client was a client, and is not being it anymore
-            if ($client->status == "2")
+            if ($client->status == "2") {
                 $client->date_cancelation = date('Y-m-d');
-            
+                $this->unsuscribeRoom($client->id);
+            }
+
             $client->phone_parents = $data['phone_parents'];
             $client->phone_client = $data['phone_client'];
             $client->phone_whatsapp = $data['phone_whatsapp'];
@@ -305,16 +307,28 @@ class ClientController extends Controller {
         //render the view
         return view('client.list', ['clients' => $clientsWithoutServices]);
     }
-    
+
     /*
      * Renders a calendar view with availability of the room services
      */
-    public function getServicesCalendar($id)
-    {
+
+    public function getServicesCalendar($id) {
         $service = Service::find($id);
         $service->serviceId;
         $fakeClient = new Client;
         $fakeClient->id = 0;
         return view('client.calendar', ['service' => $service, 'model' => $fakeClient]);
     }
+
+    /*
+     * this function will disable every room reserve for the disabled client
+     */
+
+    public function unsuscribeRoom($fk_client) {
+        $reserves = RoomReserve::where('fk_client', '=', $fk_client)->get();
+        foreach ($reserves as $reserve) {
+            $reserve->delete();
+        }
+    }
+
 }

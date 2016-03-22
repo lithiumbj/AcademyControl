@@ -19,6 +19,7 @@ use App\Models\ClientIncidence;
         <!-- Theme style -->
         <link rel="stylesheet" href="{{URL::to('/')}}/css/AdminLTE.min.css">
         <link rel="stylesheet" href="{{URL::to('/')}}/css/custom.css">
+        <link rel="stylesheet" href="{{URL::to('/')}}/css/animate.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="{{URL::to('/')}}/css/skins/_all-skins.min.css">
@@ -364,7 +365,7 @@ use App\Models\ClientIncidence;
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.3.2
+                    <b>Version</b> 3.3.4
                 </div>
                 <strong>Copyright &copy; 2016 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
             </footer>

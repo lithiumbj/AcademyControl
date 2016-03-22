@@ -9,6 +9,7 @@ use App\Models\InvoicePayment;
 use App\Models\ClientIncidence;
 use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\StatsController;
 ?>
 <section class="content-header">
@@ -20,19 +21,29 @@ use App\Http\Controllers\StatsController;
 
 <!-- Main content -->
 <section class="content">
+@if(count(InvoiceController::getUnDueClientsForMonth()) > 4)
+<div class="row animated flash">
+    <div class="col-md-12 col-lg-12 col-xs-12">
+        <div class="alert alert-info alert-dismissible">
+          <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
+          Existen {{count(InvoiceController::getUnDueClientsForMonth())}} clientes sin factura en este periodo de facturación, ¿Esto es correcto? <a href="{{URL::to('/client/undue')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
+        </div>
+    </div>
+</div>
+@endif
 @if(ClientIncidence::getIncidencesCount() > 0)
-<div class="row">
+<div class="row animated flash">
     <div class="col-md-12 col-lg-12 col-xs-12">
         <div class="alert alert-warning alert-dismissible">
           <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
-          Existen una o varias incidencias sobre alumnos abiertas en estos momentos <a href="{{URL::to('/incidence/client')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
+          Existen {{ClientIncidence::getIncidencesCount()}} incidencias sobre alumnos abiertas en estos momentos <a href="{{URL::to('/incidence/client')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
         </div>
     </div>
 </div>
 @endif
 @if(count(StatsController::fetchIncompleteClients())>0)
 
-<div class="row">
+<div class="row animated flash">
     <div class="col-md-12 col-lg-12 col-xs-12">
         <div class="alert alert-danger alert-dismissible">
           <h4><i class="icon fa fa-users"></i> ¡Atención!</h4>
@@ -41,9 +52,21 @@ use App\Http\Controllers\StatsController;
     </div>
 </div>
 @endif
+
+@if(count(ClientController::getClientsWithoutServices()) > 4)
+<div class="row animated flash">
+    <div class="col-md-12 col-lg-12 col-xs-12">
+        <div class="alert alert-info alert-dismissible">
+          <h4><i class="icon fa fa-warning"></i> ¡Atención!</h4>
+          Existen {{count(ClientController::getClientsWithoutServices())}} o más clientes sin servicios asignados en estos momentos, ¿Esto es correcto? <a href="{{URL::to('/client/noService')}}"><i class="fa fa-eye"></i> <b>Ver</b></a>
+        </div>
+    </div>
+</div>
+@endif
+
 @if(count(Invoice::get60DaysInvoices())>0)
 
-<div class="row">
+<div class="row animated flash">
     <div class="col-md-12 col-lg-12 col-xs-12">
         <div class="alert alert-danger alert-dismissible">
           <h4><i class="icon fa fa-money"></i> ¡Atención!</h4>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\Service;
 use App\Models\ContactWay;
 use App\Models\RoomReserve;
 use App\Models\ServiceClient;
@@ -64,7 +65,7 @@ class ClientController extends Controller {
             //Check if the client was registered as info
             if ($client->status == "0")
                 $client->was_info = 1;
-            
+
             $client->phone_parents = $data['phone_parents'];
             $client->phone_client = $data['phone_client'];
             $client->phone_whatsapp = $data['phone_whatsapp'];
@@ -136,7 +137,7 @@ class ClientController extends Controller {
             //Check if the client was a client, and is not being it anymore
             if ($client->status == "2")
                 $client->date_cancelation = date('Y-m-d');
-            
+
             $client->phone_parents = $data['phone_parents'];
             $client->phone_client = $data['phone_client'];
             $client->phone_whatsapp = $data['phone_whatsapp'];
@@ -179,9 +180,10 @@ class ClientController extends Controller {
                         ->select('service_client.id', 'service.id as serviceId', 'service.name', 'service_client.created_at', 'service_client.active', 'service_client.reason', 'service_client.date_to')->get();
         //Get the client last invoices
         $invoices = Invoice::where('fk_client', '=', $model->id)->orderBy('date_creation', 'asc')->get();
-
-        //Render the view
-        return view('client.view', ['model' => $model, 'contactWays' => $contactWays, 'services' => $services, 'invoices' => $invoices]);
+        //Get the service offer
+        $servicesOffer = Service::where('fk_company', '=', \Auth::user()->fk_company)->get(); 
+        //Render the view 
+        return view('client.view', ['model' => $model, 'contactWays' => $contactWays, 'services' => $services, 'invoices' => $invoices, 'servicesOffer' => $servicesOffer]);
     }
 
     /*
@@ -293,12 +295,13 @@ class ClientController extends Controller {
         //render the view
         return view('client.list', ['clients' => ClientController::getClientsWithoutServices()]);
     }
+
     /*
      * Return's an array with the client without services
      */
-    public static function getClientsWithoutServices()
-    {
-        
+
+    public static function getClientsWithoutServices() {
+
         $clients = Client::where('fk_company', '=', \Auth::user()->fk_company)->where('status', '=', 1)->get();
         $clientsWithoutServices = [];
         //Iterate over the clients
@@ -312,4 +315,28 @@ class ClientController extends Controller {
         //
         return $clientsWithoutServices;
     }
+
+    /*
+     * Renders a calendar view with availability of the room services
+     */
+
+    public function getServicesCalendar($id) {
+        $service = Service::find($id);
+        $service->serviceId;
+        $fakeClient = new Client;
+        $fakeClient->id = 0;
+        return view('client.calendar', ['service' => $service, 'model' => $fakeClient]);
+    }
+
+    /*
+     * this function will disable every room reserve for the disabled client
+     */
+
+    public function unsuscribeRoom($fk_client) {
+        $reserves = RoomReserve::where('fk_client', '=', $fk_client)->get();
+        foreach ($reserves as $reserve) {
+            $reserve->delete();
+        }
+    }
+
 }

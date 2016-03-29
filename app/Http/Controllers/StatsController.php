@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Models\Room;
 use App\Models\Client;
 use App\Models\Invoice;
+use App\Models\RoomService;
+use App\Models\RoomReserve;
 use App\Models\Service;
 use App\Models\ContactWay;
 use App\Models\Cashflow;
@@ -110,22 +113,51 @@ class StatsController extends Controller {
         //generate the JSON
         print_r(json_encode($clients));
     }
-    
+
     /*
      * Returns an array with the incomplete clients
      */
+
     public static function fetchIncompleteClients() {
         //Generate the query
         $clients = DB::table('client')
-                ->whereRaw("client.status = 1 AND (lastname_1 = '' OR client.address = '' OR client.address = 'C/' OR client.poblation = '' OR client.city = '' OR ((phone_parents = '' AND phone_client = '' AND phone_whatsapp = '') OR (phone_parents = 0 AND phone_client = 0 AND phone_whatsapp = 0) OR fk_contact_way = 99)) AND client.fk_company = ".\Auth::user()->fk_company)
+                ->whereRaw("client.status = 1 AND (lastname_1 = '' OR client.address = '' OR client.address = 'C/' OR client.poblation = '' OR client.city = '' OR ((phone_parents = '' AND phone_client = '' AND phone_whatsapp = '') OR (phone_parents = 0 AND phone_client = 0 AND phone_whatsapp = 0) OR fk_contact_way = 99)) AND client.fk_company = " . \Auth::user()->fk_company)
                 ->join('users', 'users.id', '=', 'client.fk_user')
                 ->select(DB::raw('client.*, users.name AS username'))
                 ->get();
         return $clients;
     }
-    
+
     public function getIncompleteClients() {
         return view('stats.incompleteClients', ['clients' => StatsController::fetchIncompleteClients()]);
+    }
+
+    /*
+     * Get's the ocuppation info for the client and the rooms for the current
+     * company id
+     */
+
+    public function getOccupationInfo() {
+        //Create the empty array
+        $occupation = [];
+        //Get the rooms
+        $rooms = Room::where('fk_company', '=', \Auth::user()->fk_company)->get();
+        //Get the roomReserves for-each room
+        foreach ($rooms as $room) {
+            $roomReserves = RoomReserve::where('fk_room', '=', $room->id)->get();
+            //Get the client names for every roomReserve
+            foreach ($roomReserves as $roomReserve) {
+                $client = Client::where('id', '=', $roomReserve->fk_client)->first();
+                $roomService = RoomService::where('id', '=', $roomReserve->fk_room_service)->first();
+                $service = Service::where('id', '=', $roomService->fk_service)->first();
+                //Build up the array
+                if ($client != null)
+                    $occupation[$room->name][$roomReserve->day][$roomReserve->hour][] = $client->name;
+                    //$occupation[$room->name][$roomReserve->day][$roomReserve->hour][] = $client->name . ' | ' . $service->name;
+            }
+        }
+        //return the view
+        return view('stats.occupation', ['data' => $occupation]);
     }
 
 }

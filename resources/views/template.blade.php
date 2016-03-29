@@ -326,6 +326,7 @@ use App\Models\ClientIncidence;
                                 <li><a href="{{URL::to('/stats/cancelation_conversion')}}"><i class="fa fa-circle-o"></i> Abandono de clientes</a></li>
                                 <li><a href="{{URL::to('/stats/clients_by_service')}}"><i class="fa fa-circle-o"></i> Clientes por servicio</a></li>
                                 <li><a href="{{URL::to('/stats/incomplete_clients')}}"><i class="fa fa-circle-o"></i> Fichas de cliente incompletas</a></li>
+                                <li><a href="{{URL::to('/stats/occupation_info')}}"><i class="fa fa-circle-o"></i> Informe de ocupación</a></li>
                             </ul>
                         </li>
                         <!-- //Element -->
@@ -365,7 +366,7 @@ use App\Models\ClientIncidence;
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.3.4
+                    <b>Version</b> 3.4.0
                 </div>
                 <strong>Copyright &copy; 2016 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
             </footer>

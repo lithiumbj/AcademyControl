@@ -51,7 +51,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/client/delete/{id}', 'ClientController@deleteClient');
     Route::get('/client/undue/', 'ClientController@getUndue');
     Route::get('/client/noService', 'ClientController@getWithoutService');
-    Route::get('/client/calendar/{id}', 'ClientController@getServicesCalendar');
     //Services
     Route::get('/services', 'ServicesController@getList');
     Route::post('/services/create', 'ServicesController@postCreate');
@@ -115,6 +114,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stats/clients_by_service', 'StatsController@getClientByService');
     Route::post('/stats/clients_by_service', 'StatsController@postClientByService');
     Route::get('/stats/incomplete_clients', 'StatsController@getIncompleteClients');
+    Route::get('/stats/occupation_info', 'StatsController@getOccupationInfo');
     //Provider Routes
     Route::get('/provider/', 'ProviderController@getList');
     Route::get('/provider/create', 'ProviderController@getCreate');

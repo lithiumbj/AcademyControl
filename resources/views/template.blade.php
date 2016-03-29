@@ -53,7 +53,7 @@ use App\Models\ClientIncidence;
                 <!-- Logo -->
                 <a href="{{URL::to('/')}}" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-lg"><b>Academy Control</b> 3.3</span>
+                    <span class="logo-lg"><b>Academy Control</b> 3.4</span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -366,7 +366,7 @@ use App\Models\ClientIncidence;
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.4.0
+                    <b>Version</b> 3.4.1
                 </div>
                 <strong>Copyright &copy; 2016 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
             </footer>

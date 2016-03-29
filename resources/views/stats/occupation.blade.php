@@ -125,6 +125,19 @@ use App\Http\Controllers\RoomController;
                             </tr>
                             <!-- -->
                             <tr>
+                                <td><b>16:00</b></td>
+                                @for($i=1;$i<7;$i++)
+                                <td>
+                                    @if(isset($room[$i][16]))
+                                    @foreach($room[$i][16] as $client)
+                                    <label class="btn bg-yellow btn-xs" style="display:block;margin:0 auto;margin-bottom: 10px;" >{{$client}}</label>
+                                    @endforeach
+                                    @endif
+                                </td>
+                                @endfor
+                            </tr>
+                            <!-- -->
+                            <tr>
                                 <td><b>17:15</b></td>
                                 @for($i=1;$i<7;$i++)
                                 <td>

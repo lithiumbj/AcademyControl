@@ -32,7 +32,7 @@ use App\Http\Controllers\RoomController;
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
-                    <table class="table table-bordered tablaDatos" id="table_{{$roomName}}">
+                    <table class="table table-bordered tablaDatos" id="table_{{str_replace(' ','',$roomName)}}">
                         <thead>    
                             <tr>
                                 <th style="width: 52px;"><i>Hora</i></th>

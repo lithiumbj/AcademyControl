@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/client/delete/{id}', 'ClientController@deleteClient');
     Route::get('/client/undue/', 'ClientController@getUndue');
     Route::get('/client/noService', 'ClientController@getWithoutService');
+    Route::get('/client/calendar/{id}', 'ClientController@getServicesCalendar');
     //Services
     Route::get('/services', 'ServicesController@getList');
     Route::post('/services/create', 'ServicesController@postCreate');

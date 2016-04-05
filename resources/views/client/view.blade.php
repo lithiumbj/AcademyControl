@@ -33,6 +33,7 @@ use App\Models\Client;
                     @if($model->status == 1)
                     <div class="box-tools pull-right">
                         <a class="btn btn-box-tool" href="{{URL::to('/invoice/create/'.$model->id)}}"><i class="fa fa-money"></i> Crear recibo</a>
+                        <a class="btn btn-box-tool" href="{{URL::to('/invoice/new/'.$model->id)}}"><i class="fa fa-money"></i> Crear facura</a>
                         <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i> Mas detalles</button>
                         <button class="btn btn-box-tool" data-toggle="modal" data-target="#modalIncidence" onclick="prepareIncidence({{$model->id}})"><i class="fa fa-exclamation-triangle"></i> Emitir incidencia</button>
                     </div>

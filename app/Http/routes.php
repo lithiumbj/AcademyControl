@@ -76,14 +76,17 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/invoice/generate', 'InvoiceController@getGenerateAutoInvoices');
     Route::post('/invoice/generate', 'InvoiceController@postGenerateAutoInvoices');
     Route::post('/invoice/ajaxCreate', 'InvoiceController@ajaxCreateInvoice');
+    Route::post('/invoice/ajaxFactureCreate', 'InvoiceController@ajaxFactureCreate');
     Route::post('/invoice/massiveprint', 'InvoiceController@postMassivePrint');
     Route::get('/invoice/{id}', 'InvoiceController@getView');
     Route::get('/invoice/delete/{id}', 'InvoiceController@getDelete');
     Route::post('/invoice/pay/', 'InvoiceController@setPayedInvoice');
     Route::post('/invoice/paybank', 'InvoiceController@setBankPayedInvoice');
     Route::get('/invoice/print/{id}', 'InvoiceController@printInvoice');
+    Route::get('/invoice/printFacture/{id}', 'InvoiceController@printFacture');
     Route::get('/invoice/unpay/{id}', 'InvoiceController@setUnpayedInvoice');
     Route::get('/invoice/create/{id}', 'InvoiceController@getCreateInvoice');
+    Route::get('/invoice/new/{id}', 'InvoiceController@getCreateFacture');
     Route::post('/invoice/update_public_note', 'InvoiceController@updatePublicNote');
     Route::post('/invoice/update_private_note', 'InvoiceController@updatePrivateNote');
     //Caja

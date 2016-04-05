@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\AngularHelper;
 use App\Helpers\SettingsHelper;
+use App\Models\Company;
 use DB;
 use View;
 use Validator;
@@ -49,6 +50,22 @@ class InvoiceController extends Controller {
         $request = AngularHelper::parseClientSideData();
         if ($request) {
             $finalId = InvoiceController::createDueInvoice(InvoiceController::generateFacNumber(), Auth::user()->id, $request->fk_client, Auth::user()->fk_company, 1, $request->note, $request->note, $request->date, $request->lines);
+            if ($finalId)
+                print_r(json_encode(['status' => 'ok', 'id' => $finalId]));
+            else
+                print_r(json_encode(['status' => 'ko']));
+        }else {
+            print_r(json_encode(['status' => 'ko']));
+        }
+    }
+    /*
+     * Get's the ajax request to create a new facture
+     */
+
+    public function ajaxFactureCreate() {
+        $request = AngularHelper::parseClientSideData();
+        if ($request) {
+            $finalId = InvoiceController::createDueInvoice(InvoiceController::generateFactureNumber(), Auth::user()->id, $request->fk_client, Auth::user()->fk_company, 1, $request->note, $request->note, $request->date, $request->lines);
             if ($finalId)
                 print_r(json_encode(['status' => 'ok', 'id' => $finalId]));
             else
@@ -100,7 +117,7 @@ class InvoiceController extends Controller {
                 $newLine->tax_base = $line->tax_base;
                 $newLine->tax = $line->tax;
                 $total += $newLine->tax_base;
-                $tax += ($newLine->tax_base * $newLine->tax);
+                $tax += $newLine->tax;
                 //Save it
                 if (!$newLine->save()) {
                     return false;
@@ -108,7 +125,8 @@ class InvoiceController extends Controller {
             }
             //Update the invoice
             $invoice->tax = $tax;
-            $invoice->total = $total;
+            $invoice->tax_base = $total;
+            $invoice->total = $tax + $total;
             $invoice->save();
         } else {
             //Revert the facnumber increment
@@ -145,6 +163,35 @@ class InvoiceController extends Controller {
         $newMask = $constant . $newMask . $currFacnumber;
         //Set the new facnumber
         SettingsHelper::setSetting('facnumber', $currFacnumber + 1);
+        //return the data
+        return $newMask;
+    }
+    /*
+     * Generates the next invoice number
+     */
+
+    public static function generateFactureNumber() {
+        $mask = SettingsHelper::fetchSetting('facMask');
+        //separate the static part from the dinamic
+        $explodedMask = explode("#", $mask);
+        //Get the constant
+        $constant = $explodedMask[0];
+        //Get digits of mask
+        $digits = substr_count($mask, "#");
+        //Get the current facnumber
+        $currFacnumber = SettingsHelper::fetchSetting('facMaskNumber');
+        //Build the new facnumber
+        //We get the limit (The maximun length of the mask)
+        $limit = strlen($constant) + $digits;
+        //How many # are?
+        $zeros = $digits - strlen($currFacnumber);
+        $newMask = '';
+        for ($i = 0; $i < $zeros; $i++) {
+            $newMask.='0';
+        }
+        $newMask = $constant . $newMask . $currFacnumber;
+        //Set the new facnumber
+        SettingsHelper::setSetting('facMaskNumber', $currFacnumber + 1);
         //return the data
         return $newMask;
     }
@@ -284,6 +331,20 @@ class InvoiceController extends Controller {
     }
 
     /*
+     * This function print's the invoice
+     */
+
+    public function printFacture($invoiceId) {
+        $invoice = Invoice::find($invoiceId);
+        $client = Client::find($invoice->fk_client);
+        $payments = InvoicePayment::where('fk_invoice', '=', $invoiceId)->get();
+        $lines = InvoiceLine::where('fk_invoice', '=', $invoiceId)->get();
+        $company = Company::find(\Auth::user()->fk_company)->first();
+        //generate the view
+        return view('invoice.printFacture', ['invoice' => $invoice, 'client' => $client, 'payments' => $payments, 'lines' => $lines, 'company' => $company]);
+    }
+
+    /*
      * This function render's the view of the auto-generated invoices
      */
 
@@ -375,6 +436,16 @@ class InvoiceController extends Controller {
         $services = Service::where('fk_company', '=', Auth::user()->fk_company)->get();
         //Render view
         return view('invoice.new', ['client' => $client, 'services' => $services]);
+    }
+    /*
+     * This function show's the create factura form
+     */
+
+    public function getCreateFacture($fk_client) {
+        $client = Client::find($fk_client);
+        $services = Service::where('fk_company', '=', Auth::user()->fk_company)->get();
+        //Render view
+        return view('invoice.newFacture', ['client' => $client, 'services' => $services]);
     }
 
     /*

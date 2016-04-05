@@ -196,6 +196,43 @@ class InvoiceController extends Controller {
         //return to the invoice list
         return redirect('/invoice/' . $invoice->id);
     }
+    /*
+     * Set's the invoice as payed (but with the bank, without the cashflow move
+     */
+
+    public function setBankPayedInvoice(Request $request) {
+        $data = $request->all();
+        //Get the invoice
+        $invoice = Invoice::find($data['fk_invoice']);
+        //create the payment
+        $payment = new InvoicePayment;
+        $payment->fk_user = Auth::user()->id;
+        $payment->fk_company = Auth::user()->fk_company;
+        $payment->fk_client = $invoice->fk_client;
+        $payment->fk_invoice = $invoice->id;
+        //Check if customer pays more than the invoice due
+        if ($data['toPay'] > $invoice->total)
+            $payment->total = $invoice->total;
+        else
+            $payment->total = $data['toPay'];
+        //Continue with cashflow movement
+        $payment->fk_cashflow = CashflowController::createInMovement('Pago bancario recibido de ' . Client::getClientName($payment->fk_client)." (No registra movimiento de caja)", 0);
+        //Create the payment
+        $payment->save();
+        //Check if the payments cover all the money of the invoice
+        $paymentsTotal = 0;
+        foreach (InvoicePayment::where('fk_invoice', '=', $invoice->id)->get() as $payment) {
+            $paymentsTotal += $payment->total;
+        }
+        //If enought money, payed
+        if ($paymentsTotal >= $invoice->total) {
+            //Update the status
+            $invoice->status = 4;
+            $invoice->save();
+        }
+        //return to the invoice list
+        return redirect('/invoice/' . $invoice->id);
+    }
 
     /*
      * This function set's the invoice to unpay
@@ -204,15 +241,18 @@ class InvoiceController extends Controller {
     public function setUnpayedInvoice($invoiceId) {
         //Get the invoice
         $invoice = Invoice::find($invoiceId);
-        //Update the status
-        $invoice->status = 1;
-        $invoice->save();
         //Delete the payments
         $payment = InvoicePayment::where('fk_invoice', '=', $invoice->id);
         //Create the payment
         $payment->delete();
         //Generate a exit money cashflow
-        $payment->fk_cashflow = CashflowController::createInMovement('Devolución de recibo de ' . Client::getClientName($invoice->fk_client), ($invoice->total * -1));
+        if($invoice->status == 4)
+            $payment->fk_cashflow = CashflowController::createInMovement('Devolución de recibo de ' . Client::getClientName($invoice->fk_client)." (No se registra movimiento en caja, pago bancario)", 0);
+        else
+            $payment->fk_cashflow = CashflowController::createInMovement('Devolución de recibo de ' . Client::getClientName($invoice->fk_client), ($invoice->total * -1));
+        //Update the status
+        $invoice->status = 1;
+        $invoice->save();
         //return to the invoice list
         return redirect('/invoice/' . $invoice->id);
     }

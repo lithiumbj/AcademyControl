@@ -26,8 +26,9 @@ use App\Http\Controllers\RoomController;
           <h3 class="box-title">Factura -- {{$invoice->facnumber}}</h3>
           <div class="box-tools pull-right">
             <a href="{{URL::to('/invoice/print/'.$invoice->id)}}" class="btn btn-xs btn-primary"><i class="fa fa-print"></i> Imprimir</a>
-            @if($invoice->status != 2)
+            @if($invoice->status != 2 && $invoice->status !=4)
             <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#paybox"><i class="fa fa-money"></i> Pagar</button>
+            <button class="btn btn-xs btn-success" data-toggle="modal" data-target="#payboxbank"><i class="fa fa-money"></i> Pagar por banco</button>
             @else
               <a href="{{URL::to('/invoice/unpay/'.$invoice->id)}}" class="btn btn-xs btn-warning"><i class="fa fa-trash"></i> Eliminar pago</a>
             @endif
@@ -56,6 +57,9 @@ use App\Http\Controllers\RoomController;
                   @if($invoice->status == 3)
                     <small class="label bg-red">Abandonada / Adeudada</small>
                   @endif
+                    @if($invoice->status == 4)
+                      <small class="label bg-green">Pagada por banco</small>
+                    @endif
                 </td>
               </tr>
               <tr>
@@ -172,4 +176,5 @@ use App\Http\Controllers\RoomController;
   </div>
 </section>
 @include('invoice.modals.paybox')
+@include('invoice.modals.payboxbank')
 @stop

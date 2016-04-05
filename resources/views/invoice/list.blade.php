@@ -59,6 +59,9 @@ use App\Models\Client;
               @if($invoice->status == 3)
                 <small class="label bg-red">Abandonada / Adeudada</small>
               @endif
+              @if($invoice->status == 4)
+                <small class="label bg-green">Pagada por banco</small>
+              @endif
             </td>
             <td class="center" style="width: 250px;">
               <a href="{{URL::to('/invoice/'.$invoice->id)}}" class="btn btn-success btn-xs"><i class="fa fa-eye"></i></a>

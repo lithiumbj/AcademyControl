@@ -62,6 +62,7 @@ class ClientController extends Controller {
             $client->parent_lastname_2 = $data['parent_lastname_2'];
             $client->parent_nif = $data['parent_nif'];
             $client->status = $data['status'];
+            $client->is_subscription = $data['is_subscription'];
             //Check if the client was registered as info
             if ($client->status == "0")
                 $client->was_info = 1;
@@ -134,6 +135,7 @@ class ClientController extends Controller {
             $client->poblation = $data['poblation'];
             $client->city = $data['city'];
             $client->status = $data['status'];
+            $client->is_subscription = $data['is_subscription'];
             //Check if the client was a client, and is not being it anymore
             if ($client->status == "2")
                 $client->date_cancelation = date('Y-m-d');

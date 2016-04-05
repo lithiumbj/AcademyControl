@@ -146,6 +146,14 @@
                             <input class="form-control"  name="email_client"  type="email" value="{{$model->email_client}}">
                         </div>
 
+                        <div class="form-group col-md-4">
+                            <label>Cliente de pago único <i>Esto significa que no se generan recibos cada mes</i></label>
+                            <select class="form-control" name="is_subscription">
+                                <option value="0" @if($model->is_subscription == 0) selected="selected" @endif>No</option>
+                                <option value="1" @if($model->is_subscription == 1) selected="selected" @endif>Si</option>
+                            </select>
+                        </div>
+
                         <div class="form-group col-md-12">
                             <label >Más información de contacto</label>
                             <textarea class="form-control"  name="other_address_info">{{$model->other_address_info}}</textarea>

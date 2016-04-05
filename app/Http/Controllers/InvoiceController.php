@@ -251,7 +251,7 @@ class InvoiceController extends Controller {
         //Current month client invoices
         $currentMonthClientInvoices = DB::table('invoice')
                         ->join('client', 'client.id', '=', 'invoice.fk_client')
-                        ->whereRaw("YEAR(invoice.date_creation) = " . date('Y') . " AND MONTH(invoice.date_creation) = " . date('m')." AND client.fk_company = ".\Auth::user()->fk_company)
+                        ->whereRaw("YEAR(invoice.date_creation) = " . date('Y') . " AND MONTH(invoice.date_creation) = " . date('m')." AND client.fk_company = ".\Auth::user()->fk_company." AND client.is_subscription != 1")
                         ->select(DB::raw('client.*'))->get();
         return view('invoice.generate', ['clientsWithInvoices' => $currentMonthClientInvoices]);
     }

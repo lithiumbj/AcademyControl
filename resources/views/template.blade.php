@@ -366,9 +366,9 @@ use App\Models\ClientIncidence;
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
                 <div class="pull-right hidden-xs">
-                    <b>Version</b> 3.4.1
+                    <b>Version</b> 3.4.2
                 </div>
-                <strong>Copyright &copy; 2016 <a href="http://inforfenix.com">Inforfenix</a>.</strong> Centro de formación
+                <strong>Copyright &copy; 2016 <a href="http://grupo.inforfenix.com">Grupo Inforfenix</a>.</strong> Formación, Salud y Nuevas tecnologías
             </footer>
 
             <!-- Add the sidebar's background. This div must be placed

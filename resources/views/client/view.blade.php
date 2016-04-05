@@ -179,6 +179,15 @@ use App\Models\Client;
                             <i>{{$model->email_client}}</i>
                         </div>
 
+
+                        <div class="form-group col-md-4">
+                            <label>Cliente de pago único <i>Esto significa que no se generan recibos cada mes</i></label>
+                            <select class="form-control" name="is_subscription" disabled="disabled">
+                                <option value="0" @if($model->is_subscription == 0) selected="selected" @endif>No</option>
+                                <option value="1" @if($model->is_subscription == 1) selected="selected" @endif>Si</option>
+                            </select>
+                        </div>
+
                         <div class="form-group col-md-12">
                             <label >Más información de contacto</label>
                             <br/>

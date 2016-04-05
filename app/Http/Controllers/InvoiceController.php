@@ -527,7 +527,7 @@ class InvoiceController extends Controller {
     public static function getUnDueClientsForMonth() {
         $noDueClients = [];
         //fetch all the clients (first)
-        $clients = Client::where('status', '=', 1)->where('fk_company','=',\Auth::user()->fk_company)->get();
+        $clients = Client::where('status', '=', 1)->where('fk_company','=',\Auth::user()->fk_company)->where('is_subscription', '!=', 1)->get();
         //for each client, get who not have a invoice for this month
         foreach ($clients as $client) {
 

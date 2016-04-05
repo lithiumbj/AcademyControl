@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/invoice/update_private_note', 'InvoiceController@updatePrivateNote');
     //Caja
     Route::get('/cashflow/', 'CashflowController@showCash');
+    Route::post('/cashflow/', 'CashflowController@showCashFiltered');
     Route::get('/cashflow/open', 'CashflowController@getOpen');
     Route::post('/cashflow/open', 'CashflowController@postOpen');
     Route::get('/cashflow/exit', 'CashflowController@getExit');

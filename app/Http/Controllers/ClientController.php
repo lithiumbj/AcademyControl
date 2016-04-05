@@ -304,7 +304,7 @@ class ClientController extends Controller {
 
     public static function getClientsWithoutServices() {
 
-        $clients = Client::where('fk_company', '=', \Auth::user()->fk_company)->where('status', '=', 1)->get();
+        $clients = Client::where('fk_company', '=', \Auth::user()->fk_company)->where('status', '=', 1)->where('is_subscription', '!=', 1)->get();
         $clientsWithoutServices = [];
         //Iterate over the clients
         foreach ($clients as $client) {
